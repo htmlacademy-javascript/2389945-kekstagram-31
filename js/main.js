@@ -45,7 +45,8 @@ const getRandomInteger = (a, b) => {
 };
 
 // Вычисление случайного уникального числа в диапазоне
-const createRandomIdFromRangeGenerator = (min, max) => {
+//const createRandomIdFromRangeGenerator = (min, max) => {
+function createRandomIdFromRangeGenerator (min, max) {
   const previousValues = [];
 
   return () => {
@@ -61,7 +62,7 @@ const createRandomIdFromRangeGenerator = (min, max) => {
     previousValues.push(currentValue);
     return currentValue;
   };
-};
+}
 
 // Получение случайного элемента массива
 const getRandomArrayElement = (elements) => {
