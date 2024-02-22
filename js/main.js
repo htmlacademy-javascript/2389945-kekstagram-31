@@ -1,3 +1,4 @@
+// Список имен комментаторов
 const NAMES = [
   'Cаша',
   'Маша',
@@ -11,6 +12,7 @@ const NAMES = [
   'Лёша',
 ];
 
+// Список описаний фото
 const DESCRIPTIONS = [
   'Я на даче',
   'А это на море',
@@ -20,6 +22,7 @@ const DESCRIPTIONS = [
   'С друзьями',
 ];
 
+// Список комментариев
 const MESSAGES = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
@@ -29,8 +32,11 @@ const MESSAGES = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
 
-const PHOTCARDS_COUNT = 25;
+const PHOTOCARDS_COUNT = 25; // Количество фотографий
+const MAX_COMMENTS_COUNT = 30; // Максимальное число комментариев к фото
+const MAX_LIKES_COUNT = 30; // Максимальное число лайков к фото
 
+// Вычисление случайного числа в диапазоне
 const getRandomInteger = (a, b) => {
   const lower = Math.ceil(Math.min(a, b));
   const upper = Math.floor(Math.max(a, b));
@@ -38,38 +44,61 @@ const getRandomInteger = (a, b) => {
   return Math.floor(result);
 };
 
-function createRandomIdFromRangeGenerator() {
+// Вычисление случайного уникального числа в диапазоне
+const createRandomIdFromRangeGenerator = (min, max) => {
   const previousValues = [];
 
-  return function (min, max) {
+  return () => {
     let currentValue = getRandomInteger(min, max);
+    if (previousValues.length >= max - min + 1) {
+      // eslint-disable-next-line no-console
+      console.error(`Перебраны все числа из диапазона от ${min} до ${max}`);
+      return null;
+    }
     while (previousValues.includes(currentValue)) {
       currentValue = getRandomInteger(min, max);
     }
     previousValues.push(currentValue);
     return currentValue;
   };
-}
+};
 
-const uniqueId = createRandomIdFromRangeGenerator();
+// Получение случайного элемента массива
+const getRandomArrayElement = (elements) => {
+  const uniqueElementId = createRandomIdFromRangeGenerator(
+    0,
+    elements.length - 1
+  );
+  return elements[uniqueElementId()];
+};
 
-const getRandomArrayElement = (elements) =>
-  elements[createRandomIdFromRangeGenerator(0, elements.length - 1)];
+// Получение уникального Id комментария
+const getUniqueCommentId = createRandomIdFromRangeGenerator(1, PHOTOCARDS_COUNT * MAX_COMMENTS_COUNT);
 
+// Создание объекта комментария
 const createComment = () => ({
-  id: createRandomIdFromRangeGenerator(1, 30),
-  avatar: `img/avatar-${ createRandomIdFromRangeGenerator(1, 6) }.svg`,
+  id: getUniqueCommentId(),
+  avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
   message: getRandomArrayElement(MESSAGES),
-  name: getRandomArrayElement(NAMES)
+  name: getRandomArrayElement(NAMES),
 });
 
+// Получение уникального Id фотокарточки
+const uniquePhotoCardId = createRandomIdFromRangeGenerator(1, 25);
+// Получение уникального Id фотографии
+const uniquePhotoImageId = createRandomIdFromRangeGenerator(1, 25);
+
+// Создание объекта фотокарточки
 const createPhotoCard = () => ({
-  id: uniqueId(1, 25), //createRandomIdFromRangeGenerator(),
-  url: `photos/${createRandomIdFromRangeGenerator(1, 25)}.jpg`,
+  id: uniquePhotoCardId(),
+  url: `photos/${uniquePhotoImageId()}.jpg`,
   description: getRandomArrayElement(DESCRIPTIONS),
-  likes: getRandomInteger(1, 30), //createRandomIdFromRangeGenerator(15, 200),
-  comments: Array.from({length: getRandomInteger(1, 30)}, createComment)
+  likes: getRandomInteger(1, MAX_LIKES_COUNT),
+  comments: Array.from({ length: getRandomInteger(1, MAX_COMMENTS_COUNT) }, createComment),
 });
-const photoCards = Array.from({length: PHOTCARDS_COUNT}, createPhotoCard);
 
+// Добавление объекта фотокарточки в массив
+const photoCards = Array.from({ length: PHOTOCARDS_COUNT }, createPhotoCard);
+
+// eslint-disable-next-line no-console
 console.log(photoCards);
