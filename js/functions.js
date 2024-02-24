@@ -12,10 +12,7 @@ const isPalindrome = function (strValue) {
   for (let i = 0; i < strLength; i++) {
     newStr[i] = strWoSpaces[strLength - i - 1];
   }
-  return (
-    newStr.join().replaceAll(',', '') ===
-    strWoSpaces
-  );
+  return newStr.join().replaceAll(',', '') === strWoSpaces;
 };
 
 const extractNumber = function (strValue) {
@@ -50,3 +47,40 @@ console.log(extractNumber('а я томат')); // NaN
 console.log(extractNumber(2023)); // 2023
 console.log(extractNumber(-1)); // 1
 console.log(extractNumber(1.5)); // 15
+
+// Функция принимает время начала и конца рабочего дня,
+// а также время старта и продолжительность встречи в минутах
+// и возвращает true, если встреча не выходит за рамки рабочего дня,
+// и false, если выходит.
+const isValidMeeting = (
+  worktimeBegin,
+  worktimeEnd,
+  meetingBegin,
+  meetingDuration
+) => {
+  const wtDateBegin = new Date(0).setHours(...worktimeBegin.split(':'));
+  const wtDateEnd = new Date(0).setHours(...worktimeEnd.split(':'));
+  const mtDateBegin = new Date(0).setHours(...meetingBegin.split(':'));
+  const mtDateEnd =
+    new Date(0).setHours(...meetingBegin.split(':')) +
+    meetingDuration * 60 * 1000;
+
+  return (
+    mtDateBegin >= wtDateBegin &&
+    mtDateBegin <= wtDateEnd &&
+    mtDateEnd >= wtDateBegin &&
+    mtDateEnd <= wtDateEnd
+  );
+};
+
+/*
+'8:00' - начало рабочего дня
+'17:30' - конец рабочего дня
+'14:00' - начало встречи
+90 - продолжительность встречи в минутах
+*/
+console.log(isValidMeeting('08:00', '17:30', '14:00', 90)); // true
+console.log(isValidMeeting('8:0', '10:0', '8:0', 120)); // true
+console.log(isValidMeeting('08:00', '14:30', '14:00', 90)); // false
+console.log(isValidMeeting('14:00', '17:30', '08:0', 90)); // false
+console.log(isValidMeeting('8:00', '17:30', '08:00', 900)); // false
