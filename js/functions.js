@@ -58,18 +58,18 @@ const isValidMeeting = (
   meetingBegin,
   meetingDuration
 ) => {
-  const wtDateBegin = new Date(0).setHours(...worktimeBegin.split(':'));
-  const wtDateEnd = new Date(0).setHours(...worktimeEnd.split(':'));
-  const mtDateBegin = new Date(0).setHours(...meetingBegin.split(':'));
-  const mtDateEnd =
+  const worktimeDateBegin = new Date(0).setHours(...worktimeBegin.split(':'));
+  const worktimeDateEnd = new Date(0).setHours(...worktimeEnd.split(':'));
+  const meetingDateBegin = new Date(0).setHours(...meetingBegin.split(':'));
+  const meetingDateEnd =
     new Date(0).setHours(...meetingBegin.split(':')) +
     meetingDuration * 60 * 1000;
 
   return (
-    mtDateBegin >= wtDateBegin &&
-    mtDateBegin <= wtDateEnd &&
-    mtDateEnd >= wtDateBegin &&
-    mtDateEnd <= wtDateEnd
+    meetingDateBegin >= worktimeDateBegin &&
+    meetingDateBegin <= worktimeDateEnd &&
+    meetingDateEnd >= worktimeDateBegin &&
+    meetingDateEnd <= worktimeDateEnd
   );
 };
 
