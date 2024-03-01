@@ -19,8 +19,6 @@ const createThumbnails = () => {
     fragment.appendChild(newPicture);
   });
   pictures.appendChild(fragment);
-  // eslint-disable-next-line no-console
-  //console.log(pictures);
 };
 
 // Обработчик события клика на миниатюре фотографии

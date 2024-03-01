@@ -9,7 +9,9 @@ const commentsCount = bigPicture.querySelector('.social__comment-count');
 const commentsLoader = bigPicture.querySelector('.comments-loader');
 const pictureCancel = bigPicture.querySelector('#picture-cancel');
 const comments = bigPicture.querySelector('.social__comments');
+const comment = bigPicture.querySelector('.social__comment');
 
+// Действия при нажатии клавиши Escape
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
@@ -17,6 +19,18 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
+// Добавление блока с комментариями
+const addComments = (post) => {
+  post.comments.forEach((item) => {
+    const newComment = comment.cloneNode(true);
+    newComment.querySelector('img').src = item.avatar;
+    newComment.querySelector('img').alt = item.name;
+    newComment.querySelector('.social__text').textContent = item.message;
+    comments.appendChild(newComment);
+  });
+};
+
+// Открытие формы полноразмерного просмотра фото
 const openPicture = (post) => {
   img.src = post.url;
   caption.textContent = post.description;
@@ -28,19 +42,23 @@ const openPicture = (post) => {
   while (comments.firstChild) {
     comments.removeChild(comments.firstChild);
   }
+  addComments(post);
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
-function closePicture() {
+// Закрытие формы полноразмерного просмотра фото
+const closePicture = () => {
   document.removeEventListener('keydown', onDocumentKeydown);
   body.classList.remove('modal-open');
   bigPicture.classList.add('hidden');
-}
+};
 
+// Событие закрытия формы по клику мыши
 pictureCancel.addEventListener('click', () => {
   closePicture();
 });
 
+// Событие закрытия формы по нажатию Enter на кнопке закрытия
 pictureCancel.addEventListener('keydown', (evt) => {
   if (isEnterKey(evt)) {
     closePicture();
