@@ -6,14 +6,14 @@ const bigPicture = document.querySelector('.big-picture');
 const bigPictureImg = bigPicture.querySelector('img');
 const bigPictureCaption = bigPicture.querySelector('.social__caption');
 const bigPictureLikesCount = bigPicture.querySelector('.likes-count');
-const bigPictureCommentsLoader = bigPicture.querySelector('.comments-loader');
+const actionBigPictureCommentsLoad = bigPicture.querySelector('.comments-loader');
 const bigPictureTotalCommentsCount = bigPicture.querySelector(
   '.social__comment-total-count'
 );
 const bigPictureShownCommentsCount = bigPicture.querySelector(
   '.social__comment-shown-count'
 );
-const actBigPictureCancel = bigPicture.querySelector('#picture-cancel');
+const actionBigPictureCancel = bigPicture.querySelector('#picture-cancel');
 const bigPictureComments = bigPicture.querySelector('.social__comments');
 const bigPictureComment = bigPicture.querySelector('.social__comment');
 
@@ -34,15 +34,13 @@ const onDocumentKeydown = (evt) => {
 
 // Добавление блока с комментариями
 const addComments = (post, commentsCount) => {
-  while (bigPictureComments.firstChild) {
-    bigPictureComments.removeChild(bigPictureComments.firstChild);
-  }
   post.comments.forEach((item, index) => {
     const newComment = bigPictureComment.cloneNode(true);
+    const fromCommentsCount = commentsCount - SHOWN_COMMENTS_COUNT;
     newComment.querySelector('img').src = item.avatar;
     newComment.querySelector('img').alt = item.name;
     newComment.querySelector('.social__text').textContent = item.message;
-    if (index < commentsCount) {
+    if (index >= fromCommentsCount && index < commentsCount) {
       bigPictureComments.appendChild(newComment);
     }
   });
@@ -65,19 +63,19 @@ const openPicture = (post) => {
   }
   shownComments = shownComments + addComments(post, shownComments);
   document.addEventListener('keydown', onDocumentKeydown);
-  bigPictureCommentsLoader.addEventListener('click', () => {
+  actionBigPictureCommentsLoad.addEventListener('click', () => {
     shownComments = shownComments + addComments(post, shownComments);
   });
 };
 
 // Событие закрытия формы по клику мыши
-actBigPictureCancel.addEventListener('click', () => {
+actionBigPictureCancel.addEventListener('click', () => {
   document.removeEventListener('keydown', onDocumentKeydown);
   closePicture();
 });
 
 // Событие закрытия формы по нажатию Enter на кнопке закрытия
-actBigPictureCancel.addEventListener('keydown', (evt) => {
+actionBigPictureCancel.addEventListener('keydown', (evt) => {
   if (isEnterKey(evt)) {
     document.removeEventListener('keydown', onDocumentKeydown);
     closePicture();
