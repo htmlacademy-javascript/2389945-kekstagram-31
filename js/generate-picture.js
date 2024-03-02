@@ -1,6 +1,7 @@
 import { isEnterKey, isEscapeKey } from './utils';
 import { SHOWN_COMMENTS_COUNT } from './config';
 
+// Определение элементов DOM для дальнейшей работы
 const body = document.querySelector('body');
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureImg = bigPicture.querySelector('img');
