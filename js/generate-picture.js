@@ -72,7 +72,7 @@ const openPicture = (post) => {
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
-//
+// Событие клика на кнопке "Загрузить еще"
 actionBigPictureCommentsLoad.addEventListener('click', () => {
   shownComments = addComments(sourcePost, shownComments);
 });
