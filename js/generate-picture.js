@@ -18,6 +18,9 @@ const actionBigPictureCancel = bigPicture.querySelector('#picture-cancel');
 const bigPictureComments = bigPicture.querySelector('.social__comments');
 const bigPictureComment = bigPicture.querySelector('.social__comment');
 
+let shownComments = 0;
+let sourcePost;
+
 // Закрытие формы полноразмерного просмотра фото
 const closePicture = () => {
   body.classList.remove('modal-open');
@@ -41,18 +44,21 @@ const addComments = (post, commentsCount) => {
     newComment.querySelector('img').src = item.avatar;
     newComment.querySelector('img').alt = item.name;
     newComment.querySelector('.social__text').textContent = item.message;
+    console.log(fromCommentsCount, commentsCount);
     if (index >= fromCommentsCount && index < commentsCount) {
       bigPictureComments.appendChild(newComment);
     }
   });
   bigPictureShownCommentsCount.textContent =
     commentsCount < post.comments.length ? commentsCount : post.comments.length;
-  return SHOWN_COMMENTS_COUNT;
+  return commentsCount + SHOWN_COMMENTS_COUNT;
 };
 
 // Открытие формы полноразмерного просмотра фото
 const openPicture = (post) => {
-  let shownComments = SHOWN_COMMENTS_COUNT;
+  sourcePost = post;
+  shownComments = SHOWN_COMMENTS_COUNT;
+  //console.log(shownComments);
   bigPictureImg.src = post.url;
   bigPictureCaption.textContent = post.description;
   bigPictureLikesCount.textContent = post.likes;
@@ -62,12 +68,14 @@ const openPicture = (post) => {
   while (bigPictureComments.firstChild) {
     bigPictureComments.removeChild(bigPictureComments.firstChild);
   }
-  shownComments = shownComments + addComments(post, shownComments);
+  shownComments = addComments(post, shownComments);
   document.addEventListener('keydown', onDocumentKeydown);
-  actionBigPictureCommentsLoad.addEventListener('click', () => {
-    shownComments = shownComments + addComments(post, shownComments);
-  });
 };
+
+//
+actionBigPictureCommentsLoad.addEventListener('click', () => {
+  shownComments = addComments(sourcePost, shownComments);
+});
 
 // Событие закрытия формы по клику мыши
 actionBigPictureCancel.addEventListener('click', () => {
