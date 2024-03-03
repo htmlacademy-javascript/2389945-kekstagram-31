@@ -58,7 +58,6 @@ const addComments = (post, commentsCount) => {
 const openPicture = (post) => {
   sourcePost = post;
   shownComments = SHOWN_COMMENTS_COUNT;
-  //console.log(shownComments);
   bigPictureImg.src = post.url;
   bigPictureCaption.textContent = post.description;
   bigPictureLikesCount.textContent = post.likes;
@@ -74,7 +73,13 @@ const openPicture = (post) => {
 
 // Событие клика на кнопке "Загрузить еще"
 actionBigPictureCommentsLoad.addEventListener('click', () => {
-  shownComments = addComments(sourcePost, shownComments);
+  if (
+    shownComments <
+    sourcePost.comments.length +
+      (sourcePost.comments.length % SHOWN_COMMENTS_COUNT)
+  ) {
+    shownComments = addComments(sourcePost, shownComments);
+  }
 });
 
 // Событие закрытия формы по клику мыши
