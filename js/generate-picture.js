@@ -44,7 +44,6 @@ const addComments = (post, commentsCount) => {
     newComment.querySelector('img').src = item.avatar;
     newComment.querySelector('img').alt = item.name;
     newComment.querySelector('.social__text').textContent = item.message;
-    console.log(fromCommentsCount, commentsCount);
     if (index >= fromCommentsCount && index < commentsCount) {
       bigPictureComments.appendChild(newComment);
     }
