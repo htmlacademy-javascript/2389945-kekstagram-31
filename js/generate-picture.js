@@ -1,5 +1,5 @@
-import { isEnterKey, isEscapeKey } from './utils';
 import { SHOWN_COMMENTS_COUNT } from './config';
+import { isEnterKey, isEscapeKey } from './utils';
 
 // Определение элементов DOM для дальнейшей работы
 const body = document.querySelector('body');
@@ -73,11 +73,7 @@ const openPicture = (post) => {
 
 // Событие клика на кнопке "Загрузить еще"
 actionBigPictureCommentsLoad.addEventListener('click', () => {
-  if (
-    shownComments <
-    sourcePost.comments.length +
-      (sourcePost.comments.length % SHOWN_COMMENTS_COUNT)
-  ) {
+  if (shownComments < sourcePost.comments.length + SHOWN_COMMENTS_COUNT) {
     shownComments = addComments(sourcePost, shownComments);
   }
 });
