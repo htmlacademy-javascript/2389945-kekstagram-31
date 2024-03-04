@@ -38,8 +38,8 @@ const onDocumentKeydown = (evt) => {
 };
 
 // Добавление блока с комментариями
-const addComments = (post, commentsCount) => {
-  post.comments.forEach((item, index) => {
+const addComments = (comments, commentsCount) => {
+  comments.forEach((item, index) => {
     const newComment = bigPictureComment.cloneNode(true);
     const fromCommentsCount = commentsCount - SHOWN_COMMENTS_COUNT;
     newComment.querySelector('img').src = item.avatar;
@@ -50,7 +50,7 @@ const addComments = (post, commentsCount) => {
     }
   });
   bigPictureShownCommentsCount.textContent =
-    commentsCount < post.comments.length ? commentsCount : post.comments.length;
+    commentsCount < comments.length ? commentsCount : comments.length;
   return commentsCount + SHOWN_COMMENTS_COUNT;
 };
 
@@ -67,14 +67,14 @@ const openPicture = (post) => {
   while (bigPictureComments.firstChild) {
     bigPictureComments.removeChild(bigPictureComments.firstChild);
   }
-  shownComments = addComments(post, shownComments);
+  shownComments = addComments(post.comments, shownComments);
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
 // Событие клика на кнопке "Загрузить еще"
 actionBigPictureCommentsLoad.addEventListener('click', () => {
   if (shownComments < sourcePost.comments.length + SHOWN_COMMENTS_COUNT) {
-    shownComments = addComments(sourcePost, shownComments);
+    shownComments = addComments(sourcePost.comments, shownComments);
   }
 });
 
