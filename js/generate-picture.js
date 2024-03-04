@@ -39,18 +39,18 @@ const onDocumentKeydown = (evt) => {
 
 // Добавление блока с комментариями
 const addComments = (comments, commentsCount) => {
-  comments.forEach((item, index) => {
-    const newComment = bigPictureComment.cloneNode(true);
-    const fromCommentsCount = commentsCount - SHOWN_COMMENTS_COUNT;
-    newComment.querySelector('img').src = item.avatar;
-    newComment.querySelector('img').alt = item.name;
-    newComment.querySelector('.social__text').textContent = item.message;
-    if (index >= fromCommentsCount && index < commentsCount) {
-      bigPictureComments.appendChild(newComment);
-    }
-  });
-  bigPictureShownCommentsCount.textContent =
+  const fromCommentsCount = commentsCount - SHOWN_COMMENTS_COUNT;
+  const toCommentsCount =
     commentsCount < comments.length ? commentsCount : comments.length;
+  for (let i = fromCommentsCount; i < toCommentsCount; i++) {
+    const newComment = bigPictureComment.cloneNode(true);
+    newComment.querySelector('img').src = comments[i].avatar;
+    newComment.querySelector('img').alt = comments[i].name;
+    newComment.querySelector('.social__text').textContent = comments[i].message;
+    bigPictureComments.appendChild(newComment);
+  }
+
+  bigPictureShownCommentsCount.textContent = toCommentsCount;
   return commentsCount + SHOWN_COMMENTS_COUNT;
 };
 
