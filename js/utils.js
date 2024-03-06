@@ -7,15 +7,12 @@ const getRandomInteger = (a, b) => {
 };
 
 // Вычисление случайного уникального числа в диапазоне
-//const createRandomIdFromRangeGenerator = (min, max) => {
-function createRandomIdFromRangeGenerator(min, max) {
+const createRandomIdFromRangeGenerator = (min, max) => {
   const previousValues = [];
 
   return () => {
     let currentValue = getRandomInteger(min, max);
     if (previousValues.length >= max - min + 1) {
-      // eslint-disable-next-line no-console
-      //console.error(`Перебраны все числа из диапазона от ${min} до ${max}`);
       return null;
     }
     while (previousValues.includes(currentValue)) {
