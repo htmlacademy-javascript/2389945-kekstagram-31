@@ -1,5 +1,5 @@
-import { openPicture } from './create-picture.js';
-import { createPosts } from './create-posts.js';
+import { openPicture } from './generate-picture.js';
+import { createPosts } from './generate-posts.js';
 
 const pictures = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content;
