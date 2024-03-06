@@ -43,7 +43,6 @@ const addComments = (comments, commentsCount) => {
   }
 
   pictureShownCommentsCount.textContent = toCommentsCount;
-  //return commentsCount + SHOWN_COMMENTS_COUNT;
   shownComments = commentsCount + SHOWN_COMMENTS_COUNT;
 };
 
@@ -60,7 +59,6 @@ const openPicture = (post) => {
   while (pictureComments.firstChild) {
     pictureComments.removeChild(pictureComments.firstChild);
   }
-  //shownComments = addComments(post.comments, shownComments);
   addComments(post.comments, shownComments);
   document.addEventListener('keydown', onDocumentKeydown);
 };
@@ -68,7 +66,6 @@ const openPicture = (post) => {
 // Событие клика на кнопке "Загрузить еще"
 pictureCommentsLoader.addEventListener('click', () => {
   if (shownComments < sourcePost.comments.length + SHOWN_COMMENTS_COUNT) {
-    //shownComments = addComments(sourcePost.comments, shownComments);
     addComments(sourcePost.comments, shownComments);
   }
 });
