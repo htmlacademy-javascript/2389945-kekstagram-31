@@ -21,7 +21,7 @@ const createRandomIdFromRangeGenerator = (min, max) => {
     previousValues.push(currentValue);
     return currentValue;
   };
-}
+};
 
 // Получение случайного элемента массива
 const getRandomArrayElement = (elements) => {
