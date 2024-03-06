@@ -1,14 +1,13 @@
 import { openPicture } from './generate-picture.js';
-import { createPosts } from './generate-posts.js';
+import { state } from './generate-state.js';
 
 const pictures = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content;
 const fragment = document.createDocumentFragment();
-const posts = createPosts();
 
 // Создание миниатюр фотографий
 const createThumbnails = () => {
-  posts.forEach((post, index) => {
+  state.posts.forEach((post, index) => {
     const newPicture = pictureTemplate.cloneNode(true);
     newPicture.querySelector('a').id = index;
     newPicture.querySelector('.picture__img').src = post.url;
@@ -25,7 +24,8 @@ const createThumbnails = () => {
 pictures.addEventListener('click', (evt) => {
   const id = evt.target.parentElement.id;
   evt.preventDefault();
-  openPicture(posts[id]);
+  //console.log(id);
+  openPicture(id);
 });
 
 export { createThumbnails };

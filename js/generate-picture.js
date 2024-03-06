@@ -1,5 +1,16 @@
-import { SHOWN_COMMENTS_COUNT } from './config';
-import { isEnterKey, isEscapeKey } from './utils';
+import { SHOWN_COMMENTS_COUNT } from './config.js';
+import { isEnterKey, isEscapeKey } from './utils.js';
+
+import {
+  state,
+  //setCurrentOpenedComments,
+  //setPosts,
+  setCurrentOpenedPost,
+  //getCurrentOpenedPost,
+  getPostById,
+  getCommentsFromCurrentPost,
+  //clearState,
+} from './generate-state.js';
 
 // Определение элементов DOM для дальнейшей работы
 const body = document.querySelector('body');
@@ -19,7 +30,7 @@ const pictureComments = picture.querySelector('.social__comments');
 const pictureComment = picture.querySelector('.social__comment');
 
 let shownComments = 0;
-let sourcePost;
+//let sourcePost;
 
 // Действия при нажатии клавиши Escape
 const onDocumentKeydown = (evt) => {
@@ -47,8 +58,11 @@ const addComments = (comments, commentsCount) => {
 };
 
 // Открытие формы полноразмерного просмотра фото
-const openPicture = (post) => {
-  sourcePost = post;
+const openPicture = (postId) => {
+  //const post = state.posts[postId]; //getPostById(postId);
+  const post = getPostById(postId);
+  console.log(state.posts);
+  setCurrentOpenedPost(postId);
   shownComments = SHOWN_COMMENTS_COUNT;
   pictureImg.src = post.url;
   pictureCaption.textContent = post.description;
@@ -65,8 +79,11 @@ const openPicture = (post) => {
 
 // Событие клика на кнопке "Загрузить еще"
 pictureCommentsLoader.addEventListener('click', () => {
-  if (shownComments < sourcePost.comments.length + SHOWN_COMMENTS_COUNT) {
-    addComments(sourcePost.comments, shownComments);
+  if (
+    shownComments <
+    getCommentsFromCurrentPost.length + SHOWN_COMMENTS_COUNT
+  ) {
+    addComments(getCommentsFromCurrentPost, shownComments);
   }
 });
 
