@@ -2,14 +2,13 @@ import { SHOWN_COMMENTS_COUNT } from './config.js';
 import { isEnterKey, isEscapeKey } from './utils.js';
 
 import {
-  state,
-  //setCurrentOpenedComments,
-  //setPosts,
-  setCurrentOpenedPost,
-  //getCurrentOpenedPost,
-  getPostById,
+  clearState,
   getCommentsFromCurrentPost,
-  //clearState,
+  getCurrentOpenedComments,
+  getCurrentTotalComments,
+  getPostById,
+  setCurrentOpenedComments,
+  setCurrentOpenedPost,
 } from './generate-state.js';
 
 // Определение элементов DOM для дальнейшей работы
@@ -28,9 +27,6 @@ const pictureShownCommentsCount = picture.querySelector(
 const pictureCancel = picture.querySelector('#picture-cancel');
 const pictureComments = picture.querySelector('.social__comments');
 const pictureComment = picture.querySelector('.social__comment');
-
-let shownComments = 0;
-//let sourcePost;
 
 // Действия при нажатии клавиши Escape
 const onDocumentKeydown = (evt) => {
@@ -54,36 +50,34 @@ const addComments = (comments, commentsCount) => {
   }
 
   pictureShownCommentsCount.textContent = toCommentsCount;
-  shownComments = commentsCount + SHOWN_COMMENTS_COUNT;
+  setCurrentOpenedComments(getCurrentOpenedComments() + SHOWN_COMMENTS_COUNT);
 };
 
 // Открытие формы полноразмерного просмотра фото
 const openPicture = (postId) => {
-  //const post = state.posts[postId]; //getPostById(postId);
-  const post = getPostById(postId);
-  console.log(state.posts);
-  setCurrentOpenedPost(postId);
-  shownComments = SHOWN_COMMENTS_COUNT;
+  const post = getPostById(+postId);
+  setCurrentOpenedPost(+postId);
   pictureImg.src = post.url;
   pictureCaption.textContent = post.description;
   pictureLikesCount.textContent = post.likes;
-  pictureTotalCommentsCount.textContent = post.comments.length;
+  pictureTotalCommentsCount.textContent = getCurrentTotalComments();
   body.classList.add('modal-open');
   picture.classList.remove('hidden');
   while (pictureComments.firstChild) {
     pictureComments.removeChild(pictureComments.firstChild);
   }
-  addComments(post.comments, shownComments);
+  setCurrentOpenedComments(SHOWN_COMMENTS_COUNT);
+  addComments(getCommentsFromCurrentPost(), getCurrentOpenedComments());
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
 // Событие клика на кнопке "Загрузить еще"
 pictureCommentsLoader.addEventListener('click', () => {
   if (
-    shownComments <
-    getCommentsFromCurrentPost.length + SHOWN_COMMENTS_COUNT
+    getCurrentOpenedComments() <
+    getCommentsFromCurrentPost().length + SHOWN_COMMENTS_COUNT
   ) {
-    addComments(getCommentsFromCurrentPost, shownComments);
+    addComments(getCommentsFromCurrentPost(), getCurrentOpenedComments());
   }
 });
 
@@ -104,6 +98,7 @@ function closePicture() {
   body.classList.remove('modal-open');
   picture.classList.add('hidden');
   document.removeEventListener('keydown', onDocumentKeydown);
+  clearState();
 }
 
 export { openPicture };

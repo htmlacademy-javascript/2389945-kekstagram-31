@@ -1,42 +1,49 @@
-const state = {
+const postState = {
   posts: null,
   currentOpenedPost: null,
   currentOpenedComments: 0,
 };
 
 const setCurrentOpenedPost = (value) => {
-  state.currentOpenedPost = value;
+  postState.currentOpenedPost = value;
 };
 
-const getCurrentOpenedPost = () =>
-  state.currentOpenedPost;
+const getCurrentOpenedPost = () => postState.currentOpenedPost;
 
 const setPosts = (posts) => {
-  state.posts = posts;
+  postState.posts = posts;
 };
 
 const setCurrentOpenedComments = (count) => {
-  state.currentOpenedComments = count;
+  postState.currentOpenedComments = count;
 };
 
-const getPostById = (id) => state.posts.find((el) => el.id === id);
+const getCurrentOpenedComments = () => postState.currentOpenedComments;
+
+const getPostById = function (id) {
+  return postState.posts.find((el) => el.id === id);
+};
 const getCommentsFromCurrentPost = () => {
-  const currentPost = getPostById(state.currentOpenedPost);
+  const currentPost = getPostById(getCurrentOpenedPost());
   return currentPost.comments;
 };
 
+const getCurrentTotalComments = () => getCommentsFromCurrentPost().length;
+
 const clearState = () => {
-  state.currentOpenedComments = 0;
-  state.currentOpenedPost = null;
+  postState.currentOpenedComments = 0;
+  postState.currentOpenedPost = null;
 };
 
 export {
-  state,
-  setCurrentOpenedComments,
-  getCurrentOpenedPost,
-  setPosts,
-  setCurrentOpenedPost,
-  getPostById,
-  getCommentsFromCurrentPost,
   clearState,
+  getCommentsFromCurrentPost,
+  getCurrentOpenedComments,
+  getCurrentOpenedPost,
+  getCurrentTotalComments,
+  getPostById,
+  postState,
+  setCurrentOpenedComments,
+  setCurrentOpenedPost,
+  setPosts,
 };
