@@ -40,8 +40,9 @@ const addComments = (comments, commentsCount) => {
     commentsCount < comments.length ? commentsCount : comments.length;
   for (let i = fromCommentsCount; i < toCommentsCount; i++) {
     const newComment = pictureComment.cloneNode(true);
-    newComment.querySelector('img').src = comments[i].avatar;
-    newComment.querySelector('img').alt = comments[i].name;
+    const newCommentImg = newComment.querySelector('img');
+    newCommentImg.src = comments[i].avatar;
+    newCommentImg.alt = comments[i].name;
     newComment.querySelector('.social__text').textContent = comments[i].message;
     pictureComments.appendChild(newComment);
   }

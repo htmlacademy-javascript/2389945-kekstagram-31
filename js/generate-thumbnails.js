@@ -7,9 +7,10 @@ import { pictures, pictureTemplate, fragment} from './shared.js';
 const createThumbnails = () => {
   postState.posts.forEach((post) => {
     const newPicture = pictureTemplate.cloneNode(true);
-    newPicture.querySelector('.picture__img').id = post.id;
-    newPicture.querySelector('.picture__img').src = post.url;
-    newPicture.querySelector('.picture__img').alt = post.description;
+    const pictureImg = newPicture.querySelector('.picture__img');
+    pictureImg.id = post.id;
+    pictureImg.src = post.url;
+    pictureImg.alt = post.description;
     newPicture.querySelector('.picture__likes').textContent = post.likes;
     newPicture.querySelector('.picture__comments').textContent =
       post.comments.length;
