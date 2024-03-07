@@ -1,10 +1,5 @@
 import { isEscapeKey } from './utils.js';
-
-const body = document.querySelector('body');
-const uploadForm = document.querySelector('.img-upload__form');
-const uploadInput = uploadForm.querySelector('.img-upload__input');
-const uploadOverlay = uploadForm.querySelector('.img-upload__overlay');
-const uploadCancel = uploadOverlay.querySelector('#upload-cancel');
+import { body, uploadInput, uploadOverlay, uploadCancel } from './shared.js';
 
 const processUpload = () => {
   // Действия при нажатии клавиши Escape

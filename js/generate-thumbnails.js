@@ -1,9 +1,7 @@
 import { openPicture } from './generate-picture.js';
 import { postState } from './generate-state.js';
 
-const pictures = document.querySelector('.pictures');
-const pictureTemplate = document.querySelector('#picture').content;
-const fragment = document.createDocumentFragment();
+import { pictures, pictureTemplate, fragment} from './shared.js';
 
 // Создание миниатюр фотографий
 const createThumbnails = () => {

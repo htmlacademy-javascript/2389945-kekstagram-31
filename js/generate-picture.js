@@ -2,6 +2,20 @@ import { SHOWN_COMMENTS_COUNT } from './config.js';
 import { isEnterKey, isEscapeKey } from './utils.js';
 
 import {
+  body,
+  picture,
+  pictureImg,
+  pictureCaption,
+  pictureLikesCount,
+  pictureCommentsLoader,
+  pictureTotalCommentsCount,
+  pictureShownCommentsCount,
+  pictureCancel,
+  pictureComments,
+  pictureComment,
+} from './shared.js';
+
+import {
   clearState,
   getCommentsFromCurrentPost,
   getCurrentOpenedComments,
@@ -10,23 +24,6 @@ import {
   setCurrentOpenedComments,
   setCurrentOpenedPost,
 } from './generate-state.js';
-
-// Определение элементов DOM для дальнейшей работы
-const body = document.querySelector('body');
-const picture = document.querySelector('.big-picture');
-const pictureImg = picture.querySelector('img');
-const pictureCaption = picture.querySelector('.social__caption');
-const pictureLikesCount = picture.querySelector('.likes-count');
-const pictureCommentsLoader = picture.querySelector('.comments-loader');
-const pictureTotalCommentsCount = picture.querySelector(
-  '.social__comment-total-count'
-);
-const pictureShownCommentsCount = picture.querySelector(
-  '.social__comment-shown-count'
-);
-const pictureCancel = picture.querySelector('#picture-cancel');
-const pictureComments = picture.querySelector('.social__comments');
-const pictureComment = picture.querySelector('.social__comment');
 
 // Действия при нажатии клавиши Escape
 const onDocumentKeydown = (evt) => {
