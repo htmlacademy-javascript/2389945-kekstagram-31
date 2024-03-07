@@ -9,7 +9,6 @@ const fragment = document.createDocumentFragment();
 const createThumbnails = () => {
   postState.posts.forEach((post) => {
     const newPicture = pictureTemplate.cloneNode(true);
-    //newPicture.querySelector('a').id = index;
     newPicture.querySelector('.picture__img').id = post.id;
     newPicture.querySelector('.picture__img').src = post.url;
     newPicture.querySelector('.picture__img').alt = post.description;
@@ -24,7 +23,6 @@ const createThumbnails = () => {
 // Обработчик события клика на миниатюре фотографии
 pictures.addEventListener('click', (evt) => {
   const id = evt.target.id;
-  evt.preventDefault();
   openPicture(id);
 });
 
