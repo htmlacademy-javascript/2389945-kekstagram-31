@@ -75,8 +75,8 @@ const processUpload = () => {
     uploadOverlay.classList.add('hidden');
     body.classList.remove('modal-open');
     uploadInput.value = null;
-    uploadHashtags.value = '';
-    uploadDescription.value = '';
+    uploadHashtags.value = null;
+    uploadDescription.value = null;
     pristine.reset();
     document.removeEventListener('keydown', onDocumentKeydown);
   }
