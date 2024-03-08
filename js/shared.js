@@ -23,3 +23,6 @@ export const uploadForm = document.querySelector('.img-upload__form');
 export const uploadInput = uploadForm.querySelector('.img-upload__input');
 export const uploadOverlay = uploadForm.querySelector('.img-upload__overlay');
 export const uploadCancel = uploadOverlay.querySelector('#upload-cancel');
+export const uploadHashtags = uploadForm.querySelector('.text__hashtags');
+export const uploadDescription = uploadForm.querySelector('.text__description');
+
