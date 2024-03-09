@@ -1,5 +1,11 @@
-import { HASHTAG_PATTERN, DESCRIPTION_LENGTH, MAX_HASHTAGS_COUNT } from './config.js';
-import { isEscapeKey } from './utils.js';
+import {
+  MAX_HASHTAGS_COUNT,
+  DESCRIPTION_LENGTH,
+  HASHTAGS_SPLITTER,
+  MIN_HASHTAG_LENGTH,
+  MAX_HASHTAG_LENGTH,
+} from './config.js';
+
 import {
   body,
   uploadInput,
@@ -10,8 +16,10 @@ import {
   uploadDescription,
 } from './shared.js';
 
+import { isEscapeKey, arrayHasDuplicates, validatePattern } from './utils.js';
+
+// Обработка формы загрузки и редактирования фото
 const processUpload = () => {
-  // Действия при нажатии клавиши Escape
   const pristine = new Pristine(
     uploadForm,
     {
@@ -25,25 +33,47 @@ const processUpload = () => {
     false
   );
 
+  // Валидация хэштега
   const validateHashtag = (value) => {
-    const hashtags = value.trim().split(' ');
+    const hashtags = value.trim().split(HASHTAGS_SPLITTER);
     return (
-      (hashtags.every((item) => HASHTAG_PATTERN.test(item)) &&
+      (validatePattern(hashtags) &&
+        !arrayHasDuplicates(hashtags) &&
         hashtags.length <= MAX_HASHTAGS_COUNT) ||
       value === ''
     );
   };
 
+  // Сообщение об ошибке при валидации хэштега
+  const getHashtagErrorMessage =
+    () => `хэштег должен начинаться с символа # <br>
+    хэштег должен содержать хотя бы ${MIN_HASHTAG_LENGTH} символа <br>
+    хэштег может содержать максимум ${MAX_HASHTAG_LENGTH} символов <br>
+    количество хэштегов не более ${MAX_HASHTAGS_COUNT}`;
+
+  // Валидация комментария
   const validateDescription = (value) =>
     value.length <= DESCRIPTION_LENGTH || value === '';
 
-  pristine.addValidator(uploadHashtags, validateHashtag, 'Хэштег не валидный');
+  // Сообщение об ошибке при валидации комментария
+  const getDescriptionErrorMessage = () =>
+    `Комментарий должен содержать не более ${DESCRIPTION_LENGTH} символов`;
+
+  // Валидатор для хэштегов
+  pristine.addValidator(
+    uploadHashtags,
+    validateHashtag,
+    getHashtagErrorMessage
+  );
+
+  // Валидатор для комментариев
   pristine.addValidator(
     uploadDescription,
     validateDescription,
-    'Комментарий должен содержать не более 140 символов'
+    getDescriptionErrorMessage
   );
 
+  // Действия при нажатии клавиши Escape
   const onDocumentKeydown = (evt) => {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
@@ -53,6 +83,7 @@ const processUpload = () => {
     }
   };
 
+  // Открытие формы загрузки и редактирования фото
   const openUpload = () => {
     uploadForm.addEventListener('submit', (evt) => {
       if (!pristine.validate()) {
@@ -65,15 +96,18 @@ const processUpload = () => {
     document.addEventListener('keydown', onDocumentKeydown);
   };
 
+  // Обработка события изменения поля с файлом для загрузки
   uploadInput.addEventListener('change', (evt) => {
     evt.preventDefault();
     openUpload();
   });
 
+  // Обработка события закрытия формы загрузки и редактирования фото
   uploadCancel.addEventListener('click', () => {
     closeUpload();
   });
 
+  // Закрытие формы загрузки и редактирования фото
   function closeUpload() {
     uploadOverlay.classList.add('hidden');
     body.classList.remove('modal-open');
