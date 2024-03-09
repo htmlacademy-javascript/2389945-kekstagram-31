@@ -1,38 +1,34 @@
-import { SHOWN_COMMENTS_COUNT } from './config';
-import { isEnterKey, isEscapeKey } from './utils';
+import { SHOWN_COMMENTS_COUNT } from './config.js';
+import { isEnterKey, isEscapeKey } from './utils.js';
 
-// Определение элементов DOM для дальнейшей работы
-const body = document.querySelector('body');
-const bigPicture = document.querySelector('.big-picture');
-const bigPictureImg = bigPicture.querySelector('img');
-const bigPictureCaption = bigPicture.querySelector('.social__caption');
-const bigPictureLikesCount = bigPicture.querySelector('.likes-count');
-const actionBigPictureCommentsLoad =
-  bigPicture.querySelector('.comments-loader');
-const bigPictureTotalCommentsCount = bigPicture.querySelector(
-  '.social__comment-total-count'
-);
-const bigPictureShownCommentsCount = bigPicture.querySelector(
-  '.social__comment-shown-count'
-);
-const actionBigPictureCancel = bigPicture.querySelector('#picture-cancel');
-const bigPictureComments = bigPicture.querySelector('.social__comments');
-const bigPictureComment = bigPicture.querySelector('.social__comment');
+import {
+  body,
+  picture,
+  pictureImg,
+  pictureCaption,
+  pictureLikesCount,
+  pictureCommentsLoader,
+  pictureTotalCommentsCount,
+  pictureShownCommentsCount,
+  pictureCancel,
+  pictureComments,
+  pictureComment,
+} from './shared.js';
 
-let shownComments = 0;
-let sourcePost;
-
-// Закрытие формы полноразмерного просмотра фото
-const closePicture = () => {
-  body.classList.remove('modal-open');
-  bigPicture.classList.add('hidden');
-};
+import {
+  clearPostState,
+  getCommentsFromCurrentPost,
+  getCurrentOpenedComments,
+  getCurrentTotalComments,
+  getPostById,
+  setCurrentOpenedComments,
+  setCurrentOpenedPost,
+} from './generate-state.js';
 
 // Действия при нажатии клавиши Escape
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    document.removeEventListener('keydown', onDocumentKeydown);
     closePicture();
   }
 };
@@ -43,53 +39,64 @@ const addComments = (comments, commentsCount) => {
   const toCommentsCount =
     commentsCount < comments.length ? commentsCount : comments.length;
   for (let i = fromCommentsCount; i < toCommentsCount; i++) {
-    const newComment = bigPictureComment.cloneNode(true);
-    newComment.querySelector('img').src = comments[i].avatar;
-    newComment.querySelector('img').alt = comments[i].name;
+    const newComment = pictureComment.cloneNode(true);
+    const newCommentImg = newComment.querySelector('img');
+    newCommentImg.src = comments[i].avatar;
+    newCommentImg.alt = comments[i].name;
     newComment.querySelector('.social__text').textContent = comments[i].message;
-    bigPictureComments.appendChild(newComment);
+    pictureComments.appendChild(newComment);
   }
 
-  bigPictureShownCommentsCount.textContent = toCommentsCount;
-  return commentsCount + SHOWN_COMMENTS_COUNT;
+  pictureShownCommentsCount.textContent = toCommentsCount;
+  setCurrentOpenedComments(getCurrentOpenedComments() + SHOWN_COMMENTS_COUNT);
 };
 
 // Открытие формы полноразмерного просмотра фото
-const openPicture = (post) => {
-  sourcePost = post;
-  shownComments = SHOWN_COMMENTS_COUNT;
-  bigPictureImg.src = post.url;
-  bigPictureCaption.textContent = post.description;
-  bigPictureLikesCount.textContent = post.likes;
-  bigPictureTotalCommentsCount.textContent = post.comments.length;
+const openPicture = (postId) => {
+  const post = getPostById(+postId);
+  setCurrentOpenedPost(+postId);
+  pictureImg.src = post.url;
+  pictureCaption.textContent = post.description;
+  pictureLikesCount.textContent = post.likes;
+  pictureTotalCommentsCount.textContent = getCurrentTotalComments();
   body.classList.add('modal-open');
-  bigPicture.classList.remove('hidden');
-  while (bigPictureComments.firstChild) {
-    bigPictureComments.removeChild(bigPictureComments.firstChild);
+  picture.classList.remove('hidden');
+  while (pictureComments.firstChild) {
+    pictureComments.removeChild(pictureComments.firstChild);
   }
-  shownComments = addComments(post.comments, shownComments);
+  setCurrentOpenedComments(SHOWN_COMMENTS_COUNT);
+  addComments(getCommentsFromCurrentPost(), getCurrentOpenedComments());
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
 // Событие клика на кнопке "Загрузить еще"
-actionBigPictureCommentsLoad.addEventListener('click', () => {
-  if (shownComments < sourcePost.comments.length + SHOWN_COMMENTS_COUNT) {
-    shownComments = addComments(sourcePost.comments, shownComments);
+pictureCommentsLoader.addEventListener('click', () => {
+  if (
+    getCurrentOpenedComments() <
+    getCommentsFromCurrentPost().length + SHOWN_COMMENTS_COUNT
+  ) {
+    addComments(getCommentsFromCurrentPost(), getCurrentOpenedComments());
   }
 });
 
 // Событие закрытия формы по клику мыши
-actionBigPictureCancel.addEventListener('click', () => {
-  document.removeEventListener('keydown', onDocumentKeydown);
+pictureCancel.addEventListener('click', () => {
   closePicture();
 });
 
 // Событие закрытия формы по нажатию Enter на кнопке закрытия
-actionBigPictureCancel.addEventListener('keydown', (evt) => {
+pictureCancel.addEventListener('keydown', (evt) => {
   if (isEnterKey(evt)) {
-    document.removeEventListener('keydown', onDocumentKeydown);
     closePicture();
   }
 });
+
+// Закрытие формы полноразмерного просмотра фото
+function closePicture() {
+  body.classList.remove('modal-open');
+  picture.classList.add('hidden');
+  document.removeEventListener('keydown', onDocumentKeydown);
+  clearPostState();
+}
 
 export { openPicture };

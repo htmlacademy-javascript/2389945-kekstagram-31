@@ -1,18 +1,16 @@
 import { openPicture } from './generate-picture.js';
-import { createPosts } from './generate-posts.js';
+import { postState } from './generate-state.js';
 
-const pictures = document.querySelector('.pictures');
-const pictureTemplate = document.querySelector('#picture').content;
-const fragment = document.createDocumentFragment();
-const posts = createPosts();
+import { pictures, pictureTemplate, fragment} from './shared.js';
 
 // Создание миниатюр фотографий
 const createThumbnails = () => {
-  posts.forEach((post, index) => {
+  postState.posts.forEach((post) => {
     const newPicture = pictureTemplate.cloneNode(true);
-    newPicture.querySelector('a').id = index;
-    newPicture.querySelector('.picture__img').src = post.url;
-    newPicture.querySelector('.picture__img').alt = post.description;
+    const pictureImg = newPicture.querySelector('.picture__img');
+    pictureImg.id = post.id;
+    pictureImg.src = post.url;
+    pictureImg.alt = post.description;
     newPicture.querySelector('.picture__likes').textContent = post.likes;
     newPicture.querySelector('.picture__comments').textContent =
       post.comments.length;
@@ -23,9 +21,8 @@ const createThumbnails = () => {
 
 // Обработчик события клика на миниатюре фотографии
 pictures.addEventListener('click', (evt) => {
-  const id = evt.target.parentElement.id;
-  evt.preventDefault();
-  openPicture(posts[id]);
+  const id = evt.target.id;
+  openPicture(id);
 });
 
 export { createThumbnails };
