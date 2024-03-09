@@ -27,7 +27,6 @@ const processUpload = () => {
 
   const validateHashtag = (value) => {
     const hashtags = value.trim().split(' ');
-    console.log(hashtags);
     return (
       (hashtags.every((item) => HASHTAG_PATTERN.test(item)) &&
         hashtags.length <= MAX_HASHTAGS_COUNT) ||
