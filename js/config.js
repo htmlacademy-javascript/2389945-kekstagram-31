@@ -7,4 +7,4 @@ export const SHOWN_COMMENTS_COUNT = 5; // Количество коммента�
 export const AVATARS_COUNT = 6; // Количество аватарок
 export const HASHTAG_PATTERN = /^#[a-zа-яё0-9]{1,19}$/i; // Шаблон для хэштега
 export const DESCRIPTION_LENGTH = 140; // Максимальная длина комментария
-
+export const MAX_HASHTAGS_COUNT = 5; // Максимальное количество хэштегов

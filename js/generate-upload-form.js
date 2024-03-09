@@ -1,4 +1,4 @@
-import { HASHTAG_PATTERN, DESCRIPTION_LENGTH } from './config.js';
+import { HASHTAG_PATTERN, DESCRIPTION_LENGTH, MAX_HASHTAGS_COUNT } from './config.js';
 import { isEscapeKey } from './utils.js';
 import {
   body,
@@ -25,8 +25,15 @@ const processUpload = () => {
     false
   );
 
-  const validateHashtag = (value) =>
-    HASHTAG_PATTERN.test(value) || value === '';
+  const validateHashtag = (value) => {
+    const hashtags = value.trim().split(' ');
+    console.log(hashtags);
+    return (
+      (hashtags.every((item) => HASHTAG_PATTERN.test(item)) &&
+        hashtags.length <= MAX_HASHTAGS_COUNT) ||
+      value === ''
+    );
+  };
 
   const validateDescription = (value) =>
     value.length <= DESCRIPTION_LENGTH || value === '';
@@ -35,16 +42,13 @@ const processUpload = () => {
   pristine.addValidator(
     uploadDescription,
     validateDescription,
-    'Коммент не валидный'
+    'Комментарий должен содержать не более 140 символов'
   );
 
   const onDocumentKeydown = (evt) => {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
-      if (
-        evt.target !== uploadHashtags &&
-        evt.target !== uploadDescription
-      ) {
+      if (evt.target !== uploadHashtags && evt.target !== uploadDescription) {
         closeUpload();
       }
     }
