@@ -1,5 +1,11 @@
-import { HASHTAG_PATTERN, DESCRIPTION_LENGTH, MAX_HASHTAGS_COUNT } from './config.js';
-import { isEscapeKey } from './utils.js';
+import {
+  MAX_HASHTAGS_COUNT,
+  DESCRIPTION_LENGTH,
+  HASHTAGS_SPLITTER,
+  MIN_HASHTAG_LENGTH,
+  MAX_HASHTAG_LENGTH,
+} from './config.js';
+
 import {
   body,
   uploadInput,
@@ -10,8 +16,9 @@ import {
   uploadDescription,
 } from './shared.js';
 
+import { isEscapeKey, arrayHasDuplicates, validatePattern } from './utils.js';
+
 const processUpload = () => {
-  // Действия при нажатии клавиши Escape
   const pristine = new Pristine(
     uploadForm,
     {
@@ -26,24 +33,39 @@ const processUpload = () => {
   );
 
   const validateHashtag = (value) => {
-    const hashtags = value.trim().split(' ');
+    const hashtags = value.trim().split(HASHTAGS_SPLITTER);
     return (
-      (hashtags.every((item) => HASHTAG_PATTERN.test(item)) &&
+      (validatePattern(hashtags) &&
+        !arrayHasDuplicates(hashtags) &&
         hashtags.length <= MAX_HASHTAGS_COUNT) ||
       value === ''
     );
   };
 
+  const getHashtagErrorMessage =
+    () => `хэштег должен начинаться с символа # <br>
+    хэштег должен содержать хотя бы ${MIN_HASHTAG_LENGTH} символа <br>
+    хэштег может содержать максимум ${MAX_HASHTAG_LENGTH} символов <br>
+    количество хэштегов не более ${MAX_HASHTAGS_COUNT}`;
+
   const validateDescription = (value) =>
     value.length <= DESCRIPTION_LENGTH || value === '';
 
-  pristine.addValidator(uploadHashtags, validateHashtag, 'Хэштег не валидный');
+  const getDescriptionErrorMessage = () =>
+    `Комментарий должен содержать не более ${DESCRIPTION_LENGTH} символов`;
+
+  pristine.addValidator(
+    uploadHashtags,
+    validateHashtag,
+    getHashtagErrorMessage
+  );
   pristine.addValidator(
     uploadDescription,
     validateDescription,
-    'Комментарий должен содержать не более 140 символов'
+    getDescriptionErrorMessage
   );
 
+  // Действия при нажатии клавиши Escape
   const onDocumentKeydown = (evt) => {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
@@ -55,6 +77,7 @@ const processUpload = () => {
 
   const openUpload = () => {
     uploadForm.addEventListener('submit', (evt) => {
+      //console.log(pristine.getErrors(uploadForm));
       if (!pristine.validate()) {
         evt.preventDefault();
       }

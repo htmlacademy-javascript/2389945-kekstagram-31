@@ -1,3 +1,5 @@
+import { HASHTAG_PATTERN } from './config.js';
+
 // Вычисление случайного числа в диапазоне
 const getRandomInteger = (a, b) => {
   const lower = Math.ceil(Math.min(a, b));
@@ -34,6 +36,9 @@ const getRandomArrayElement = (elements) => {
 
 const isEnterKey = (evt) => evt.key === 'Enter';
 const isEscapeKey = (evt) => evt.key === 'Escape';
+const arrayHasDuplicates = (array) => new Set(array).size !== array.length;
+const validatePattern = (array) =>
+  array.every((item) => HASHTAG_PATTERN.test(item));
 
 export {
   createRandomIdFromRangeGenerator,
@@ -41,4 +46,6 @@ export {
   getRandomInteger,
   isEnterKey,
   isEscapeKey,
+  arrayHasDuplicates,
+  validatePattern,
 };
