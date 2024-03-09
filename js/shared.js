@@ -25,4 +25,6 @@ export const uploadOverlay = uploadForm.querySelector('.img-upload__overlay');
 export const uploadCancel = uploadOverlay.querySelector('#upload-cancel');
 export const uploadHashtags = uploadForm.querySelector('.text__hashtags');
 export const uploadDescription = uploadForm.querySelector('.text__description');
+export const scaleSmaller = uploadOverlay.querySelector('.scale__control--smaller');
+export const scaleBigger = uploadOverlay.querySelector('.scale__control--bigger');
 
