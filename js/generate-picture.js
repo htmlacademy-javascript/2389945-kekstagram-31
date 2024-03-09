@@ -16,7 +16,7 @@ import {
 } from './shared.js';
 
 import {
-  clearState,
+  clearPostState,
   getCommentsFromCurrentPost,
   getCurrentOpenedComments,
   getCurrentTotalComments,
@@ -96,7 +96,7 @@ function closePicture() {
   body.classList.remove('modal-open');
   picture.classList.add('hidden');
   document.removeEventListener('keydown', onDocumentKeydown);
-  clearState();
+  clearPostState();
 }
 
 export { openPicture };

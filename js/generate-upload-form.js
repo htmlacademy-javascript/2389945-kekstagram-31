@@ -18,6 +18,7 @@ import {
 
 import { isEscapeKey, arrayHasDuplicates, validatePattern } from './utils.js';
 
+// Обработка формы загрузки и редактирования фото
 const processUpload = () => {
   const pristine = new Pristine(
     uploadForm,
@@ -32,6 +33,7 @@ const processUpload = () => {
     false
   );
 
+  // Валидация хэштега
   const validateHashtag = (value) => {
     const hashtags = value.trim().split(HASHTAGS_SPLITTER);
     return (
@@ -42,23 +44,29 @@ const processUpload = () => {
     );
   };
 
+  // Сообщение об ошибке при валидации хэштега
   const getHashtagErrorMessage =
     () => `хэштег должен начинаться с символа # <br>
     хэштег должен содержать хотя бы ${MIN_HASHTAG_LENGTH} символа <br>
     хэштег может содержать максимум ${MAX_HASHTAG_LENGTH} символов <br>
     количество хэштегов не более ${MAX_HASHTAGS_COUNT}`;
 
+  // Валидация комментария
   const validateDescription = (value) =>
     value.length <= DESCRIPTION_LENGTH || value === '';
 
+  // Сообщение об ошибке при валидации комментария
   const getDescriptionErrorMessage = () =>
     `Комментарий должен содержать не более ${DESCRIPTION_LENGTH} символов`;
 
+  // Валидатор для хэштегов
   pristine.addValidator(
     uploadHashtags,
     validateHashtag,
     getHashtagErrorMessage
   );
+
+  // Валидатор для комментариев
   pristine.addValidator(
     uploadDescription,
     validateDescription,
@@ -75,9 +83,9 @@ const processUpload = () => {
     }
   };
 
+  // Открытие формы загрузки и редактирования фото
   const openUpload = () => {
     uploadForm.addEventListener('submit', (evt) => {
-      //console.log(pristine.getErrors(uploadForm));
       if (!pristine.validate()) {
         evt.preventDefault();
       }
@@ -88,15 +96,18 @@ const processUpload = () => {
     document.addEventListener('keydown', onDocumentKeydown);
   };
 
+  // Обработка события изменения поля с файлом для загрузки
   uploadInput.addEventListener('change', (evt) => {
     evt.preventDefault();
     openUpload();
   });
 
+  // Обработка события закрытия формы загрузки и редактирования фото
   uploadCancel.addEventListener('click', () => {
     closeUpload();
   });
 
+  // Закрытие формы загрузки и редактирования фото
   function closeUpload() {
     uploadOverlay.classList.add('hidden');
     body.classList.remove('modal-open');
