@@ -31,6 +31,7 @@ const createComment = () => ({
 
 // Получение уникального Id поста
 const uniquePostId = createRandomIdFromRangeGenerator(1, POSTS_COUNT);
+
 // Получение уникального Id фотографии
 const uniquePhotoImageId = createRandomIdFromRangeGenerator(1, POSTS_COUNT);
 
@@ -47,6 +48,6 @@ const createPost = () => ({
 });
 
 // Добавление объекта поста в массив
-const createPosts = () => Array.from({ length: POSTS_COUNT }, createPost);
+const processPosts = () => Array.from({ length: POSTS_COUNT }, createPost);
 
-export { createPosts };
+export { processPosts };

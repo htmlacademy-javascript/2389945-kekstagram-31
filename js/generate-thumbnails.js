@@ -4,7 +4,7 @@ import { postState } from './generate-state.js';
 import { pictures, pictureTemplate, fragment} from './shared.js';
 
 // Создание миниатюр фотографий
-const createThumbnails = () => {
+const processThumbnails = () => {
   postState.posts.forEach((post) => {
     const newPicture = pictureTemplate.cloneNode(true);
     const pictureImg = newPicture.querySelector('.picture__img');
@@ -27,4 +27,4 @@ pictures.addEventListener('click', (evt) => {
   }
 });
 
-export { createThumbnails };
+export { processThumbnails };
