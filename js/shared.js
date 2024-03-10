@@ -22,9 +22,12 @@ export const pictureShownCommentsCount = picture.querySelector(
 export const uploadForm = document.querySelector('.img-upload__form');
 export const uploadInput = uploadForm.querySelector('.img-upload__input');
 export const uploadOverlay = uploadForm.querySelector('.img-upload__overlay');
+export const uploadPreview = uploadOverlay.querySelector('.img-upload__preview');
 export const uploadCancel = uploadOverlay.querySelector('#upload-cancel');
 export const uploadHashtags = uploadForm.querySelector('.text__hashtags');
 export const uploadDescription = uploadForm.querySelector('.text__description');
 export const scaleSmaller = uploadOverlay.querySelector('.scale__control--smaller');
 export const scaleBigger = uploadOverlay.querySelector('.scale__control--bigger');
+export const scaleValue = uploadOverlay.querySelector('.scale__control--value');
+
 
