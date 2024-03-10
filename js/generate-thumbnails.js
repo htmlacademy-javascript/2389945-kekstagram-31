@@ -22,7 +22,9 @@ const createThumbnails = () => {
 // Обработчик события клика на миниатюре фотографии
 pictures.addEventListener('click', (evt) => {
   const id = evt.target.id;
-  openPicture(id);
+  if (postState.posts.some((post) => post.id === +id)) {
+    openPicture(id);
+  }
 });
 
 export { createThumbnails };
