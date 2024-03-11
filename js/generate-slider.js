@@ -39,7 +39,4 @@ const processSlider = () => {
   });
 };
 
-
-
-
 export { processSlider };
