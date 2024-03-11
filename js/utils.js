@@ -47,6 +47,9 @@ const arrayHasDuplicates = (array) => new Set(array).size !== array.length;
 const validatePattern = (array) =>
   array.every((item) => HASHTAG_PATTERN.test(item));
 
+// Отформатировать знвчение масштаба
+const formatScale = (value) => +value.replace('%', '');
+
 export {
   createRandomIdFromRangeGenerator,
   getRandomArrayElement,
@@ -55,4 +58,5 @@ export {
   isEscapeKey,
   arrayHasDuplicates,
   validatePattern,
+  formatScale
 };

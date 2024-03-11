@@ -4,8 +4,8 @@ import {
   MAX_HASHTAGS_COUNT,
   MAX_HASHTAG_LENGTH,
   MIN_HASHTAG_LENGTH,
+  DEFAULT_SCALE,
 } from './config.js';
-
 import {
   body,
   uploadCancel,
@@ -14,9 +14,10 @@ import {
   uploadHashtags,
   uploadInput,
   uploadOverlay,
+  scaleControl,
 } from './shared.js';
-
 import { arrayHasDuplicates, isEscapeKey, validatePattern } from './utils.js';
+import { scalePicture } from './generate-scale-form.js';
 
 // Обработка формы загрузки и редактирования фото
 const processUpload = () => {
@@ -85,6 +86,7 @@ const processUpload = () => {
 
   // Открытие формы загрузки и редактирования фото
   const openUpload = () => {
+    scalePicture(null);
     uploadForm.addEventListener('submit', (evt) => {
       if (!pristine.validate()) {
         evt.preventDefault();
@@ -114,6 +116,7 @@ const processUpload = () => {
     uploadInput.value = null;
     uploadHashtags.value = null;
     uploadDescription.value = null;
+    scaleControl.value = DEFAULT_SCALE;
     pristine.reset();
     document.removeEventListener('keydown', onDocumentKeydown);
   }

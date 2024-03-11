@@ -28,6 +28,6 @@ export const uploadHashtags = uploadForm.querySelector('.text__hashtags');
 export const uploadDescription = uploadForm.querySelector('.text__description');
 export const scaleSmaller = uploadOverlay.querySelector('.scale__control--smaller');
 export const scaleBigger = uploadOverlay.querySelector('.scale__control--bigger');
-export const scaleValue = uploadOverlay.querySelector('.scale__control--value');
+export const scaleControl = uploadOverlay.querySelector('.scale__control--value');
 
 

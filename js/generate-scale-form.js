@@ -1,39 +1,36 @@
 import { MAX_SCALE_VALUE, MIN_SCALE_VALUE, SCALE_STEP } from './config.js';
+import { formatScale } from './utils.js';
 import {
   scaleBigger,
   scaleSmaller,
-  scaleValue,
+  scaleControl,
   uploadPreview,
 } from './shared.js';
 
+// Масштабирование изображения
 const scalePicture = (value) => {
-  scaleValue.value = `${+scaleValue.value.replace('%', '') + value}%`;
+  scaleControl.value = `${formatScale(scaleControl.value) + value}%`;
   uploadPreview.querySelector('img').style = `transform: scale(${
-    +scaleValue.value.replace('%', '') / 100
+    formatScale(scaleControl.value) / 100
   })`;
 };
 
-const onScaleSmallerClick = () => {
-  if (
-    scaleValue.value.replace('%', '') > MIN_SCALE_VALUE &&
-    scaleValue.value.replace('%', '') <= MAX_SCALE_VALUE
-  ) {
-    scalePicture(-SCALE_STEP);
-  }
-};
+// Процедура обработки нажатия на кнопку уменьшения масштаба
+const onScaleSmallerClick = () =>
+  formatScale(scaleControl.value) > MIN_SCALE_VALUE
+    ? scalePicture(-SCALE_STEP)
+    : null;
 
-const onScaleBiggerClick = () => {
-  if (
-    scaleValue.value.replace('%', '') >= MIN_SCALE_VALUE &&
-    scaleValue.value.replace('%', '') < MAX_SCALE_VALUE
-  ) {
-    scalePicture(SCALE_STEP);
-  }
-};
+// Процедура обработки нажатия на кнопку увеличения масштаба
+const onScaleBiggerClick = () =>
+  formatScale(scaleControl.value) < MAX_SCALE_VALUE
+    ? scalePicture(SCALE_STEP)
+    : null;
 
+// Общая процедура масштабирования
 const processScale = () => {
-  scaleSmaller.addEventListener('click', (evt) => onScaleSmallerClick());
-  scaleBigger.addEventListener('click', (evt) => onScaleBiggerClick());
+  scaleSmaller.addEventListener('click', () => onScaleSmallerClick());
+  scaleBigger.addEventListener('click', () => onScaleBiggerClick());
 };
 
-export { processScale };
+export { processScale, scalePicture };

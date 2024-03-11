@@ -14,3 +14,4 @@ export const HASHTAGS_SPLITTER = ' '; // Разделитель хэштегов
 export const MIN_SCALE_VALUE = 25; // Минимальное значение масштаба (в процентах)
 export const MAX_SCALE_VALUE = 100; // Минимальное значение масштаба (в процентах)
 export const SCALE_STEP = 25; // Шаг масштабирования фото (в процентах)
+export const DEFAULT_SCALE = '100%';
