@@ -1,22 +1,22 @@
 import {
-  MAX_HASHTAGS_COUNT,
   DESCRIPTION_LENGTH,
   HASHTAGS_SPLITTER,
-  MIN_HASHTAG_LENGTH,
+  MAX_HASHTAGS_COUNT,
   MAX_HASHTAG_LENGTH,
+  MIN_HASHTAG_LENGTH,
 } from './config.js';
 
 import {
   body,
-  uploadInput,
-  uploadOverlay,
   uploadCancel,
+  uploadDescription,
   uploadForm,
   uploadHashtags,
-  uploadDescription,
+  uploadInput,
+  uploadOverlay,
 } from './shared.js';
 
-import { isEscapeKey, arrayHasDuplicates, validatePattern } from './utils.js';
+import { arrayHasDuplicates, isEscapeKey, validatePattern } from './utils.js';
 
 // Обработка формы загрузки и редактирования фото
 const processUpload = () => {
@@ -35,7 +35,7 @@ const processUpload = () => {
 
   // Валидация хэштега
   const validateHashtag = (value) => {
-    const hashtags = value.trim().split(HASHTAGS_SPLITTER);
+    const hashtags = value.trim().replace(/ +/g, ' ').split(HASHTAGS_SPLITTER);
     return (
       (validatePattern(hashtags) &&
         !arrayHasDuplicates(hashtags) &&

@@ -4,15 +4,15 @@ import { isEnterKey, isEscapeKey } from './utils.js';
 import {
   body,
   picture,
-  pictureImg,
-  pictureCaption,
-  pictureLikesCount,
-  pictureCommentsLoader,
-  pictureTotalCommentsCount,
-  pictureShownCommentsCount,
   pictureCancel,
-  pictureComments,
+  pictureCaption,
   pictureComment,
+  pictureComments,
+  pictureCommentsLoader,
+  pictureImg,
+  pictureLikesCount,
+  pictureShownCommentsCount,
+  pictureTotalCommentsCount,
 } from './shared.js';
 
 import {
