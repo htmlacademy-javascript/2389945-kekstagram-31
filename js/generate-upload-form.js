@@ -17,7 +17,7 @@ import {
   scaleControl,
 } from './shared.js';
 import { arrayHasDuplicates, isEscapeKey, validatePattern } from './utils.js';
-import { scalePicture } from './generate-scale-form.js';
+import { scalePicture } from './generate-scale.js';
 
 // Обработка формы загрузки и редактирования фото
 const processUpload = () => {
