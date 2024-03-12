@@ -55,7 +55,6 @@ const processUpload = () => {
 
   // Открытие формы загрузки и редактирования фото
   const openUpload = () => {
-    //processScale.scalePicture();
     uploadForm.addEventListener('submit', (evt) => {
       if (!pristine.validate()) {
         evt.preventDefault();
