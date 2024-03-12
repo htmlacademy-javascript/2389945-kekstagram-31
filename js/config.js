@@ -15,3 +15,54 @@ export const MIN_SCALE_VALUE = 25; // Минимальное значение м
 export const MAX_SCALE_VALUE = 100; // Минимальное значение масштаба (в процентах)
 export const SCALE_STEP = 25; // Шаг масштабирования фото (в процентах)
 export const DEFAULT_SCALE = '100%';
+
+export const effectsConfig = {
+  none: {
+    range: {
+      min: 0,
+      max: 0,
+    },
+    step: 0,
+    style: () => 'none',
+  },
+  chrome: {
+    range: {
+      min: 0,
+      max: 1,
+    },
+    step: 0.1,
+    style: (value) => `grayscale(${value})`,
+  },
+  sepia: {
+    range: {
+      min: 0,
+      max: 1,
+    },
+    step: 0.1,
+    style: (value) => `sepia(${value})`,
+  },
+  marvin: {
+    range: {
+      min: 0,
+      max: 100,
+    },
+    step: 1,
+    style: (value) => `invert(${value}%)`,
+  },
+  phobos: {
+    range: {
+      min: 0,
+      max: 3,
+    },
+    step: 0.1,
+    style: (value) => `blur(${value}px)`,
+  },
+  heat: {
+    range: {
+      min: 1,
+      max: 3,
+    },
+    step: 0.1,
+    style: (value) => `brightness(${value})`,
+  },
+};

@@ -1,23 +1,26 @@
 import {
+  DEFAULT_SCALE,
   DESCRIPTION_LENGTH,
   HASHTAGS_SPLITTER,
   MAX_HASHTAGS_COUNT,
   MAX_HASHTAG_LENGTH,
   MIN_HASHTAG_LENGTH,
-  DEFAULT_SCALE,
 } from './config.js';
+
+import { processScale } from './generate-scale.js';
+import { destroySlider, processSlider } from './generate-slider.js';
 import {
   body,
+  scaleControl,
   uploadCancel,
   uploadDescription,
   uploadForm,
   uploadHashtags,
   uploadInput,
   uploadOverlay,
-  scaleControl,
 } from './shared.js';
+
 import { arrayHasDuplicates, isEscapeKey, validatePattern } from './utils.js';
-import { scalePicture } from './generate-scale.js';
 
 // Обработка формы загрузки и редактирования фото
 const processUpload = () => {
@@ -86,7 +89,7 @@ const processUpload = () => {
 
   // Открытие формы загрузки и редактирования фото
   const openUpload = () => {
-    scalePicture(null);
+    //processScale.scalePicture();
     uploadForm.addEventListener('submit', (evt) => {
       if (!pristine.validate()) {
         evt.preventDefault();
@@ -96,6 +99,8 @@ const processUpload = () => {
     uploadOverlay.classList.remove('hidden');
     body.classList.add('modal-open');
     document.addEventListener('keydown', onDocumentKeydown);
+    processScale();
+    processSlider();
   };
 
   // Обработка события изменения поля с файлом для загрузки
@@ -105,9 +110,7 @@ const processUpload = () => {
   });
 
   // Обработка события закрытия формы загрузки и редактирования фото
-  uploadCancel.addEventListener('click', () => {
-    closeUpload();
-  });
+  uploadCancel.addEventListener('click', closeUpload);
 
   // Закрытие формы загрузки и редактирования фото
   function closeUpload() {
@@ -119,6 +122,7 @@ const processUpload = () => {
     scaleControl.value = DEFAULT_SCALE;
     pristine.reset();
     document.removeEventListener('keydown', onDocumentKeydown);
+    destroySlider();
   }
 };
 

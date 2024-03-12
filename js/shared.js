@@ -22,16 +22,29 @@ export const pictureShownCommentsCount = picture.querySelector(
 export const uploadForm = document.querySelector('.img-upload__form');
 export const uploadInput = uploadForm.querySelector('.img-upload__input');
 export const uploadOverlay = uploadForm.querySelector('.img-upload__overlay');
-export const uploadPreview = uploadOverlay.querySelector('.img-upload__preview');
+export const uploadPreview = uploadOverlay.querySelector(
+  '.img-upload__preview'
+);
 export const uploadCancel = uploadOverlay.querySelector('#upload-cancel');
 export const uploadHashtags = uploadForm.querySelector('.text__hashtags');
 export const uploadDescription = uploadForm.querySelector('.text__description');
 
-export const scaleSmaller = uploadOverlay.querySelector('.scale__control--smaller');
-export const scaleBigger = uploadOverlay.querySelector('.scale__control--bigger');
-export const scaleControl = uploadOverlay.querySelector('.scale__control--value');
+export const scaleSmaller = uploadOverlay.querySelector(
+  '.scale__control--smaller'
+);
+export const scaleBigger = uploadOverlay.querySelector(
+  '.scale__control--bigger'
+);
+export const scaleControl = uploadOverlay.querySelector(
+  '.scale__control--value'
+);
 
-export const sliderControl = uploadOverlay.querySelector('.effect-level__slider');
+export const sliderContainer = uploadOverlay.querySelector(
+  '.img-upload__effect-level'
+);
+export const sliderControl = uploadOverlay.querySelector(
+  '.effect-level__slider'
+);
 export const sliderValue = uploadOverlay.querySelector('.effect-level__value');
 
 export const effectsList = uploadOverlay.querySelector('.effects__list');
