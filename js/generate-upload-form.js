@@ -7,11 +7,17 @@ import {
   MIN_HASHTAG_LENGTH,
 } from './config.js';
 
-import { processScale } from './generate-scale.js';
+import {
+  scalePicture,
+  onScaleSmallerClick,
+  onScaleBiggerClick,
+} from './generate-scale.js';
 import { destroySlider, processSlider } from './generate-slider.js';
 import {
   body,
   scaleControl,
+  scaleSmaller,
+  scaleBigger,
   uploadCancel,
   uploadDescription,
   uploadForm,
@@ -36,6 +42,35 @@ const processUpload = () => {
     },
     false
   );
+
+  // Действия при нажатии клавиши Escape
+  const onDocumentKeydown = (evt) => {
+    if (isEscapeKey(evt)) {
+      evt.preventDefault();
+      if (evt.target !== uploadHashtags && evt.target !== uploadDescription) {
+        closeUpload();
+      }
+    }
+  };
+
+  // Открытие формы загрузки и редактирования фото
+  const openUpload = () => {
+    //processScale.scalePicture();
+    uploadForm.addEventListener('submit', (evt) => {
+      if (!pristine.validate()) {
+        evt.preventDefault();
+      }
+    });
+
+    uploadOverlay.classList.remove('hidden');
+    body.classList.add('modal-open');
+    document.addEventListener('keydown', onDocumentKeydown);
+    scaleSmaller.addEventListener('click', onScaleSmallerClick);
+    scaleBigger.addEventListener('click', onScaleBiggerClick);
+    scaleControl.value = DEFAULT_SCALE;
+    scalePicture(null);
+    processSlider();
+  };
 
   // Валидация хэштега
   const validateHashtag = (value) => {
@@ -77,32 +112,6 @@ const processUpload = () => {
     getDescriptionErrorMessage
   );
 
-  // Действия при нажатии клавиши Escape
-  const onDocumentKeydown = (evt) => {
-    if (isEscapeKey(evt)) {
-      evt.preventDefault();
-      if (evt.target !== uploadHashtags && evt.target !== uploadDescription) {
-        closeUpload();
-      }
-    }
-  };
-
-  // Открытие формы загрузки и редактирования фото
-  const openUpload = () => {
-    //processScale.scalePicture();
-    uploadForm.addEventListener('submit', (evt) => {
-      if (!pristine.validate()) {
-        evt.preventDefault();
-      }
-    });
-
-    uploadOverlay.classList.remove('hidden');
-    body.classList.add('modal-open');
-    document.addEventListener('keydown', onDocumentKeydown);
-    processScale();
-    processSlider();
-  };
-
   // Обработка события изменения поля с файлом для загрузки
   uploadInput.addEventListener('change', (evt) => {
     evt.preventDefault();
@@ -119,9 +128,10 @@ const processUpload = () => {
     uploadInput.value = null;
     uploadHashtags.value = null;
     uploadDescription.value = null;
-    scaleControl.value = DEFAULT_SCALE;
     pristine.reset();
     document.removeEventListener('keydown', onDocumentKeydown);
+    scaleSmaller.removeEventListener('click', onScaleSmallerClick);
+    scaleBigger.removeEventListener('click', onScaleBiggerClick);
     destroySlider();
   }
 };
