@@ -4,7 +4,7 @@ import {
   MIN_COMMENTS_COUNT,
   MIN_LIKES_COUNT,
   POSTS_COUNT,
-  AVATARS_COUNT
+  AVATARS_COUNT,
 } from './config.js';
 
 import {
@@ -30,15 +30,15 @@ const createComment = () => ({
 });
 
 // Получение уникального Id поста
-const uniquePostId = createRandomIdFromRangeGenerator(1, POSTS_COUNT);
+const uniquePictureId = createRandomIdFromRangeGenerator(1, POSTS_COUNT);
 
 // Получение уникального Id фотографии
-const uniquePhotoImageId = createRandomIdFromRangeGenerator(1, POSTS_COUNT);
+const uniquePictureImageId = createRandomIdFromRangeGenerator(1, POSTS_COUNT);
 
 // Создание объекта поста
-const createPost = () => ({
-  id: uniquePostId(),
-  url: `photos/${uniquePhotoImageId()}.jpg`,
+const createPicture = () => ({
+  id: uniquePictureId(),
+  url: `photos/${uniquePictureImageId()}.jpg`,
   description: getRandomArrayElement(DESCRIPTIONS),
   likes: getRandomInteger(MIN_LIKES_COUNT, MAX_LIKES_COUNT),
   comments: Array.from(
@@ -48,6 +48,6 @@ const createPost = () => ({
 });
 
 // Добавление объекта поста в массив
-const processPosts = () => Array.from({ length: POSTS_COUNT }, createPost);
+const createPictures = () => Array.from({ length: POSTS_COUNT }, createPicture);
 
-export { processPosts };
+export { createPictures };

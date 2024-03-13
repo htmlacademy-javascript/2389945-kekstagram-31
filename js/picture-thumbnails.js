@@ -1,18 +1,18 @@
 import { openPicture } from './picture-comments.js';
-import { postState } from './picture-state.js';
+import { pictureState } from './picture-state.js';
 import { fragment, pictureTemplate, pictures } from './dom-elements.js';
 
 // Создание миниатюр фотографий
 const processThumbnails = () => {
-  postState.posts.forEach((post) => {
+  pictureState.pictures.forEach((picture) => {
     const newPicture = pictureTemplate.cloneNode(true);
     const pictureImg = newPicture.querySelector('.picture__img');
-    pictureImg.id = post.id;
-    pictureImg.src = post.url;
-    pictureImg.alt = post.description;
-    newPicture.querySelector('.picture__likes').textContent = post.likes;
+    pictureImg.id = picture.id;
+    pictureImg.src = picture.url;
+    pictureImg.alt = picture.description;
+    newPicture.querySelector('.picture__likes').textContent = picture.likes;
     newPicture.querySelector('.picture__comments').textContent =
-      post.comments.length;
+      picture.comments.length;
     fragment.appendChild(newPicture);
   });
   pictures.appendChild(fragment);
@@ -21,7 +21,7 @@ const processThumbnails = () => {
 // Обработчик события клика на миниатюре фотографии
 pictures.addEventListener('click', (evt) => {
   const id = evt.target.id;
-  if (postState.posts.some((post) => post.id === +id)) {
+  if (pictureState.pictures.some((picture) => picture.id === +id)) {
     openPicture(id);
   }
 });

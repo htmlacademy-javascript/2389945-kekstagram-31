@@ -16,13 +16,13 @@ import {
 } from './dom-elements.js';
 
 import {
-  clearPostState,
-  getCommentsFromCurrentPost,
+  clearPictureState,
+  getCommentsFromCurrentPicture,
   getCurrentOpenedComments,
   getCurrentTotalComments,
-  getPostById,
+  getPictureById,
   setCurrentOpenedComments,
-  setCurrentOpenedPost,
+  setCurrentOpenedPicture,
 } from './picture-state.js';
 
 // Действия при нажатии клавиши Escape
@@ -58,12 +58,12 @@ const addComments = (comments, commentsCount) => {
 };
 
 // Открытие формы полноразмерного просмотра фото
-const openPicture = (postId) => {
-  const post = getPostById(+postId);
-  setCurrentOpenedPost(+postId);
-  pictureImg.src = post.url;
-  pictureCaption.textContent = post.description;
-  pictureLikesCount.textContent = post.likes;
+const openPicture = (pictureId) => {
+  const newPicture = getPictureById(+pictureId);
+  setCurrentOpenedPicture(+pictureId);
+  pictureImg.src = newPicture.url;
+  pictureCaption.textContent = newPicture.description;
+  pictureLikesCount.textContent = newPicture.likes;
   pictureTotalCommentsCount.textContent = getCurrentTotalComments();
   body.classList.add('modal-open');
   picture.classList.remove('hidden');
@@ -71,7 +71,7 @@ const openPicture = (postId) => {
     pictureComments.removeChild(pictureComments.firstChild);
   }
   setCurrentOpenedComments(SHOWN_COMMENTS_COUNT);
-  addComments(getCommentsFromCurrentPost(), getCurrentOpenedComments());
+  addComments(getCommentsFromCurrentPicture(), getCurrentOpenedComments());
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
@@ -79,9 +79,9 @@ const openPicture = (postId) => {
 pictureCommentsLoader.addEventListener('click', () => {
   if (
     getCurrentOpenedComments() <
-    getCommentsFromCurrentPost().length + SHOWN_COMMENTS_COUNT
+    getCommentsFromCurrentPicture().length + SHOWN_COMMENTS_COUNT
   ) {
-    addComments(getCommentsFromCurrentPost(), getCurrentOpenedComments());
+    addComments(getCommentsFromCurrentPicture(), getCurrentOpenedComments());
   } else {
     pictureCommentsLoader.classList.add('hidden');
   }
@@ -104,7 +104,7 @@ function closePicture() {
   body.classList.remove('modal-open');
   picture.classList.add('hidden');
   document.removeEventListener('keydown', onDocumentKeydown);
-  clearPostState();
+  clearPictureState();
 }
 
 export { openPicture };
