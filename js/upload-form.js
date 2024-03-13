@@ -12,7 +12,7 @@ import {
   onScaleSmallerClick,
   onScaleBiggerClick,
 } from './upload-form-scale.js';
-import { destroySlider, processSlider } from './upload-form-slider.js';
+import { destroySlider, processSlider } from './upload-form-effects.js';
 import {
   body,
   scaleControl,

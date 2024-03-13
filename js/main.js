@@ -1,4 +1,4 @@
-import { processPosts } from './picture-posts.js';
+import { processPosts } from './picture-data.js';
 import { setPosts } from './picture-state.js';
 import { processThumbnails } from './picture-thumbnails.js';
 import { processUpload } from './upload-form.js';

@@ -1,4 +1,4 @@
-import { openPicture } from './picture.js';
+import { openPicture } from './picture-comments.js';
 import { postState } from './picture-state.js';
 import { fragment, pictureTemplate, pictures } from './dom-elements.js';
 
