@@ -66,8 +66,6 @@ const processUpload = () => {
     document.addEventListener('keydown', onDocumentKeydown);
     scaleSmaller.addEventListener('click', onScaleSmallerClick);
     scaleBigger.addEventListener('click', onScaleBiggerClick);
-    scaleControl.value = DEFAULT_SCALE;
-    scalePicture(null);
     processSlider();
   };
 
@@ -127,10 +125,12 @@ const processUpload = () => {
     uploadInput.value = null;
     uploadHashtags.value = null;
     uploadDescription.value = null;
-    pristine.reset();
+    scaleControl.value = DEFAULT_SCALE;
+    scalePicture(null);
     document.removeEventListener('keydown', onDocumentKeydown);
     scaleSmaller.removeEventListener('click', onScaleSmallerClick);
     scaleBigger.removeEventListener('click', onScaleBiggerClick);
+    pristine.reset();
     destroySlider();
   }
 };
