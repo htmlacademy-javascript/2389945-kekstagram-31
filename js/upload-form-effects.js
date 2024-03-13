@@ -9,7 +9,7 @@ import {
 import { effectsConfig } from './config.js';
 
 // Общая процедура обработки эффектов
-const processSlider = () => {
+const uploadFormSlider = () => {
   // Инициализация слайдера
   noUiSlider.create(sliderControl, {
     range: {
@@ -65,6 +65,6 @@ const processSlider = () => {
 };
 
 // Процедура удаления слайдера
-const destroySlider = () => sliderControl.noUiSlider.destroy();
+const destroyUploadFormSlider = () => sliderControl.noUiSlider.destroy();
 
-export { destroySlider, processSlider };
+export { destroyUploadFormSlider, uploadFormSlider };

@@ -3,7 +3,7 @@ import { pictureState } from './picture-state.js';
 import { fragment, pictureTemplate, pictures } from './dom-elements.js';
 
 // Создание миниатюр фотографий
-const processThumbnails = () => {
+const pictureThumbnails = () => {
   pictureState.pictures.forEach((picture) => {
     const newPicture = pictureTemplate.cloneNode(true);
     const pictureImg = newPicture.querySelector('.picture__img');
@@ -26,4 +26,4 @@ pictures.addEventListener('click', (evt) => {
   }
 });
 
-export { processThumbnails };
+export { pictureThumbnails };

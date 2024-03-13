@@ -12,7 +12,7 @@ import {
   onScaleSmallerClick,
   onScaleBiggerClick,
 } from './upload-form-scale.js';
-import { destroySlider, processSlider } from './upload-form-effects.js';
+import { destroySlider, uploadFormSlider } from './upload-form-effects.js';
 import {
   body,
   scaleControl,
@@ -66,7 +66,7 @@ const processUpload = () => {
     document.addEventListener('keydown', onDocumentKeydown);
     scaleSmaller.addEventListener('click', onScaleSmallerClick);
     scaleBigger.addEventListener('click', onScaleBiggerClick);
-    processSlider();
+    uploadFormSlider();
   };
 
   // Валидация хэштега
