@@ -13,7 +13,7 @@ import {
   pictureLikesCount,
   pictureShownCommentsCount,
   pictureTotalCommentsCount,
-} from './shared.js';
+} from './dom-elements.js';
 
 import {
   clearPostState,
@@ -23,7 +23,7 @@ import {
   getPostById,
   setCurrentOpenedComments,
   setCurrentOpenedPost,
-} from './generate-state.js';
+} from './picture-state.js';
 
 // Действия при нажатии клавиши Escape
 const onDocumentKeydown = (evt) => {

@@ -4,7 +4,7 @@ import {
   sliderControl,
   sliderValue,
   uploadPreview,
-} from './shared.js';
+} from './dom-elements.js';
 
 import { effectsConfig } from './config.js';
 

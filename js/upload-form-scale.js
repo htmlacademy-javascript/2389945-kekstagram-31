@@ -2,7 +2,7 @@ import { MAX_SCALE_VALUE, MIN_SCALE_VALUE, SCALE_STEP } from './config.js';
 import {
   scaleControl,
   uploadPreview,
-} from './shared.js';
+} from './dom-elements.js';
 import { formatScale } from './utils.js';
 
 // Масштабирование изображения

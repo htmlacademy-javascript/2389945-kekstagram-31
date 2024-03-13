@@ -11,8 +11,8 @@ import {
   scalePicture,
   onScaleSmallerClick,
   onScaleBiggerClick,
-} from './generate-scale.js';
-import { destroySlider, processSlider } from './generate-slider.js';
+} from './upload-form-scale.js';
+import { destroySlider, processSlider } from './upload-form-slider.js';
 import {
   body,
   scaleControl,
@@ -24,7 +24,7 @@ import {
   uploadHashtags,
   uploadInput,
   uploadOverlay,
-} from './shared.js';
+} from './dom-elements.js';
 
 import { arrayHasDuplicates, isEscapeKey, validatePattern } from './utils.js';
 

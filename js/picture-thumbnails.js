@@ -1,6 +1,6 @@
-import { openPicture } from './generate-picture.js';
-import { postState } from './generate-state.js';
-import { fragment, pictureTemplate, pictures } from './shared.js';
+import { openPicture } from './picture.js';
+import { postState } from './picture-state.js';
+import { fragment, pictureTemplate, pictures } from './dom-elements.js';
 
 // Создание миниатюр фотографий
 const processThumbnails = () => {
