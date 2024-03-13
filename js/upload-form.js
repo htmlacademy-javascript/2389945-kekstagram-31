@@ -12,7 +12,7 @@ import {
   onScaleSmallerClick,
   onScaleBiggerClick,
 } from './upload-form-scale.js';
-import { destroySlider, uploadFormSlider } from './upload-form-effects.js';
+import { destroyUploadFormSlider, uploadFormSlider } from './upload-form-effects.js';
 import {
   body,
   scaleControl,
@@ -29,7 +29,7 @@ import {
 import { arrayHasDuplicates, isEscapeKey, validatePattern } from './utils.js';
 
 // Обработка формы загрузки и редактирования фото
-const processUpload = () => {
+const createUploadForm = () => {
   const pristine = new Pristine(
     uploadForm,
     {
@@ -131,8 +131,8 @@ const processUpload = () => {
     scaleSmaller.removeEventListener('click', onScaleSmallerClick);
     scaleBigger.removeEventListener('click', onScaleBiggerClick);
     pristine.reset();
-    destroySlider();
+    destroyUploadFormSlider();
   }
 };
 
-export { processUpload };
+export { createUploadForm };
