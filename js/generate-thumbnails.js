@@ -1,10 +1,9 @@
 import { openPicture } from './generate-picture.js';
 import { postState } from './generate-state.js';
-
-import { pictures, pictureTemplate, fragment} from './shared.js';
+import { fragment, pictureTemplate, pictures } from './shared.js';
 
 // Создание миниатюр фотографий
-const createThumbnails = () => {
+const processThumbnails = () => {
   postState.posts.forEach((post) => {
     const newPicture = pictureTemplate.cloneNode(true);
     const pictureImg = newPicture.querySelector('.picture__img');
@@ -22,7 +21,9 @@ const createThumbnails = () => {
 // Обработчик события клика на миниатюре фотографии
 pictures.addEventListener('click', (evt) => {
   const id = evt.target.id;
-  openPicture(id);
+  if (postState.posts.some((post) => post.id === +id)) {
+    openPicture(id);
+  }
 });
 
-export { createThumbnails };
+export { processThumbnails };

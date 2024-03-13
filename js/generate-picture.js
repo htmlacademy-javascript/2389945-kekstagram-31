@@ -4,15 +4,15 @@ import { isEnterKey, isEscapeKey } from './utils.js';
 import {
   body,
   picture,
-  pictureImg,
-  pictureCaption,
-  pictureLikesCount,
-  pictureCommentsLoader,
-  pictureTotalCommentsCount,
-  pictureShownCommentsCount,
   pictureCancel,
-  pictureComments,
+  pictureCaption,
   pictureComment,
+  pictureComments,
+  pictureCommentsLoader,
+  pictureImg,
+  pictureLikesCount,
+  pictureShownCommentsCount,
+  pictureTotalCommentsCount,
 } from './shared.js';
 
 import {
@@ -36,8 +36,14 @@ const onDocumentKeydown = (evt) => {
 // Добавление блока с комментариями
 const addComments = (comments, commentsCount) => {
   const fromCommentsCount = commentsCount - SHOWN_COMMENTS_COUNT;
-  const toCommentsCount =
-    commentsCount < comments.length ? commentsCount : comments.length;
+  let toCommentsCount;
+  if (commentsCount < comments.length) {
+    toCommentsCount = commentsCount;
+    pictureCommentsLoader.classList.remove('hidden');
+  } else {
+    toCommentsCount = comments.length;
+    pictureCommentsLoader.classList.add('hidden');
+  }
   for (let i = fromCommentsCount; i < toCommentsCount; i++) {
     const newComment = pictureComment.cloneNode(true);
     const newCommentImg = newComment.querySelector('img');
@@ -76,6 +82,8 @@ pictureCommentsLoader.addEventListener('click', () => {
     getCommentsFromCurrentPost().length + SHOWN_COMMENTS_COUNT
   ) {
     addComments(getCommentsFromCurrentPost(), getCurrentOpenedComments());
+  } else {
+    pictureCommentsLoader.classList.add('hidden');
   }
 });
 

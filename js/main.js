@@ -1,9 +1,9 @@
-import { createPosts } from './generate-posts.js';
+import { processPosts } from './generate-posts.js';
 import { setPosts } from './generate-state.js';
-import { createThumbnails } from './generate-thumbnails.js';
+import { processThumbnails } from './generate-thumbnails.js';
 import { processUpload } from './generate-upload-form.js';
 
-const posts = createPosts();
+const posts = processPosts();
 setPosts(posts);
-createThumbnails();
+processThumbnails();
 processUpload();
