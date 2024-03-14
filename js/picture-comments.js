@@ -25,14 +25,6 @@ import {
   setCurrentOpenedPicture,
 } from './picture-state.js';
 
-// Действия при нажатии клавиши Escape
-const onDocumentKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    closePicture();
-  }
-};
-
 // Добавление блока с комментариями
 const addComments = (comments, commentsCount) => {
   const fromCommentsCount = commentsCount - SHOWN_COMMENTS_COUNT;
@@ -52,9 +44,28 @@ const addComments = (comments, commentsCount) => {
     newComment.querySelector('.social__text').textContent = comments[i].message;
     pictureComments.appendChild(newComment);
   }
-
   pictureShownCommentsCount.textContent = toCommentsCount;
   setCurrentOpenedComments(getCurrentOpenedComments() + SHOWN_COMMENTS_COUNT);
+};
+
+// Действия при нажатии клавиши Escape
+const onDocumentKeydown = (evt) => {
+  if (isEscapeKey(evt) || isEnterKey(evt)) {
+    evt.preventDefault();
+    closePicture();
+  }
+};
+
+// Действия при клике на кнопке "Загрузить еще"
+const onPictureCommentsLoader = () => {
+  if (
+    getCurrentOpenedComments() <
+    getCommentsFromCurrentPicture().length + SHOWN_COMMENTS_COUNT
+  ) {
+    addComments(getCommentsFromCurrentPicture(), getCurrentOpenedComments());
+  } else {
+    pictureCommentsLoader.classList.add('hidden');
+  }
 };
 
 // Открытие формы полноразмерного просмотра фото
@@ -73,37 +84,19 @@ const openPicture = (pictureId) => {
   setCurrentOpenedComments(SHOWN_COMMENTS_COUNT);
   addComments(getCommentsFromCurrentPicture(), getCurrentOpenedComments());
   document.addEventListener('keydown', onDocumentKeydown);
+  pictureCommentsLoader.addEventListener('click', onPictureCommentsLoader);
+  pictureCancel.addEventListener('click', closePicture);
+  pictureCancel.addEventListener('keydown', onDocumentKeydown);
 };
-
-// Событие клика на кнопке "Загрузить еще"
-pictureCommentsLoader.addEventListener('click', () => {
-  if (
-    getCurrentOpenedComments() <
-    getCommentsFromCurrentPicture().length + SHOWN_COMMENTS_COUNT
-  ) {
-    addComments(getCommentsFromCurrentPicture(), getCurrentOpenedComments());
-  } else {
-    pictureCommentsLoader.classList.add('hidden');
-  }
-});
-
-// Событие закрытия формы по клику мыши
-pictureCancel.addEventListener('click', () => {
-  closePicture();
-});
-
-// Событие закрытия формы по нажатию Enter на кнопке закрытия
-pictureCancel.addEventListener('keydown', (evt) => {
-  if (isEnterKey(evt)) {
-    closePicture();
-  }
-});
 
 // Закрытие формы полноразмерного просмотра фото
 function closePicture() {
   body.classList.remove('modal-open');
   picture.classList.add('hidden');
   document.removeEventListener('keydown', onDocumentKeydown);
+  pictureCommentsLoader.removeEventListener('click', onPictureCommentsLoader);
+  pictureCancel.removeEventListener('click', closePicture);
+  pictureCancel.removeEventListener('keydown', onDocumentKeydown);
   clearPictureState();
 }
 

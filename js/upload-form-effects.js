@@ -9,7 +9,7 @@ import {
 import { effectsConfig } from './config.js';
 
 // Общая процедура обработки эффектов
-const uploadFormSlider = () => {
+const uploadFormEffects = () => {
   // Инициализация слайдера
   noUiSlider.create(sliderControl, {
     range: {
@@ -57,9 +57,7 @@ const uploadFormSlider = () => {
   effectsList.addEventListener('change', onEffectsListChange);
 
   // Обработчик события изменения значения слайдера
-  sliderControl.noUiSlider.on('update', () => {
-    onSliderChange();
-  });
+  sliderControl.noUiSlider.on('update', onSliderChange);
 
   onEffectsListChange();
 };
@@ -67,4 +65,4 @@ const uploadFormSlider = () => {
 // Процедура удаления слайдера
 const destroyUploadFormSlider = () => sliderControl.noUiSlider.destroy();
 
-export { destroyUploadFormSlider, uploadFormSlider };
+export { destroyUploadFormSlider, uploadFormEffects };

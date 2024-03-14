@@ -8,16 +8,10 @@ import {
 } from './config.js';
 
 import {
-  scalePicture,
-  onScaleSmallerClick,
-  onScaleBiggerClick,
-} from './upload-form-scale.js';
-import { destroyUploadFormSlider, uploadFormSlider } from './upload-form-effects.js';
-import {
   body,
+  scaleBigger,
   scaleControl,
   scaleSmaller,
-  scaleBigger,
   uploadCancel,
   uploadDescription,
   uploadForm,
@@ -25,6 +19,15 @@ import {
   uploadInput,
   uploadOverlay,
 } from './dom-elements.js';
+import {
+  destroyUploadFormSlider,
+  uploadFormEffects,
+} from './upload-form-effects.js';
+import {
+  onScaleBiggerClick,
+  onScaleSmallerClick,
+  scalePicture,
+} from './upload-form-scale.js';
 
 import { arrayHasDuplicates, isEscapeKey, validatePattern } from './utils.js';
 
@@ -43,6 +46,12 @@ const createUploadForm = () => {
     false
   );
 
+  const onUploadFormSubmit = (evt) => {
+    if (!pristine.validate()) {
+      evt.preventDefault();
+    }
+  };
+
   // Действия при нажатии клавиши Escape
   const onDocumentKeydown = (evt) => {
     if (isEscapeKey(evt)) {
@@ -55,18 +64,14 @@ const createUploadForm = () => {
 
   // Открытие формы загрузки и редактирования фото
   const openUpload = () => {
-    uploadForm.addEventListener('submit', (evt) => {
-      if (!pristine.validate()) {
-        evt.preventDefault();
-      }
-    });
+    uploadForm.addEventListener('submit', onUploadFormSubmit);
 
     uploadOverlay.classList.remove('hidden');
     body.classList.add('modal-open');
     document.addEventListener('keydown', onDocumentKeydown);
     scaleSmaller.addEventListener('click', onScaleSmallerClick);
     scaleBigger.addEventListener('click', onScaleBiggerClick);
-    uploadFormSlider();
+    uploadFormEffects();
   };
 
   // Валидация хэштега
@@ -130,6 +135,7 @@ const createUploadForm = () => {
     document.removeEventListener('keydown', onDocumentKeydown);
     scaleSmaller.removeEventListener('click', onScaleSmallerClick);
     scaleBigger.removeEventListener('click', onScaleBiggerClick);
+    uploadForm.removeEventListener('submit', onUploadFormSubmit);
     pristine.reset();
     destroyUploadFormSlider();
   }

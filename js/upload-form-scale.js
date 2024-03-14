@@ -1,15 +1,17 @@
-import { MAX_SCALE_VALUE, MIN_SCALE_VALUE, SCALE_STEP } from './config.js';
 import {
-  scaleControl,
-  uploadPreview,
-} from './dom-elements.js';
+  DEFAULT_SCALE,
+  MAX_SCALE_VALUE,
+  MIN_SCALE_VALUE,
+  SCALE_STEP,
+} from './config.js';
+import { scaleControl, uploadPreview } from './dom-elements.js';
 import { formatScale } from './utils.js';
 
 // Масштабирование изображения
 const scalePicture = (value) => {
   scaleControl.value = `${formatScale(scaleControl.value) + value}%`;
   uploadPreview.querySelector('img').style.transform = `scale(${
-    formatScale(scaleControl.value) / MAX_SCALE_VALUE
+    formatScale(scaleControl.value) / formatScale(DEFAULT_SCALE)
   })`;
 };
 
@@ -25,4 +27,4 @@ const onScaleBiggerClick = () =>
     ? scalePicture(SCALE_STEP)
     : null;
 
-export { scalePicture, onScaleSmallerClick, onScaleBiggerClick };
+export { onScaleBiggerClick, onScaleSmallerClick, scalePicture };
