@@ -3,8 +3,6 @@ import {
   DESCRIPTION_LENGTH,
   HASHTAGS_SPLITTER,
   MAX_HASHTAGS_COUNT,
-  MAX_HASHTAG_LENGTH,
-  MIN_HASHTAG_LENGTH,
 } from './config.js';
 
 import {
@@ -65,7 +63,6 @@ const createUploadForm = () => {
   // Открытие формы загрузки и редактирования фото
   const openUpload = () => {
     uploadForm.addEventListener('submit', onUploadFormSubmit);
-
     uploadOverlay.classList.remove('hidden');
     body.classList.add('modal-open');
     document.addEventListener('keydown', onDocumentKeydown);
@@ -74,23 +71,28 @@ const createUploadForm = () => {
     uploadFormEffects();
   };
 
-  // Валидация хэштега
-  const validateHashtag = (value) => {
-    const hashtags = value.trim().replace(/ +/g, ' ').split(HASHTAGS_SPLITTER);
-    return (
-      (validatePattern(hashtags) &&
-        !arrayHasDuplicates(hashtags) &&
-        hashtags.length <= MAX_HASHTAGS_COUNT) ||
-      value === ''
-    );
+  // Сообщение об ошибке при валидации хэштега
+  const getHashtagErrorMessage = (value) => {
+    const hashtags = value
+      .trim()
+      .toLowerCase()
+      .replace(/ +/g, ' ')
+      .split(HASHTAGS_SPLITTER);
+    if (value === '') {
+      return null;
+    } else if (!validatePattern(hashtags)) {
+      return 'Введён невалидный хэштег';
+    } else if (arrayHasDuplicates(hashtags)) {
+      return 'Хэштеги повторяются';
+    } else if (hashtags.length > MAX_HASHTAGS_COUNT) {
+      return 'Превышено количество хэштегов';
+    } else {
+      return null;
+    }
   };
 
-  // Сообщение об ошибке при валидации хэштега
-  const getHashtagErrorMessage =
-    () => `хэштег должен начинаться с символа # <br>
-    хэштег должен содержать хотя бы ${MIN_HASHTAG_LENGTH} символа <br>
-    хэштег может содержать максимум ${MAX_HASHTAG_LENGTH} символов <br>
-    количество хэштегов не более ${MAX_HASHTAGS_COUNT}`;
+  // Валидация хэштега
+  const validateHashtag = (value) => !getHashtagErrorMessage(value) === true;
 
   // Валидация комментария
   const validateDescription = (value) =>

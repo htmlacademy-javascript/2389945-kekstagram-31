@@ -1,10 +1,10 @@
 import {
+  AVATARS_COUNT,
   MAX_COMMENTS_COUNT,
   MAX_LIKES_COUNT,
   MIN_COMMENTS_COUNT,
   MIN_LIKES_COUNT,
   POSTS_COUNT,
-  AVATARS_COUNT,
 } from './config.js';
 
 import {
@@ -15,7 +15,7 @@ import {
 
 import { DESCRIPTIONS, MESSAGES, NAMES } from './data.js';
 
-// Получение уникального Id комментария
+// Получение уникального id комментария
 const getUniqueCommentId = createRandomIdFromRangeGenerator(
   1,
   POSTS_COUNT * MAX_COMMENTS_COUNT
@@ -29,13 +29,13 @@ const createComment = () => ({
   name: getRandomArrayElement(NAMES),
 });
 
-// Получение уникального Id поста
+// Получение уникального id фото
 const uniquePictureId = createRandomIdFromRangeGenerator(1, POSTS_COUNT);
 
-// Получение уникального Id фотографии
+// Получение уникального Id изображения
 const uniquePictureImageId = createRandomIdFromRangeGenerator(1, POSTS_COUNT);
 
-// Создание объекта поста
+// Создание объекта фото
 const createPicture = () => ({
   id: uniquePictureId(),
   url: `photos/${uniquePictureImageId()}.jpg`,
@@ -47,7 +47,7 @@ const createPicture = () => ({
   ),
 });
 
-// Добавление объекта поста в массив
+// Добавление объекта фото в массив
 const createPictures = () => Array.from({ length: POSTS_COUNT }, createPicture);
 
 export { createPictures };

@@ -15,13 +15,13 @@ const scalePicture = (value) => {
   })`;
 };
 
-// Процедура обработки нажатия на кнопку уменьшения масштаба
+// Обработка нажатия на кнопку уменьшения масштаба
 const onScaleSmallerClick = () =>
   formatScale(scaleControl.value) > MIN_SCALE_VALUE
     ? scalePicture(-SCALE_STEP)
     : null;
 
-// Процедура обработки нажатия на кнопку увеличения масштаба
+// Обработка нажатия на кнопку увеличения масштаба
 const onScaleBiggerClick = () =>
   formatScale(scaleControl.value) < MAX_SCALE_VALUE
     ? scalePicture(SCALE_STEP)

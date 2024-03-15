@@ -2,7 +2,7 @@ import { fragment, pictureTemplate, pictures } from './dom-elements.js';
 import { openPicture } from './picture-comments.js';
 import { pictureState } from './picture-state.js';
 
-// Действия при клике на миниатюре фотографии
+// Обработка действия при клике на миниатюре фотографии
 const onPicturesClick = (evt) => {
   const id = evt.target.id;
   if (pictureState.pictures.some((picture) => picture.id === +id)) {

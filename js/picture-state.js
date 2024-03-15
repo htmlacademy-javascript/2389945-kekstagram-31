@@ -5,17 +5,17 @@ const pictureState = {
   currentOpenedComments: 0,
 };
 
-// Инициализация пула постов
+// Инициализация пула фотографий
 const setPictures = (pictures) => {
   pictureState.pictures = pictures;
 };
 
-// Установить текущий выбранный пост
+// Установить текущее выбранное фото
 const setCurrentOpenedPicture = (picture) => {
   pictureState.currentOpenedPicture = picture;
 };
 
-// Получить текущий выбранный пост
+// Получить текущее выбранное фото
 const getCurrentOpenedPicture = () => pictureState.currentOpenedPicture;
 
 // Установить количество открытых (просмотренных) комментариев
@@ -26,33 +26,33 @@ const setCurrentOpenedComments = (count) => {
 // Получить количество открытых (просмотренных) комментариев
 const getCurrentOpenedComments = () => pictureState.currentOpenedComments;
 
-// Получить пост по id
+// Получить фото по id
 const getPictureById = function (id) {
   return pictureState.pictures.find((el) => el.id === id);
 };
 
-// Получить массив комментариев текущего открытого поста
+// Получить массив комментариев текущего открытого фото
 const getCommentsFromCurrentPicture = () =>
   getPictureById(getCurrentOpenedPicture()).comments;
 
-// Получить общее количество комментариев текущего открытого поста
+// Получить общее количество комментариев текущего открытого фото
 const getCurrentTotalComments = () => getCommentsFromCurrentPicture().length;
 
-// Сбросить состояние текущего отерытого поста
+// Сбросить состояние текущего отерытого фото
 const clearPictureState = () => {
   pictureState.currentOpenedComments = 0;
   pictureState.currentOpenedPicture = null;
 };
 
 export {
-  pictureState,
-  setPictures,
+  clearPictureState,
   getCommentsFromCurrentPicture,
   getCurrentOpenedComments,
   getCurrentOpenedPicture,
   getCurrentTotalComments,
   getPictureById,
+  pictureState,
   setCurrentOpenedComments,
   setCurrentOpenedPicture,
-  clearPictureState,
+  setPictures,
 };
