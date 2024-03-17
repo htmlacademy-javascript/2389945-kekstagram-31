@@ -47,6 +47,7 @@ const uploadFormEffects = () => {
       sliderContainer.classList.remove('hidden');
     }
     sliderControl.noUiSlider.updateOptions(effectsConfig[currentEffect]);
+    sliderControl.noUiSlider.set(effectsConfig[currentEffect].range.max);
     onSliderChange(getCurrentEffect());
   };
 
