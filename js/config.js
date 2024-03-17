@@ -15,6 +15,18 @@ export const MIN_SCALE_VALUE = 25; // Минимальное значение м
 export const MAX_SCALE_VALUE = 100; // Минимальное значение масштаба (в процентах)
 export const SCALE_STEP = 25; // Шаг масштабирования фото (в процентах)
 export const DEFAULT_SCALE = '100%';
+export const ERROR_SHOW_TIME = 5000;
+export const DATA_URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
+
+export const Router = {
+  GET_DATA: '/data',
+  SEND_DATA: '/',
+};
+
+export const Method = {
+  GET: 'GET',
+  POST: 'POST',
+};
 
 export const effectsConfig = {
   none: {

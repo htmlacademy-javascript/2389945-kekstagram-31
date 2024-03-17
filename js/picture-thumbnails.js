@@ -5,6 +5,7 @@ import { pictureState } from './picture-state.js';
 // Обработка действия при клике на миниатюре фотографии
 const onPicturesClick = (evt) => {
   const id = evt.target.id;
+  //console.log(id);
   if (pictureState.pictures.some((picture) => picture.id === +id)) {
     openPicture(id);
   }

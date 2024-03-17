@@ -46,5 +46,6 @@ export const sliderControl = uploadOverlay.querySelector(
   '.effect-level__slider'
 );
 export const sliderValue = uploadOverlay.querySelector('.effect-level__value');
-
 export const effectsList = uploadOverlay.querySelector('.effects__list');
+
+export const dataError = document.querySelector('#data-error');
