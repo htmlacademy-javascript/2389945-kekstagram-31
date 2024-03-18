@@ -5,8 +5,36 @@ import {
   sliderValue,
   uploadPreview,
 } from './dom-elements.js';
-
 import { effectsConfig } from './config.js';
+
+// Получение текущего выбранного эффекта
+const getCurrentEffect = () =>
+  effectsList.querySelector('input[type="radio"][name="effect"]:checked').value;
+
+// Обработка события изменения значения слайдера
+const onSliderChange = (currentEffect) => {
+  sliderValue.value = sliderControl.noUiSlider.get();
+  const currentFilterValue = effectsConfig[currentEffect].style(
+    sliderValue.value
+  );
+  uploadPreview.querySelector('img').style.filter = currentFilterValue;
+};
+
+// Обработка события изменения выбранного эффекта
+const onEffectsListChange = (evt) => {
+  if (evt) {
+    evt.preventDefault();
+  }
+  const currentEffect = getCurrentEffect();
+  if (currentEffect === 'none') {
+    sliderContainer.classList.add('hidden');
+  } else {
+    sliderContainer.classList.remove('hidden');
+  }
+  sliderControl.noUiSlider.updateOptions(effectsConfig[currentEffect]);
+  sliderControl.noUiSlider.set(effectsConfig[currentEffect].range.max);
+  onSliderChange(getCurrentEffect());
+};
 
 // Общая функция обработки эффектов
 const uploadFormEffects = () => {
@@ -21,36 +49,6 @@ const uploadFormEffects = () => {
     connect: 'lower',
   });
 
-  // Получение текущего выбранного эффекта
-  const getCurrentEffect = () =>
-    effectsList.querySelector('input[type="radio"][name="effect"]:checked')
-      .value;
-
-  // Обработка события изменения значения слайдера
-  const onSliderChange = (currentEffect) => {
-    sliderValue.value = sliderControl.noUiSlider.get();
-    const currentFilterValue = effectsConfig[currentEffect].style(
-      sliderValue.value
-    );
-    uploadPreview.querySelector('img').style.filter = currentFilterValue;
-  };
-
-  // Обработка события изменения выбранного эффекта
-  const onEffectsListChange = (evt) => {
-    if (evt) {
-      evt.preventDefault();
-    }
-    const currentEffect = getCurrentEffect();
-    if (currentEffect === 'none') {
-      sliderContainer.classList.add('hidden');
-    } else {
-      sliderContainer.classList.remove('hidden');
-    }
-    sliderControl.noUiSlider.updateOptions(effectsConfig[currentEffect]);
-    sliderControl.noUiSlider.set(effectsConfig[currentEffect].range.max);
-    onSliderChange(getCurrentEffect());
-  };
-
   // Обработчик события изменения выбранного эффекта
   effectsList.addEventListener('change', onEffectsListChange);
 
@@ -58,11 +56,10 @@ const uploadFormEffects = () => {
   sliderControl.noUiSlider.on('slide', () =>
     onSliderChange(getCurrentEffect())
   );
-
   onEffectsListChange();
 };
 
 // Удаление слайдера
 const destroyUploadFormSlider = () => sliderControl.noUiSlider.destroy();
 
-export { destroyUploadFormSlider, uploadFormEffects };
+export { destroyUploadFormSlider, uploadFormEffects, onEffectsListChange };

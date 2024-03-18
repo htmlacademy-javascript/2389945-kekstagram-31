@@ -21,6 +21,7 @@ import {
 import {
   destroyUploadFormSlider,
   uploadFormEffects,
+  onEffectsListChange,
 } from './upload-form-effects.js';
 import {
   onScaleBiggerClick,
@@ -82,6 +83,7 @@ const createUploadForm = () => {
     document.addEventListener('keydown', onDocumentKeydown);
     scaleSmaller.addEventListener('click', onScaleSmallerClick);
     scaleBigger.addEventListener('click', onScaleBiggerClick);
+    console.log(1);
     uploadFormEffects();
   };
 
@@ -154,6 +156,8 @@ function closeUpload() {
   scaleBigger.removeEventListener('click', onScaleBiggerClick);
   uploadForm.removeEventListener('submit', onUploadFormSubmit);
   pristine.reset();
+  console.log(555);
+  onEffectsListChange();
   destroyUploadFormSlider();
 }
 

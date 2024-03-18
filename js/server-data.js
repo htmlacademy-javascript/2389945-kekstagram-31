@@ -16,30 +16,32 @@ const showError = (errorText) => {
   }, ERROR_SHOW_TIMEOUT);
 };
 
-const showSuccess = function () {
-  document.body.appendChild(dataSuccessTemplate);
-
-  const onSuccessButtonKeyDown = function (evt) {
+const showSuccess = () => {
+  const onDataSuccessButtonKeyDown = (evt) => {
     if (evt.key === 'Escape') {
       dataSuccessFormClose(evt);
     }
   };
 
-  const onDataSuccessButtonClick = function (evt) {
+  document.body.appendChild(dataSuccessTemplate);
+  document.addEventListener('keydown', onDataSuccessButtonKeyDown);
+
+  const onDataSuccessButtonClick = (evt) => {
     dataSuccessFormClose(evt);
   };
 
   function dataSuccessFormClose() {
     dataSuccessTemplate.remove();
-    document.removeEventListener('keydown', onSuccessButtonKeyDown);
+    document.removeEventListener('keydown', onDataSuccessButtonKeyDown);
+    dataSuccessButton.removeEventListener('click', onDataSuccessButtonClick);
     closeUpload();
   }
 
   dataSuccessButton.addEventListener('click', onDataSuccessButtonClick);
 };
 
-const sendRequest = function (router, method, errorText, body = null) {
-  return fetch(`${DATA_URL}${router}`, { method, body })
+const sendRequest = (router, method, errorText, body = null) =>
+  fetch(`${DATA_URL}${router}`, { method, body })
     .then((response) => {
       if (!response.ok) {
         throw new Error();
@@ -49,23 +51,20 @@ const sendRequest = function (router, method, errorText, body = null) {
     .catch(() => {
       throw new Error(errorText);
     });
-};
 
-const getServerData = function () {
-  return sendRequest(
+const getServerData = () =>
+  sendRequest(
     Router.GET_DATA,
     Method.GET,
     'Ошибка загрузки данных. Обновите страницу позднее'
   );
-};
 
-const sendServerData = function (body) {
-  return sendRequest(
+const sendServerData = (body) =>
+  sendRequest(
     Router.SEND_DATA,
     Method.POST,
     'Ошибка отправки данных. Обновите страницу позднее',
     body
   );
-};
 
 export { getServerData, sendServerData, showError, showSuccess };
