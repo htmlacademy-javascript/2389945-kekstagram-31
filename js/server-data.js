@@ -1,17 +1,41 @@
-import { DATA_URL, ERROR_SHOW_TIME, Router, Method } from './config.js';
-import { dataError } from './dom-elements.js';
+import { DATA_URL, ERROR_SHOW_TIMEOUT, Method, Router } from './config.js';
+import {
+  dataErrorTemplate,
+  dataErrorTitle,
+  dataSuccessButton,
+  dataSuccessTemplate,
+} from './dom-elements.js';
 
-const dataErrorTemplate = dataError.cloneNode(true);
-const dataErrorTitle = dataErrorTemplate.querySelector('.data-error__title');
-dataErrorTemplate.classList.add('hidden');
-document.body.appendChild(dataErrorTemplate);
+import { closeUpload } from './upload-form.js';
 
 const showError = (errorText) => {
   dataErrorTitle.textContent = errorText;
-  dataErrorTemplate.classList.remove('hidden');
+  document.body.appendChild(dataErrorTemplate);
   setTimeout(() => {
-    dataErrorTemplate.classList.add('hidden');
-  }, ERROR_SHOW_TIME);
+    dataErrorTemplate.remove();
+  }, ERROR_SHOW_TIMEOUT);
+};
+
+const showSuccess = function () {
+  document.body.appendChild(dataSuccessTemplate);
+
+  const onSuccessButtonKeyDown = function (evt) {
+    if (evt.key === 'Escape') {
+      dataSuccessFormClose(evt);
+    }
+  };
+
+  const onDataSuccessButtonClick = function (evt) {
+    dataSuccessFormClose(evt);
+  };
+
+  function dataSuccessFormClose(evt) {
+    dataSuccessTemplate.classList.add('hidden');
+    document.removeEventListener('keydown', onSuccessButtonKeyDown);
+    closeUpload(evt);
+  }
+
+  dataSuccessButton.addEventListener('click', onDataSuccessButtonClick);
 };
 
 const sendRequest = function (router, method, errorText, body = null) {
@@ -44,4 +68,4 @@ const sendServerData = function (body) {
   );
 };
 
-export { getServerData, sendServerData, showError };
+export { getServerData, sendServerData, showError, showSuccess };

@@ -16,6 +16,7 @@ import {
   uploadHashtags,
   uploadInput,
   uploadOverlay,
+  uploadSubmitButton,
 } from './dom-elements.js';
 import {
   destroyUploadFormSlider,
@@ -27,39 +28,52 @@ import {
   scalePicture,
 } from './upload-form-scale.js';
 
+import { sendServerData, showError, showSuccess } from './server-data.js';
 import { arrayHasDuplicates, isEscapeKey, validatePattern } from './utils.js';
+
+const pristine = new Pristine(
+  uploadForm,
+  {
+    classTo: 'img-upload__field-wrapper', // Элемент, на который будут добавляться классы
+    errorTextParent: 'img-upload__field-wrapper', // Элемент, куда будет выводиться текст с ошибкой
+    errorTextTag: 'div', // Тег, который будет обрамлять текст ошибки
+    errorTextClass: 'img-upload__field-wrapper--error', // Класс для элемента с текстом ошибки
+  },
+  false
+);
+
+const onUploadFormSubmit = (evt) => {
+  evt.preventDefault();
+  if (pristine.validate()) {
+    uploadSubmitButton.disabled = true;
+    uploadSubmitButton.textContent = 'Отправка данных на сервер';
+
+    const formData = new FormData(evt.target);
+
+    sendServerData(formData)
+      .then(showSuccess)
+      .catch((err) => {
+        showError(err.message);
+      })
+      .finally(() => {
+        uploadSubmitButton.disabled = false;
+        uploadSubmitButton.textContent = 'Опубликовать';
+      });
+  }
+};
+
+// Действия при нажатии клавиши Escape
+const onDocumentKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    if (evt.target !== uploadHashtags && evt.target !== uploadDescription) {
+      closeUpload();
+    }
+  }
+};
 
 // Обработка формы загрузки и редактирования фото
 const createUploadForm = () => {
-  const pristine = new Pristine(
-    uploadForm,
-    {
-      classTo: 'img-upload__field-wrapper', // Элемент, на который будут добавляться классы
-      //errorClass: 'form__item--invalid', // Класс, обозначающий невалидное поле
-      //successClass: 'form__item--valid', // Класс, обозначающий валидное поле
-      errorTextParent: 'img-upload__field-wrapper', // Элемент, куда будет выводиться текст с ошибкой
-      errorTextTag: 'div', // Тег, который будет обрамлять текст ошибки
-      errorTextClass: 'img-upload__field-wrapper--error', // Класс для элемента с текстом ошибки
-    },
-    false
-  );
-
-  const onUploadFormSubmit = (evt) => {
-    if (!pristine.validate()) {
-      evt.preventDefault();
-    }
-  };
-
-  // Действия при нажатии клавиши Escape
-  const onDocumentKeydown = (evt) => {
-    if (isEscapeKey(evt)) {
-      evt.preventDefault();
-      if (evt.target !== uploadHashtags && evt.target !== uploadDescription) {
-        closeUpload();
-      }
-    }
-  };
-
   // Открытие формы загрузки и редактирования фото
   const openUpload = () => {
     uploadForm.addEventListener('submit', onUploadFormSubmit);
@@ -124,23 +138,23 @@ const createUploadForm = () => {
 
   // Обработка события закрытия формы загрузки и редактирования фото
   uploadCancel.addEventListener('click', closeUpload);
-
-  // Закрытие формы загрузки и редактирования фото
-  function closeUpload() {
-    uploadOverlay.classList.add('hidden');
-    body.classList.remove('modal-open');
-    uploadInput.value = null;
-    uploadHashtags.value = null;
-    uploadDescription.value = null;
-    scaleControl.value = DEFAULT_SCALE;
-    scalePicture(null);
-    document.removeEventListener('keydown', onDocumentKeydown);
-    scaleSmaller.removeEventListener('click', onScaleSmallerClick);
-    scaleBigger.removeEventListener('click', onScaleBiggerClick);
-    uploadForm.removeEventListener('submit', onUploadFormSubmit);
-    pristine.reset();
-    destroyUploadFormSlider();
-  }
 };
 
-export { createUploadForm };
+// Закрытие формы загрузки и редактирования фото
+function closeUpload() {
+  uploadOverlay.classList.add('hidden');
+  body.classList.remove('modal-open');
+  uploadInput.value = null;
+  uploadHashtags.value = null;
+  uploadDescription.value = null;
+  scaleControl.value = DEFAULT_SCALE;
+  scalePicture(null);
+  document.removeEventListener('keydown', onDocumentKeydown);
+  scaleSmaller.removeEventListener('click', onScaleSmallerClick);
+  scaleBigger.removeEventListener('click', onScaleBiggerClick);
+  uploadForm.removeEventListener('submit', onUploadFormSubmit);
+  pristine.reset();
+  destroyUploadFormSlider();
+}
+
+export { closeUpload, createUploadForm };
