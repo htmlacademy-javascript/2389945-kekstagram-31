@@ -29,10 +29,10 @@ const showSuccess = function () {
     dataSuccessFormClose(evt);
   };
 
-  function dataSuccessFormClose(evt) {
-    dataSuccessTemplate.classList.add('hidden');
+  function dataSuccessFormClose() {
+    dataSuccessTemplate.remove();
     document.removeEventListener('keydown', onSuccessButtonKeyDown);
-    closeUpload(evt);
+    closeUpload();
   }
 
   dataSuccessButton.addEventListener('click', onDataSuccessButtonClick);
