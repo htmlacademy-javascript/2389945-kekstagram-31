@@ -29,7 +29,7 @@ import {
   scalePicture,
 } from './upload-form-scale.js';
 
-import { sendServerData, showError, showSuccess } from './server-data.js';
+import { sendServerData, onError, onSuccess } from './server-data.js';
 import { arrayHasDuplicates, isEscapeKey, validatePattern } from './utils.js';
 
 const pristine = new Pristine(
@@ -53,9 +53,9 @@ const onUploadFormSubmit = (evt) => {
     const formData = new FormData(evt.target);
 
     sendServerData(formData)
-      .then(showSuccess)
+      .then(onSuccess)
       .catch((err) => {
-        showError(err.message);
+        onError(err.message);
       })
       .finally(() => {
         uploadSubmitButton.disabled = false;

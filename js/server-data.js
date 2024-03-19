@@ -9,7 +9,7 @@ import {
 import { closeUpload } from './upload-form.js';
 
 // Отображение сообщения об ошибке при отправке или получении данных
-const showError = (errorText) => {
+const onError = (errorText) => {
   dataErrorTitle.textContent = errorText;
   document.body.appendChild(dataErrorTemplate);
   setTimeout(() => {
@@ -18,7 +18,7 @@ const showError = (errorText) => {
 };
 
 // Отображение формы успешной отправки данных
-const showSuccess = () => {
+const onSuccess = () => {
   const onDataSuccessButtonKeyDown = (evt) => {
     if (evt.key === 'Escape') {
       dataSuccessFormClose(evt);
@@ -77,4 +77,4 @@ const sendServerData = (body) =>
     body
   );
 
-export { getServerData, sendServerData, showError, showSuccess };
+export { getServerData, sendServerData, onError, onSuccess };
