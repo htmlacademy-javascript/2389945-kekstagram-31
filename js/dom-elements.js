@@ -28,6 +28,9 @@ export const uploadPreview = uploadOverlay.querySelector(
 export const uploadCancel = uploadOverlay.querySelector('#upload-cancel');
 export const uploadHashtags = uploadForm.querySelector('.text__hashtags');
 export const uploadDescription = uploadForm.querySelector('.text__description');
+export const uploadSubmitButton = uploadForm.querySelector(
+  '.img-upload__submit'
+);
 
 export const scaleSmaller = uploadOverlay.querySelector(
   '.scale__control--smaller'
@@ -46,5 +49,19 @@ export const sliderControl = uploadOverlay.querySelector(
   '.effect-level__slider'
 );
 export const sliderValue = uploadOverlay.querySelector('.effect-level__value');
-
 export const effectsList = uploadOverlay.querySelector('.effects__list');
+export const effectNone = effectsList.querySelector('#effect-none');
+
+export const dataError = document.querySelector('#data-error').content;
+export const dataErrorTemplate = dataError
+  .querySelector('.data-error')
+  .cloneNode(true);
+export const dataErrorTitle =
+  dataErrorTemplate.querySelector('.data-error__title');
+
+export const dataSuccess = document.querySelector('#success').content;
+export const dataSuccessTemplate = dataSuccess
+  .querySelector('.success')
+  .cloneNode(true);
+export const dataSuccessButton =
+  dataSuccessTemplate.querySelector('.success__button');

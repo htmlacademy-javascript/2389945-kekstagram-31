@@ -15,6 +15,7 @@ const isPalindrome = function (strValue) {
   return newStr.join().replaceAll(',', '') === strWoSpaces;
 };
 
+// Функция выделения числа из строки
 const extractNumber = function (strValue) {
   const trueString = String(strValue);
   let retVal = '';
