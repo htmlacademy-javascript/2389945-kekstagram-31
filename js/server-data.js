@@ -8,6 +8,7 @@ import {
 
 import { closeUpload } from './upload-form.js';
 
+// Отображение сообщения об ошибке при отправке или получении данных
 const showError = (errorText) => {
   dataErrorTitle.textContent = errorText;
   document.body.appendChild(dataErrorTemplate);
@@ -16,6 +17,7 @@ const showError = (errorText) => {
   }, ERROR_SHOW_TIMEOUT);
 };
 
+// Отображение формы успешной отправки данных
 const showSuccess = () => {
   const onDataSuccessButtonKeyDown = (evt) => {
     if (evt.key === 'Escape') {
@@ -27,19 +29,25 @@ const showSuccess = () => {
   document.addEventListener('keydown', onDataSuccessButtonKeyDown);
 
   const onDataSuccessButtonClick = (evt) => {
-    dataSuccessFormClose(evt);
+    if (
+      evt.target === dataSuccessTemplate ||
+      evt.target === dataSuccessButton
+    ) {
+      dataSuccessFormClose(evt);
+      closeUpload();
+    }
   };
 
   function dataSuccessFormClose() {
     dataSuccessTemplate.remove();
     document.removeEventListener('keydown', onDataSuccessButtonKeyDown);
-    dataSuccessButton.removeEventListener('click', onDataSuccessButtonClick);
-    closeUpload();
+    dataSuccessTemplate.removeEventListener('click', onDataSuccessButtonClick);
   }
 
-  dataSuccessButton.addEventListener('click', onDataSuccessButtonClick);
+  dataSuccessTemplate.addEventListener('click', onDataSuccessButtonClick);
 };
 
+// Функция отправки запроса на сервер
 const sendRequest = (router, method, errorText, body = null) =>
   fetch(`${DATA_URL}${router}`, { method, body })
     .then((response) => {
@@ -52,6 +60,7 @@ const sendRequest = (router, method, errorText, body = null) =>
       throw new Error(errorText);
     });
 
+// Функция получения данных с сервера
 const getServerData = () =>
   sendRequest(
     Router.GET_DATA,
@@ -59,6 +68,7 @@ const getServerData = () =>
     'Ошибка загрузки данных. Обновите страницу позднее'
   );
 
+// Функция отправки данных на сервер
 const sendServerData = (body) =>
   sendRequest(
     Router.SEND_DATA,

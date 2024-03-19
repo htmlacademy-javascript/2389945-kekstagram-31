@@ -7,6 +7,7 @@ import {
 
 import {
   body,
+  effectNone,
   scaleBigger,
   scaleControl,
   scaleSmaller,
@@ -21,7 +22,6 @@ import {
 import {
   destroyUploadFormSlider,
   uploadFormEffects,
-  onEffectsListChange,
 } from './upload-form-effects.js';
 import {
   onScaleBiggerClick,
@@ -43,6 +43,7 @@ const pristine = new Pristine(
   false
 );
 
+// Действия при публикации формы
 const onUploadFormSubmit = (evt) => {
   evt.preventDefault();
   if (pristine.validate()) {
@@ -81,9 +82,9 @@ const createUploadForm = () => {
     uploadOverlay.classList.remove('hidden');
     body.classList.add('modal-open');
     document.addEventListener('keydown', onDocumentKeydown);
+    uploadCancel.addEventListener('click', closeUpload);
     scaleSmaller.addEventListener('click', onScaleSmallerClick);
     scaleBigger.addEventListener('click', onScaleBiggerClick);
-    console.log(1);
     uploadFormEffects();
   };
 
@@ -137,9 +138,6 @@ const createUploadForm = () => {
     evt.preventDefault();
     openUpload();
   });
-
-  // Обработка события закрытия формы загрузки и редактирования фото
-  uploadCancel.addEventListener('click', closeUpload);
 };
 
 // Закрытие формы загрузки и редактирования фото
@@ -150,14 +148,14 @@ function closeUpload() {
   uploadHashtags.value = null;
   uploadDescription.value = null;
   scaleControl.value = DEFAULT_SCALE;
+  effectNone.checked = true;
   scalePicture(null);
   document.removeEventListener('keydown', onDocumentKeydown);
+  uploadCancel.removeEventListener('click', closeUpload);
   scaleSmaller.removeEventListener('click', onScaleSmallerClick);
   scaleBigger.removeEventListener('click', onScaleBiggerClick);
   uploadForm.removeEventListener('submit', onUploadFormSubmit);
   pristine.reset();
-  console.log(555);
-  onEffectsListChange();
   destroyUploadFormSlider();
 }
 

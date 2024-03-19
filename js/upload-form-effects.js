@@ -1,3 +1,4 @@
+import { effectsConfig } from './config.js';
 import {
   effectsList,
   sliderContainer,
@@ -5,7 +6,6 @@ import {
   sliderValue,
   uploadPreview,
 } from './dom-elements.js';
-import { effectsConfig } from './config.js';
 
 // Получение текущего выбранного эффекта
 const getCurrentEffect = () =>
@@ -62,4 +62,4 @@ const uploadFormEffects = () => {
 // Удаление слайдера
 const destroyUploadFormSlider = () => sliderControl.noUiSlider.destroy();
 
-export { destroyUploadFormSlider, uploadFormEffects, onEffectsListChange };
+export { destroyUploadFormSlider, uploadFormEffects };
