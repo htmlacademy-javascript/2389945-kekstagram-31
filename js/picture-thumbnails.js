@@ -1,4 +1,4 @@
-import { fragment, pictureTemplate, pictures } from './dom-elements.js';
+import { fragment, pictureTemplate, pictures, pictureFilters } from './dom-elements.js';
 import { openPicture } from './picture-comments.js';
 import { pictureState } from './picture-state.js';
 
@@ -26,6 +26,7 @@ const createPictureThumbnails = () => {
       picture.comments.length;
     fragment.appendChild(newPicture);
   });
+  pictureFilters.classList.remove('img-filters--inactive');
   pictures.appendChild(fragment);
   pictures.addEventListener('click', onPicturesClick);
 };
