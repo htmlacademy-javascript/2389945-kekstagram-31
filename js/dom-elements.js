@@ -26,6 +26,7 @@ export const uploadOverlay = uploadForm.querySelector('.img-upload__overlay');
 export const uploadPreview = uploadOverlay.querySelector(
   '.img-upload__preview'
 );
+export const uploadPreviewImg = uploadPreview.querySelector('img');
 export const uploadCancel = uploadOverlay.querySelector('#upload-cancel');
 export const uploadHashtags = uploadForm.querySelector('.text__hashtags');
 export const uploadDescription = uploadForm.querySelector('.text__description');

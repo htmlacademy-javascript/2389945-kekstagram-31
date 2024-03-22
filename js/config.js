@@ -19,6 +19,7 @@ export const DEFAULT_SCALE = '100%';
 export const ERROR_SHOW_TIMEOUT = 5000;
 export const DEBOUNCE_TIMEOUT = 500;
 export const DATA_URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
+export const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
 export const Router = {
   GET_DATA: '/data',

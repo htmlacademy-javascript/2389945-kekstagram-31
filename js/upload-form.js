@@ -16,6 +16,7 @@ import {
   uploadForm,
   uploadHashtags,
   uploadInput,
+  uploadPreviewImg,
   uploadOverlay,
   uploadSubmitButton,
 } from './dom-elements.js';
@@ -30,7 +31,12 @@ import {
 } from './upload-form-scale.js';
 
 import { sendServerData, onError, onSuccess } from './server-data.js';
-import { arrayHasDuplicates, isEscapeKey, validatePattern } from './utils.js';
+import {
+  arrayHasDuplicates,
+  isEscapeKey,
+  validatePattern,
+  getFilePath,
+} from './utils.js';
 
 const pristine = new Pristine(
   uploadForm,
@@ -76,8 +82,8 @@ const onDocumentKeydown = (evt) => {
 
 // Обработка формы загрузки и редактирования фото
 const createUploadForm = () => {
-  // Открытие формы загрузки и редактирования фото
   const openUpload = () => {
+    uploadPreviewImg.src = getFilePath(uploadInput.files[0]);
     uploadForm.addEventListener('submit', onUploadFormSubmit);
     uploadOverlay.classList.remove('hidden');
     body.classList.add('modal-open');
