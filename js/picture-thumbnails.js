@@ -15,7 +15,7 @@ import {
 const onPicturesClick = (evt) => {
   const id = evt.target.id;
   if (
-    pictureState.pictures.some((picture) => picture.id === +id) &&
+    pictureState.pictures.some((picture) => picture.id === Number(id)) &&
     id !== ''
   ) {
     openPicture(id);
