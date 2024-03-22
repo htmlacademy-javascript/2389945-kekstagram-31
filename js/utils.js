@@ -1,4 +1,15 @@
 import { HASHTAG_PATTERN } from './config.js';
+import { getPictureById } from './picture-state.js';
+
+// Устранение "дребезга"
+const debounce = (callback, timeoutDelay) => {
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
 
 // Вычисление случайного числа в диапазоне
 const getRandomInteger = (min, max) => {
@@ -26,12 +37,28 @@ const createRandomIdFromRangeGenerator = (min, max) => {
 };
 
 // Получение случайного элемента массива
-const getRandomArrayElement = (elements) => {
-  const uniqueElementId = createRandomIdFromRangeGenerator(
-    0,
-    elements.length - 1
-  );
-  return elements[uniqueElementId()];
+const getRandomArrayElement = (array) => {
+  const uniqueElementId = createRandomIdFromRangeGenerator(0, array.length - 1);
+  return array[uniqueElementId()];
+};
+
+// Получение случайного массива заданного размера
+const getUniqueRandomArray = (sourceArray, resultArraySize) => {
+  const resultIndex = new Set();
+  while (resultIndex.size !== Math.min(resultArraySize, sourceArray.length)) {
+    resultIndex.add(getRandomInteger(0, sourceArray.length - 1));
+  }
+
+  const resultArray = [];
+  resultIndex.forEach((value) => resultArray.push(sourceArray[value]));
+  return resultArray;
+};
+
+// Сравнение количества комментариев у двух фотографий
+const comparePicturesComments = (pictureOne, pictureTwo) => {
+  const rankOne = getPictureById(pictureOne.id).comments.length;
+  const rankTwo = getPictureById(pictureTwo.id).comments.length;
+  return rankTwo - rankOne;
 };
 
 // Нажата клавиша Enter
@@ -52,10 +79,13 @@ const formatScale = (value) => +value.replace('%', '');
 
 export {
   arrayHasDuplicates,
+  comparePicturesComments,
   createRandomIdFromRangeGenerator,
+  debounce,
   formatScale,
   getRandomArrayElement,
   getRandomInteger,
+  getUniqueRandomArray,
   isEnterKey,
   isEscapeKey,
   validatePattern,
