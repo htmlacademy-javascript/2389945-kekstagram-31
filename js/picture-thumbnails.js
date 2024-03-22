@@ -1,6 +1,15 @@
-import { fragment, pictureTemplate, pictures } from './dom-elements.js';
+import {
+  fragment,
+  pictureFilters,
+  pictureTemplate,
+  pictures,
+} from './dom-elements.js';
 import { openPicture } from './picture-comments.js';
 import { pictureState } from './picture-state.js';
+import {
+  getFilteredPictures,
+  pictureThumbnailsFilter,
+} from './picture-thumbnails-filter.js';
 
 // Обработка действия при клике на миниатюре фотографии
 const onPicturesClick = (evt) => {
@@ -14,8 +23,10 @@ const onPicturesClick = (evt) => {
 };
 
 // Создание миниатюр фотографий
-const createPictureThumbnails = () => {
-  pictureState.pictures.forEach((picture) => {
+const createPictureThumbnails = (evt) => {
+  const filteredPictures = getFilteredPictures(evt);
+
+  filteredPictures.forEach((picture) => {
     const newPicture = pictureTemplate.cloneNode(true);
     const pictureImg = newPicture.querySelector('.picture__img');
     pictureImg.id = picture.id;
@@ -26,8 +37,17 @@ const createPictureThumbnails = () => {
       picture.comments.length;
     fragment.appendChild(newPicture);
   });
+  pictureFilters.classList.remove('img-filters--inactive');
   pictures.appendChild(fragment);
   pictures.addEventListener('click', onPicturesClick);
 };
+
+// Обработка действия при смене фильтра
+const onPictureFiltersClick = (evt) => {
+  evt.preventDefault();
+  pictureThumbnailsFilter(evt);
+};
+
+pictureFilters.addEventListener('click', onPictureFiltersClick);
 
 export { createPictureThumbnails };

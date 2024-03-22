@@ -1,4 +1,5 @@
-export const POSTS_COUNT = 25; // Количество постов (фотографий)
+export const PICTURES_DEFAULT_COUNT = 25; // Количество фотографий, отображаемых по умолчанию
+export const PICTURES_RANDOM_COUNT = 10; // Количество случайных фотографий
 export const MIN_COMMENTS_COUNT = 1; // Минимальное число комментариев к фото
 export const MAX_COMMENTS_COUNT = 30; // Максимальное число комментариев к фото
 export const MIN_LIKES_COUNT = 1; // Минимальное число лайков к фото
@@ -16,6 +17,7 @@ export const MAX_SCALE_VALUE = 100; // Минимальное значение �
 export const SCALE_STEP = 25; // Шаг масштабирования фото (в процентах)
 export const DEFAULT_SCALE = '100%';
 export const ERROR_SHOW_TIMEOUT = 5000;
+export const DEBOUNCE_TIMEOUT = 500;
 export const DATA_URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
 
 export const Router = {
@@ -26,6 +28,12 @@ export const Router = {
 export const Method = {
   GET: 'GET',
   POST: 'POST',
+};
+
+export const Filter = {
+  DEFAULT: 'filter-default',
+  RANDOM: 'filter-random',
+  DISCUSSED: 'filter-discussed',
 };
 
 export const effectsConfig = {

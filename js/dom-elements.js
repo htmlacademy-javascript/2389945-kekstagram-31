@@ -5,6 +5,7 @@ export const fragment = document.createDocumentFragment();
 
 export const body = document.querySelector('body');
 export const picture = document.querySelector('.big-picture');
+export const pictureFilters = body.querySelector('.img-filters');
 export const pictureImg = picture.querySelector('img');
 export const pictureCaption = picture.querySelector('.social__caption');
 export const pictureLikesCount = picture.querySelector('.likes-count');
