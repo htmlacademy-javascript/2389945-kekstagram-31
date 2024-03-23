@@ -53,6 +53,7 @@ const pristine = new Pristine(
 const onUploadFormSubmit = (evt) => {
   evt.preventDefault();
   if (pristine.validate()) {
+    uploadOverlay.classList.add('hidden');
     uploadSubmitButton.disabled = true;
     uploadSubmitButton.textContent = 'Отправка данных на сервер';
 
