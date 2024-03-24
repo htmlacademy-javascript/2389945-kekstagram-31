@@ -1,6 +1,6 @@
 import { HASHTAG_PATTERN, FILE_TYPES } from './config.js';
 import { getPictureById } from './picture-state.js';
-import { onError } from './server-data.js';
+import { onReceiveError } from './server-data.js';
 
 // Устранение "дребезга"
 const debounce = (callback, timeoutDelay) => {
@@ -87,7 +87,7 @@ const getFilePath = (file) => {
   if (matches) {
     return URL.createObjectURL(file);
   } else {
-    onError('Неверный формат файла');
+    onReceiveError('Неверный формат файла');
   }
 };
 

@@ -30,7 +30,11 @@ import {
   scalePicture,
 } from './upload-form-scale.js';
 
-import { sendServerData, onError, onSuccess } from './server-data.js';
+import {
+  sendServerData,
+  onSendError,
+  onSendSuccess,
+} from './server-data.js';
 import {
   arrayHasDuplicates,
   isEscapeKey,
@@ -53,16 +57,16 @@ const pristine = new Pristine(
 const onUploadFormSubmit = (evt) => {
   evt.preventDefault();
   if (pristine.validate()) {
-    uploadOverlay.classList.add('hidden');
+    //uploadOverlay.classList.add('hidden');
     uploadSubmitButton.disabled = true;
     uploadSubmitButton.textContent = 'Отправка данных на сервер';
 
     const formData = new FormData(evt.target);
 
     sendServerData(formData)
-      .then(onSuccess)
+      .then(onSendSuccess)
       .catch((err) => {
-        onError(err.message);
+        onSendError(err.message);
       })
       .finally(() => {
         uploadSubmitButton.disabled = false;

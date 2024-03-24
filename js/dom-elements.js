@@ -61,9 +61,12 @@ export const dataErrorTemplate = dataError
 export const dataErrorTitle =
   dataErrorTemplate.querySelector('.data-error__title');
 
-export const dataSuccess = document.querySelector('#success').content;
-export const dataSuccessTemplate = dataSuccess
+export const success = document.querySelector('#success').content;
+export const successTemplate = success
   .querySelector('.success')
   .cloneNode(true);
-export const dataSuccessButton =
-  dataSuccessTemplate.querySelector('.success__button');
+export const successButton = successTemplate.querySelector('.success__button');
+
+export const error = document.querySelector('#error').content;
+export const errorTemplate = error.querySelector('.error').cloneNode(true);
+export const errorButton = errorTemplate.querySelector('.error__button');
