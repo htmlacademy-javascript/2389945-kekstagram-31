@@ -1,4 +1,4 @@
-import { getServerData, onError } from './server-data.js';
+import { getServerData, onReceiveError } from './server-data.js';
 import { setPictures } from './picture-state.js';
 import { createPictureThumbnails } from './picture-thumbnails.js';
 
@@ -10,7 +10,7 @@ const createPictures = () =>
       createPictureThumbnails();
     })
     .catch((err) => {
-      onError(err.message);
+      onReceiveError(err.message);
     });
 
 export { createPictures };

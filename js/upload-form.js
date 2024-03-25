@@ -6,22 +6,24 @@ import {
 } from './config.js';
 
 import {
-  body,
-  effectNone,
-  scaleBigger,
-  scaleControl,
-  scaleSmaller,
-  uploadCancel,
-  uploadDescription,
-  uploadForm,
-  uploadHashtags,
-  uploadInput,
-  uploadPreviewImg,
-  uploadOverlay,
-  uploadSubmitButton,
+  bodyElement,
+  effectNoneElement,
+  scaleBiggerElement,
+  scaleControlElement,
+  scaleSmallerElement,
+  uploadCancelElement,
+  uploadDescriptionElement,
+  uploadFormElement,
+  uploadHashtagsElement,
+  uploadInputElement,
+  uploadPreviewImgElement,
+  uploadOverlayElement,
+  uploadSubmitButtonElement,
+  effectsPreviewsContainerElement
 } from './dom-elements.js';
 import {
-  destroyUploadFormSlider,
+  //destroyUploadFormSlider,
+  createSlider,
   uploadFormEffects,
 } from './upload-form-effects.js';
 import {
@@ -30,7 +32,11 @@ import {
   scalePicture,
 } from './upload-form-scale.js';
 
-import { sendServerData, onError, onSuccess } from './server-data.js';
+import {
+  sendServerData,
+  onSendError,
+  onSendSuccess,
+} from './server-data.js';
 import {
   arrayHasDuplicates,
   isEscapeKey,
@@ -39,7 +45,7 @@ import {
 } from './utils.js';
 
 const pristine = new Pristine(
-  uploadForm,
+  uploadFormElement,
   {
     classTo: 'img-upload__field-wrapper', // Элемент, на который будут добавляться классы
     errorTextParent: 'img-upload__field-wrapper', // Элемент, куда будет выводиться текст с ошибкой
@@ -53,19 +59,20 @@ const pristine = new Pristine(
 const onUploadFormSubmit = (evt) => {
   evt.preventDefault();
   if (pristine.validate()) {
-    uploadSubmitButton.disabled = true;
-    uploadSubmitButton.textContent = 'Отправка данных на сервер';
+    //uploadOverlay.classList.add('hidden');
+    uploadSubmitButtonElement.disabled = true;
+    uploadSubmitButtonElement.textContent = 'Отправка данных на сервер';
 
     const formData = new FormData(evt.target);
 
     sendServerData(formData)
-      .then(onSuccess)
+      .then(onSendSuccess)
       .catch((err) => {
-        onError(err.message);
+        onSendError(err.message);
       })
       .finally(() => {
-        uploadSubmitButton.disabled = false;
-        uploadSubmitButton.textContent = 'Опубликовать';
+        uploadSubmitButtonElement.disabled = false;
+        uploadSubmitButtonElement.textContent = 'Опубликовать';
       });
   }
 };
@@ -74,7 +81,7 @@ const onUploadFormSubmit = (evt) => {
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    if (evt.target !== uploadHashtags && evt.target !== uploadDescription) {
+    if (evt.target !== uploadHashtagsElement && evt.target !== uploadDescriptionElement) {
       closeUpload();
     }
   }
@@ -82,15 +89,20 @@ const onDocumentKeydown = (evt) => {
 
 // Обработка формы загрузки и редактирования фото
 const createUploadForm = () => {
+  createSlider();
   const openUpload = () => {
-    uploadPreviewImg.src = getFilePath(uploadInput.files[0]);
-    uploadForm.addEventListener('submit', onUploadFormSubmit);
-    uploadOverlay.classList.remove('hidden');
-    body.classList.add('modal-open');
+    const filePath = getFilePath(uploadInputElement.files[0]);
+    uploadPreviewImgElement.src = filePath;
+    effectsPreviewsContainerElement.forEach((preview) => {
+      preview.style.backgroundImage = `url(${filePath})`;
+    });
+    uploadFormElement.addEventListener('submit', onUploadFormSubmit);
+    uploadOverlayElement.classList.remove('hidden');
+    bodyElement.classList.add('modal-open');
     document.addEventListener('keydown', onDocumentKeydown);
-    uploadCancel.addEventListener('click', closeUpload);
-    scaleSmaller.addEventListener('click', onScaleSmallerClick);
-    scaleBigger.addEventListener('click', onScaleBiggerClick);
+    uploadCancelElement.addEventListener('click', closeUpload);
+    scaleSmallerElement.addEventListener('click', onScaleSmallerClick);
+    scaleBiggerElement.addEventListener('click', onScaleBiggerClick);
     uploadFormEffects();
   };
 
@@ -127,20 +139,20 @@ const createUploadForm = () => {
 
   // Валидатор для хэштегов
   pristine.addValidator(
-    uploadHashtags,
+    uploadHashtagsElement,
     validateHashtag,
     getHashtagErrorMessage
   );
 
   // Валидатор для комментариев
   pristine.addValidator(
-    uploadDescription,
+    uploadDescriptionElement,
     validateDescription,
     getDescriptionErrorMessage
   );
 
   // Обработка события изменения поля с файлом для загрузки
-  uploadInput.addEventListener('change', (evt) => {
+  uploadInputElement.addEventListener('change', (evt) => {
     evt.preventDefault();
     openUpload();
   });
@@ -148,21 +160,20 @@ const createUploadForm = () => {
 
 // Закрытие формы загрузки и редактирования фото
 function closeUpload() {
-  uploadOverlay.classList.add('hidden');
-  body.classList.remove('modal-open');
-  uploadInput.value = null;
-  uploadHashtags.value = null;
-  uploadDescription.value = null;
-  scaleControl.value = DEFAULT_SCALE;
-  effectNone.checked = true;
+  uploadOverlayElement.classList.add('hidden');
+  bodyElement.classList.remove('modal-open');
+  uploadInputElement.value = null;
+  uploadHashtagsElement.value = null;
+  uploadDescriptionElement.value = null;
+  scaleControlElement.value = DEFAULT_SCALE;
+  effectNoneElement.checked = true;
   scalePicture(null);
   document.removeEventListener('keydown', onDocumentKeydown);
-  uploadCancel.removeEventListener('click', closeUpload);
-  scaleSmaller.removeEventListener('click', onScaleSmallerClick);
-  scaleBigger.removeEventListener('click', onScaleBiggerClick);
-  uploadForm.removeEventListener('submit', onUploadFormSubmit);
+  uploadCancelElement.removeEventListener('click', closeUpload);
+  scaleSmallerElement.removeEventListener('click', onScaleSmallerClick);
+  scaleBiggerElement.removeEventListener('click', onScaleBiggerClick);
+  uploadFormElement.removeEventListener('submit', onUploadFormSubmit);
   pristine.reset();
-  destroyUploadFormSlider();
 }
 
-export { closeUpload, createUploadForm };
+export { closeUpload, createUploadForm, onDocumentKeydown };
