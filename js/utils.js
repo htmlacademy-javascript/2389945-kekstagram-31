@@ -1,5 +1,6 @@
-import { HASHTAG_PATTERN } from './config.js';
+import { HASHTAG_PATTERN, FILE_TYPES } from './config.js';
 import { getPictureById } from './picture-state.js';
+import { onReceiveError } from './server-data.js';
 
 // Устранение "дребезга"
 const debounce = (callback, timeoutDelay) => {
@@ -77,6 +78,19 @@ const validatePattern = (array) =>
 // Отформатировать знвчение масштаба
 const formatScale = (value) => +value.replace('%', '');
 
+// Получение расположения файла
+const getFilePath = (file) => {
+  const fileName = file.name.toLowerCase();
+
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+
+  if (matches) {
+    return URL.createObjectURL(file);
+  } else {
+    onReceiveError('Неверный формат файла');
+  }
+};
+
 export {
   arrayHasDuplicates,
   comparePicturesComments,
@@ -89,4 +103,5 @@ export {
   isEnterKey,
   isEscapeKey,
   validatePattern,
+  getFilePath,
 };

@@ -1,50 +1,80 @@
 import { DATA_URL, ERROR_SHOW_TIMEOUT, Method, Router } from './config.js';
 import {
-  dataErrorTemplate,
-  dataErrorTitle,
-  dataSuccessButton,
-  dataSuccessTemplate,
+  bodyElement as bodyDOM,
+  dataErrorTemplateElement,
+  dataErrorTitleElement,
+  successButtonElement,
+  successTemplateElement,
+  errorButtonElement,
+  errorTemplateElement,
 } from './dom-elements.js';
 
-import { closeUpload } from './upload-form.js';
+import { closeUpload, onDocumentKeydown } from './upload-form.js';
 
 // Отображение сообщения об ошибке при отправке или получении данных
-const onError = (errorText) => {
-  dataErrorTitle.textContent = errorText;
-  document.body.appendChild(dataErrorTemplate);
+const onReceiveError = (errorText) => {
+  dataErrorTitleElement.textContent = errorText;
+  bodyDOM.appendChild(dataErrorTemplateElement);
   setTimeout(() => {
-    dataErrorTemplate.remove();
+    dataErrorTemplateElement.remove();
   }, ERROR_SHOW_TIMEOUT);
 };
 
 // Отображение формы успешной отправки данных
-const onSuccess = () => {
+const onSendSuccess = () => {
+  bodyDOM.classList.remove('modal-open');
   const onDataSuccessButtonKeyDown = (evt) => {
     if (evt.key === 'Escape') {
       dataSuccessFormClose(evt);
     }
   };
 
-  document.body.appendChild(dataSuccessTemplate);
+  bodyDOM.appendChild(successTemplateElement);
   document.addEventListener('keydown', onDataSuccessButtonKeyDown);
 
   const onDataSuccessButtonClick = (evt) => {
-    if (
-      evt.target === dataSuccessTemplate ||
-      evt.target === dataSuccessButton
-    ) {
+    if (evt.target === successTemplateElement || evt.target === successButtonElement) {
       dataSuccessFormClose(evt);
       closeUpload();
     }
   };
 
   function dataSuccessFormClose() {
-    dataSuccessTemplate.remove();
+    successTemplateElement.remove();
     document.removeEventListener('keydown', onDataSuccessButtonKeyDown);
-    dataSuccessTemplate.removeEventListener('click', onDataSuccessButtonClick);
+    successTemplateElement.removeEventListener('click', onDataSuccessButtonClick);
   }
 
-  dataSuccessTemplate.addEventListener('click', onDataSuccessButtonClick);
+  successTemplateElement.addEventListener('click', onDataSuccessButtonClick);
+};
+
+// Отображение формы отправки данных с ошибкой
+const onSendError = () => {
+  bodyDOM.classList.remove('modal-open');
+  const onDataErrorButtonKeyDown = (evt) => {
+    if (evt.key === 'Escape') {
+      dataErrorFormClose(evt);
+    }
+  };
+
+  bodyDOM.appendChild(errorTemplateElement);
+  document.removeEventListener('keydown', onDocumentKeydown);
+  document.addEventListener('keydown', onDataErrorButtonKeyDown);
+
+  const onDataErrorButtonClick = (evt) => {
+    if (evt.target === errorTemplateElement || evt.target === errorButtonElement) {
+      dataErrorFormClose(evt);
+    }
+  };
+
+  function dataErrorFormClose() {
+    errorTemplateElement.remove();
+    document.removeEventListener('keydown', onDataErrorButtonKeyDown);
+    document.addEventListener('keydown', onDocumentKeydown);
+    errorTemplateElement.removeEventListener('click', onDataErrorButtonClick);
+  }
+
+  errorTemplateElement.addEventListener('click', onDataErrorButtonClick);
 };
 
 // Функция отправки запроса на сервер
@@ -77,4 +107,10 @@ const sendServerData = (body) =>
     body
   );
 
-export { getServerData, sendServerData, onError, onSuccess };
+export {
+  getServerData,
+  sendServerData,
+  onReceiveError,
+  onSendSuccess,
+  onSendError,
+};
