@@ -10,10 +10,10 @@ export const MIN_SCALE_VALUE = 25; // Минимальное значение м
 export const MAX_SCALE_VALUE = 100; // Минимальное значение масштаба (в процентах)
 export const SCALE_STEP = 25; // Шаг масштабирования фото (в процентах)
 export const DEFAULT_SCALE = '100%'; // Масштаб по-умолчанию
-export const ERROR_SHOW_TIMEOUT = 5000;  //Таймаут показа сообщения об ошибке
-export const DEBOUNCE_TIMEOUT = 500;  // Таймаут переключения фильтров
+export const ERROR_SHOW_TIMEOUT = 5000; //Таймаут показа сообщения об ошибке
+export const DEBOUNCE_TIMEOUT = 500; // Таймаут переключения фильтров
 export const DATA_URL = 'https://31.javascript.htmlacademy.pro/kekstagram'; // Адрес сервера
-export const FILE_TYPES = ['jpg', 'jpeg', 'png'];  // Допустимые типы загружаемых файлов
+export const FILE_TYPES = ['jpg', 'jpeg', 'png']; // Допустимые типы загружаемых файлов
 
 // Адресация запроса
 export const Router = {
