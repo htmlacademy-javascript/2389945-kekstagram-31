@@ -1,73 +1,97 @@
 // Определение элементов DOM для дальнейшей работы
-export const pictures = document.querySelector('.pictures');
-export const pictureTemplate = document.querySelector('#picture').content;
-export const fragment = document.createDocumentFragment();
+export const picturesContainerElement = document.querySelector('.pictures');
+export const pictureTemplateElement =
+  document.querySelector('#picture').content;
+export const documentFragment = document.createDocumentFragment();
 
-export const body = document.querySelector('body');
-export const picture = document.querySelector('.big-picture');
-export const pictureFilters = body.querySelector('.img-filters');
-export const pictureImg = picture.querySelector('img');
-export const pictureCaption = picture.querySelector('.social__caption');
-export const pictureLikesCount = picture.querySelector('.likes-count');
-export const pictureCommentsLoader = picture.querySelector('.comments-loader');
-export const pictureCancel = picture.querySelector('#picture-cancel');
-export const pictureComments = picture.querySelector('.social__comments');
-export const pictureComment = picture.querySelector('.social__comment');
-export const pictureTotalCommentsCount = picture.querySelector(
+export const bodyElement = document.querySelector('body');
+export const pictureElement = document.querySelector('.big-picture');
+export const pictureFiltersContainerElement =
+  bodyElement.querySelector('.img-filters');
+export const pictureImgElement = pictureElement.querySelector('img');
+export const pictureCaptionElement =
+  pictureElement.querySelector('.social__caption');
+export const pictureLikesCountElement =
+  pictureElement.querySelector('.likes-count');
+export const pictureCommentsLoaderElement =
+  pictureElement.querySelector('.comments-loader');
+export const pictureCancelElement =
+  pictureElement.querySelector('#picture-cancel');
+export const pictureCommentsContainerElement =
+  pictureElement.querySelector('.social__comments');
+export const pictureCommentElement =
+  pictureElement.querySelector('.social__comment');
+export const pictureTotalCommentsCountElement = pictureElement.querySelector(
   '.social__comment-total-count'
 );
-export const pictureShownCommentsCount = picture.querySelector(
+export const pictureShownCommentsCountElement = pictureElement.querySelector(
   '.social__comment-shown-count'
 );
 
-export const uploadForm = document.querySelector('.img-upload__form');
-export const uploadInput = uploadForm.querySelector('.img-upload__input');
-export const uploadOverlay = uploadForm.querySelector('.img-upload__overlay');
-export const uploadPreview = uploadOverlay.querySelector(
+export const uploadFormElement = document.querySelector('.img-upload__form');
+export const uploadInputElement =
+  uploadFormElement.querySelector('.img-upload__input');
+export const uploadOverlayElement = uploadFormElement.querySelector(
+  '.img-upload__overlay'
+);
+export const uploadPreviewElement = uploadOverlayElement.querySelector(
   '.img-upload__preview'
 );
-export const uploadPreviewImg = uploadPreview.querySelector('img');
-export const uploadCancel = uploadOverlay.querySelector('#upload-cancel');
-export const uploadHashtags = uploadForm.querySelector('.text__hashtags');
-export const uploadDescription = uploadForm.querySelector('.text__description');
-export const uploadSubmitButton = uploadForm.querySelector(
+export const uploadPreviewImgElement =
+  uploadPreviewElement.querySelector('img');
+export const uploadCancelElement =
+  uploadOverlayElement.querySelector('#upload-cancel');
+export const uploadHashtagsElement =
+  uploadFormElement.querySelector('.text__hashtags');
+export const uploadDescriptionElement =
+  uploadFormElement.querySelector('.text__description');
+export const uploadSubmitButtonElement = uploadFormElement.querySelector(
   '.img-upload__submit'
 );
 
-export const scaleSmaller = uploadOverlay.querySelector(
+export const scaleSmallerElement = uploadOverlayElement.querySelector(
   '.scale__control--smaller'
 );
-export const scaleBigger = uploadOverlay.querySelector(
+export const scaleBiggerElement = uploadOverlayElement.querySelector(
   '.scale__control--bigger'
 );
-export const scaleControl = uploadOverlay.querySelector(
+export const scaleControlElement = uploadOverlayElement.querySelector(
   '.scale__control--value'
 );
 
-export const sliderContainer = uploadOverlay.querySelector(
+export const sliderContainerElement = uploadOverlayElement.querySelector(
   '.img-upload__effect-level'
 );
-export const sliderControl = uploadOverlay.querySelector(
+export const sliderControlElement = uploadOverlayElement.querySelector(
   '.effect-level__slider'
 );
-export const sliderValue = uploadOverlay.querySelector('.effect-level__value');
-export const effectsList = uploadOverlay.querySelector('.effects__list');
-export const effectsPreviews = uploadOverlay.querySelectorAll('.effects__preview')
-export const effectNone = effectsList.querySelector('#effect-none');
+export const sliderValueElement = uploadOverlayElement.querySelector(
+  '.effect-level__value'
+);
+export const effectsListContainerElement =
+  uploadOverlayElement.querySelector('.effects__list');
+export const effectsPreviewsContainerElement =
+  uploadOverlayElement.querySelectorAll('.effects__preview');
+export const effectNoneElement =
+  effectsListContainerElement.querySelector('#effect-none');
 
-export const dataError = document.querySelector('#data-error').content;
-export const dataErrorTemplate = dataError
+export const dataErrorElement = document.querySelector('#data-error').content;
+export const dataErrorTemplateElement = dataErrorElement
   .querySelector('.data-error')
   .cloneNode(true);
-export const dataErrorTitle =
-  dataErrorTemplate.querySelector('.data-error__title');
+export const dataErrorTitleElement =
+  dataErrorTemplateElement.querySelector('.data-error__title');
 
-export const success = document.querySelector('#success').content;
-export const successTemplate = success
+export const successElement = document.querySelector('#success').content;
+export const successTemplateElement = successElement
   .querySelector('.success')
   .cloneNode(true);
-export const successButton = successTemplate.querySelector('.success__button');
+export const successButtonElement =
+  successTemplateElement.querySelector('.success__button');
 
-export const error = document.querySelector('#error').content;
-export const errorTemplate = error.querySelector('.error').cloneNode(true);
-export const errorButton = errorTemplate.querySelector('.error__button');
+export const errorElement = document.querySelector('#error').content;
+export const errorTemplateElement = errorElement
+  .querySelector('.error')
+  .cloneNode(true);
+export const errorButtonElement =
+  errorTemplateElement.querySelector('.error__button');

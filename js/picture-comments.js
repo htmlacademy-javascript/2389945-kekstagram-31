@@ -2,17 +2,17 @@ import { SHOWN_COMMENTS_COUNT } from './config.js';
 import { isEnterKey, isEscapeKey } from './utils.js';
 
 import {
-  body,
-  picture,
-  pictureCancel,
-  pictureCaption,
-  pictureComment,
-  pictureComments,
-  pictureCommentsLoader,
-  pictureImg,
-  pictureLikesCount,
-  pictureShownCommentsCount,
-  pictureTotalCommentsCount,
+  bodyElement,
+  pictureElement,
+  pictureCancelElement,
+  pictureCaptionElement,
+  pictureCommentElement,
+  pictureCommentsContainerElement,
+  pictureCommentsLoaderElement,
+  pictureImgElement,
+  pictureLikesCountElement,
+  pictureShownCommentsCountElement,
+  pictureTotalCommentsCountElement,
 } from './dom-elements.js';
 
 import {
@@ -31,20 +31,20 @@ const addComments = (comments, commentsCount) => {
   let toCommentsCount;
   if (commentsCount < comments.length) {
     toCommentsCount = commentsCount;
-    pictureCommentsLoader.classList.remove('hidden');
+    pictureCommentsLoaderElement.classList.remove('hidden');
   } else {
     toCommentsCount = comments.length;
-    pictureCommentsLoader.classList.add('hidden');
+    pictureCommentsLoaderElement.classList.add('hidden');
   }
   for (let i = fromCommentsCount; i < toCommentsCount; i++) {
-    const newComment = pictureComment.cloneNode(true);
+    const newComment = pictureCommentElement.cloneNode(true);
     const newCommentImg = newComment.querySelector('img');
     newCommentImg.src = comments[i].avatar;
     newCommentImg.alt = comments[i].name;
     newComment.querySelector('.social__text').textContent = comments[i].message;
-    pictureComments.appendChild(newComment);
+    pictureCommentsContainerElement.appendChild(newComment);
   }
-  pictureShownCommentsCount.textContent = toCommentsCount;
+  pictureShownCommentsCountElement.textContent = toCommentsCount;
   setCurrentOpenedComments(getCurrentOpenedComments() + SHOWN_COMMENTS_COUNT);
 };
 
@@ -64,7 +64,7 @@ const onPictureCommentsLoader = () => {
   ) {
     addComments(getCommentsFromCurrentPicture(), getCurrentOpenedComments());
   } else {
-    pictureCommentsLoader.classList.add('hidden');
+    pictureCommentsLoaderElement.classList.add('hidden');
   }
 };
 
@@ -72,31 +72,31 @@ const onPictureCommentsLoader = () => {
 const openPicture = (pictureId) => {
   const newPicture = getPictureById(+pictureId);
   setCurrentOpenedPicture(+pictureId);
-  pictureImg.src = newPicture.url;
-  pictureCaption.textContent = newPicture.description;
-  pictureLikesCount.textContent = newPicture.likes;
-  pictureTotalCommentsCount.textContent = getCurrentTotalComments();
-  body.classList.add('modal-open');
-  picture.classList.remove('hidden');
-  while (pictureComments.firstChild) {
-    pictureComments.removeChild(pictureComments.firstChild);
+  pictureImgElement.src = newPicture.url;
+  pictureCaptionElement.textContent = newPicture.description;
+  pictureLikesCountElement.textContent = newPicture.likes;
+  pictureTotalCommentsCountElement.textContent = getCurrentTotalComments();
+  bodyElement.classList.add('modal-open');
+  pictureElement.classList.remove('hidden');
+  while (pictureCommentsContainerElement.firstChild) {
+    pictureCommentsContainerElement.removeChild(pictureCommentsContainerElement.firstChild);
   }
   setCurrentOpenedComments(SHOWN_COMMENTS_COUNT);
   addComments(getCommentsFromCurrentPicture(), getCurrentOpenedComments());
   document.addEventListener('keydown', onDocumentKeydown);
-  pictureCommentsLoader.addEventListener('click', onPictureCommentsLoader);
-  pictureCancel.addEventListener('click', closePicture);
-  pictureCancel.addEventListener('keydown', onDocumentKeydown);
+  pictureCommentsLoaderElement.addEventListener('click', onPictureCommentsLoader);
+  pictureCancelElement.addEventListener('click', closePicture);
+  pictureCancelElement.addEventListener('keydown', onDocumentKeydown);
 };
 
 // Закрытие формы полноразмерного просмотра фото
 function closePicture() {
-  body.classList.remove('modal-open');
-  picture.classList.add('hidden');
+  bodyElement.classList.remove('modal-open');
+  pictureElement.classList.add('hidden');
   document.removeEventListener('keydown', onDocumentKeydown);
-  pictureCommentsLoader.removeEventListener('click', onPictureCommentsLoader);
-  pictureCancel.removeEventListener('click', closePicture);
-  pictureCancel.removeEventListener('keydown', onDocumentKeydown);
+  pictureCommentsLoaderElement.removeEventListener('click', onPictureCommentsLoader);
+  pictureCancelElement.removeEventListener('click', closePicture);
+  pictureCancelElement.removeEventListener('keydown', onDocumentKeydown);
   clearPictureState();
 }
 

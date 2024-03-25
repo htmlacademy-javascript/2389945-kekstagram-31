@@ -1,5 +1,5 @@
 import { DEBOUNCE_TIMEOUT, Filter, PICTURES_RANDOM_COUNT } from './config';
-import { pictures } from './dom-elements';
+import { picturesContainerElement } from './dom-elements';
 import { pictureState } from './picture-state';
 import { createPictureThumbnails } from './picture-thumbnails';
 import {
@@ -11,7 +11,7 @@ import {
 // Получение отфильтрованных фотографий
 const getFilteredPictures = (evt) => {
   if (evt) {
-    pictures
+    picturesContainerElement
       .querySelectorAll('.picture')
       .forEach((picture) => picture.parentNode.removeChild(picture));
 

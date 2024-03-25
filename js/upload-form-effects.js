@@ -1,15 +1,15 @@
 import { effectsConfig } from './config.js';
 import {
-  effectsList,
-  sliderContainer,
-  sliderControl,
-  sliderValue,
-  uploadPreview,
+  effectsListContainerElement,
+  sliderContainerElement,
+  sliderControlElement,
+  sliderValueElement,
+  uploadPreviewElement,
 } from './dom-elements.js';
 
 // Инициализация слайдера
 const createSlider = () => {
-  noUiSlider.create(sliderControl, {
+  noUiSlider.create(sliderControlElement, {
     range: {
       min: 0,
       max: 1,
@@ -33,15 +33,15 @@ const createSlider = () => {
 
 // Получение текущего выбранного эффекта
 const getCurrentEffect = () =>
-  effectsList.querySelector('input[type="radio"][name="effect"]:checked').value;
+  effectsListContainerElement.querySelector('input[type="radio"][name="effect"]:checked').value;
 
 // Обработка события изменения значения слайдера
 const onSliderChange = (currentEffect) => {
-  sliderValue.value = sliderControl.noUiSlider.get();
+  sliderValueElement.value = sliderControlElement.noUiSlider.get();
   const currentFilterValue = effectsConfig[currentEffect].style(
-    sliderValue.value
+    sliderValueElement.value
   );
-  uploadPreview.querySelector('img').style.filter = currentFilterValue;
+  uploadPreviewElement.querySelector('img').style.filter = currentFilterValue;
 };
 
 // Обработка события изменения выбранного эффекта
@@ -51,22 +51,22 @@ const onEffectsListChange = (evt) => {
   }
   const currentEffect = getCurrentEffect();
   if (currentEffect === 'none') {
-    sliderContainer.classList.add('hidden');
+    sliderContainerElement.classList.add('hidden');
   } else {
-    sliderContainer.classList.remove('hidden');
+    sliderContainerElement.classList.remove('hidden');
   }
-  sliderControl.noUiSlider.updateOptions(effectsConfig[currentEffect]);
-  sliderControl.noUiSlider.set(effectsConfig[currentEffect].range.max);
+  sliderControlElement.noUiSlider.updateOptions(effectsConfig[currentEffect]);
+  sliderControlElement.noUiSlider.set(effectsConfig[currentEffect].range.max);
   onSliderChange(getCurrentEffect());
 };
 
 // Общая функция обработки эффектов
 const uploadFormEffects = () => {
   // Обработчик события изменения выбранного эффекта
-  effectsList.addEventListener('change', onEffectsListChange);
+  effectsListContainerElement.addEventListener('change', onEffectsListChange);
 
   // Обработчик события изменения значения слайдера
-  sliderControl.noUiSlider.on('slide', () =>
+  sliderControlElement.noUiSlider.on('slide', () =>
     onSliderChange(getCurrentEffect())
   );
   onEffectsListChange();
