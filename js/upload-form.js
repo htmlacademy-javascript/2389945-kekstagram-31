@@ -19,9 +19,11 @@ import {
   uploadPreviewImg,
   uploadOverlay,
   uploadSubmitButton,
+  effectsPreviews
 } from './dom-elements.js';
 import {
-  destroyUploadFormSlider,
+  //destroyUploadFormSlider,
+  createSlider,
   uploadFormEffects,
 } from './upload-form-effects.js';
 import {
@@ -87,8 +89,13 @@ const onDocumentKeydown = (evt) => {
 
 // Обработка формы загрузки и редактирования фото
 const createUploadForm = () => {
+  createSlider();
   const openUpload = () => {
-    uploadPreviewImg.src = getFilePath(uploadInput.files[0]);
+    const filePath = getFilePath(uploadInput.files[0]);
+    uploadPreviewImg.src = filePath;
+    effectsPreviews.forEach((preview) => {
+      preview.style.backgroundImage = `url(${filePath})`;
+    });
     uploadForm.addEventListener('submit', onUploadFormSubmit);
     uploadOverlay.classList.remove('hidden');
     body.classList.add('modal-open');
@@ -167,7 +174,7 @@ function closeUpload() {
   scaleBigger.removeEventListener('click', onScaleBiggerClick);
   uploadForm.removeEventListener('submit', onUploadFormSubmit);
   pristine.reset();
-  destroyUploadFormSlider();
+  //destroyUploadFormSlider();
 }
 
-export { closeUpload, createUploadForm };
+export { closeUpload, createUploadForm, onDocumentKeydown };

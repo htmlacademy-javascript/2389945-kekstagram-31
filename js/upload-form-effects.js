@@ -7,6 +7,30 @@ import {
   uploadPreview,
 } from './dom-elements.js';
 
+// Инициализация слайдера
+const createSlider = () => {
+  noUiSlider.create(sliderControl, {
+    range: {
+      min: 0,
+      max: 1,
+    },
+    start: 0,
+    step: 0.1,
+    connect: 'lower',
+    format: {
+      to: function (value) {
+        if (Number.isInteger(value)) {
+          return value.toFixed(0);
+        }
+        return value.toFixed(1);
+      },
+      from: function (value) {
+        return parseFloat(value);
+      },
+    },
+  });
+};
+
 // Получение текущего выбранного эффекта
 const getCurrentEffect = () =>
   effectsList.querySelector('input[type="radio"][name="effect"]:checked').value;
@@ -38,28 +62,6 @@ const onEffectsListChange = (evt) => {
 
 // Общая функция обработки эффектов
 const uploadFormEffects = () => {
-  // Инициализация слайдера
-  noUiSlider.create(sliderControl, {
-    range: {
-      min: 0,
-      max: 1,
-    },
-    start: 0,
-    step: 0.1,
-    connect: 'lower',
-    format: {
-      to: function (value) {
-        if (Number.isInteger(value)) {
-          return value.toFixed(0);
-        }
-        return value.toFixed(1);
-      },
-      from: function (value) {
-        return parseFloat(value);
-      },
-    },
-  });
-
   // Обработчик события изменения выбранного эффекта
   effectsList.addEventListener('change', onEffectsListChange);
 
@@ -70,7 +72,4 @@ const uploadFormEffects = () => {
   onEffectsListChange();
 };
 
-// Удаление слайдера
-const destroyUploadFormSlider = () => sliderControl.noUiSlider.destroy();
-
-export { destroyUploadFormSlider, uploadFormEffects };
+export { uploadFormEffects, createSlider };

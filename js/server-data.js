@@ -9,7 +9,7 @@ import {
   errorTemplate,
 } from './dom-elements.js';
 
-import { closeUpload } from './upload-form.js';
+import { closeUpload, onDocumentKeydown } from './upload-form.js';
 
 // Отображение сообщения об ошибке при отправке или получении данных
 const onReceiveError = (errorText) => {
@@ -52,11 +52,13 @@ const onSendError = () => {
   bodyDOM.classList.remove('modal-open');
   const onDataErrorButtonKeyDown = (evt) => {
     if (evt.key === 'Escape') {
+      console.log(evt.target);
       dataErrorFormClose(evt);
     }
   };
 
   bodyDOM.appendChild(errorTemplate);
+  document.removeEventListener('keydown', onDocumentKeydown);
   document.addEventListener('keydown', onDataErrorButtonKeyDown);
 
   const onDataErrorButtonClick = (evt) => {
@@ -69,6 +71,7 @@ const onSendError = () => {
   function dataErrorFormClose() {
     errorTemplate.remove();
     document.removeEventListener('keydown', onDataErrorButtonKeyDown);
+    document.addEventListener('keydown', onDocumentKeydown);
     errorTemplate.removeEventListener('click', onDataErrorButtonClick);
   }
 
