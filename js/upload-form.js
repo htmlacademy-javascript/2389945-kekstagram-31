@@ -22,7 +22,6 @@ import {
   effectsPreviewsContainerElement
 } from './dom-elements.js';
 import {
-  //destroyUploadFormSlider,
   createSlider,
   uploadFormEffects,
 } from './upload-form-effects.js';
@@ -59,7 +58,6 @@ const pristine = new Pristine(
 const onUploadFormSubmit = (evt) => {
   evt.preventDefault();
   if (pristine.validate()) {
-    //uploadOverlay.classList.add('hidden');
     uploadSubmitButtonElement.disabled = true;
     uploadSubmitButtonElement.textContent = 'Отправка данных на сервер';
 

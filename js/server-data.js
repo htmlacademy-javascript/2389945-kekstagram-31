@@ -25,7 +25,7 @@ const onSendSuccess = () => {
   bodyDOM.classList.remove('modal-open');
   const onDataSuccessButtonKeyDown = (evt) => {
     if (evt.key === 'Escape') {
-      dataSuccessFormClose(evt);
+      closeDataSuccessForm(evt);
     }
   };
 
@@ -34,12 +34,12 @@ const onSendSuccess = () => {
 
   const onDataSuccessButtonClick = (evt) => {
     if (evt.target === successTemplateElement || evt.target === successButtonElement) {
-      dataSuccessFormClose(evt);
+      closeDataSuccessForm(evt);
       closeUpload();
     }
   };
 
-  function dataSuccessFormClose() {
+  function closeDataSuccessForm() {
     successTemplateElement.remove();
     document.removeEventListener('keydown', onDataSuccessButtonKeyDown);
     successTemplateElement.removeEventListener('click', onDataSuccessButtonClick);
@@ -53,7 +53,7 @@ const onSendError = () => {
   bodyDOM.classList.remove('modal-open');
   const onDataErrorButtonKeyDown = (evt) => {
     if (evt.key === 'Escape') {
-      dataErrorFormClose(evt);
+      closeDataErrorForm(evt);
     }
   };
 
@@ -63,11 +63,11 @@ const onSendError = () => {
 
   const onDataErrorButtonClick = (evt) => {
     if (evt.target === errorTemplateElement || evt.target === errorButtonElement) {
-      dataErrorFormClose(evt);
+      closeDataErrorForm(evt);
     }
   };
 
-  function dataErrorFormClose() {
+  function closeDataErrorForm() {
     errorTemplateElement.remove();
     document.removeEventListener('keydown', onDataErrorButtonKeyDown);
     document.addEventListener('keydown', onDocumentKeydown);

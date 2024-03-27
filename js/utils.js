@@ -69,7 +69,7 @@ const isEnterKey = (evt) => evt.key === 'Enter';
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
 // Проверка массива на наличие дублей
-const arrayHasDuplicates = (array) => new Set(array).size !== array.length;
+const isDuplicates = (array) => new Set(array).size !== array.length;
 
 // Проверка строки на соответствие шаблону
 const validatePattern = (array) =>
@@ -92,7 +92,7 @@ const getFilePath = (file) => {
 };
 
 export {
-  arrayHasDuplicates,
+  isDuplicates as arrayHasDuplicates,
   comparePicturesComments,
   createRandomIdFromRangeGenerator,
   debounce,
