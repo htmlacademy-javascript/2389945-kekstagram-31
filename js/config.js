@@ -8,17 +8,17 @@ export const FILE_TYPES = ['jpg', 'jpeg', 'png']; // Допустимые тип
 
 // Настройки масштабирования
 export const ScaleOptions = {
-  DEFAULT_SCALE_VALUE: '100%',
-  MIN_SCALE_VALUE: 25,
-  MAX_SCALE_VALUE: 100,
-  SCALE_STEP: 25,
+  DEFAULT_VALUE: '100%',
+  MIN_VALUE: 25,
+  MAX_VALUE: 100,
+  STEP: 25,
 };
 
 // Настройки валидации хэштегов
 export const HashtagsValidateOptions = {
-  MAX_HASHTAGS_COUNT: 5,
-  HASHTAGS_SPLITTER: ' ',
-  HASHTAG_PATTERN: /^#[a-zа-яё0-9]{1,19}$/i
+  MAX_COUNT: 5,
+  SPLITTER: ' ',
+  PATTERN: /^#[a-zа-яё0-9]{1,19}$/i
 };
 
 // Адресация запроса

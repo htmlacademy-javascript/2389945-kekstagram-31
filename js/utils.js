@@ -69,11 +69,11 @@ const isEnterKey = (evt) => evt.key === 'Enter';
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
 // Проверка массива на наличие дублей
-const isDuplicates = (array) => new Set(array).size !== array.length;
+const isArrayDuplicates = (array) => new Set(array).size !== array.length;
 
 // Проверка строки на соответствие шаблону
 const validatePattern = (array) =>
-  array.every((item) => HashtagsValidateOptions.HASHTAG_PATTERN.test(item));
+  array.every((item) => HashtagsValidateOptions.PATTERN.test(item));
 
 // Отформатировать знвчение масштаба
 const formatScale = (value) => Number(value.replace('%', ''));
@@ -92,7 +92,7 @@ const getFilePath = (file) => {
 };
 
 export {
-  isDuplicates as arrayHasDuplicates,
+  isArrayDuplicates,
   comparePicturesComments,
   createRandomIdFromRangeGenerator,
   debounce,
