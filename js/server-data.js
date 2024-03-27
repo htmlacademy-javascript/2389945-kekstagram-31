@@ -1,6 +1,5 @@
 import { DATA_URL, ERROR_SHOW_TIMEOUT, Method, Router } from './config.js';
 import {
-  bodyElement as bodyDOM,
   dataErrorTemplateElement,
   dataErrorTitleElement,
   successButtonElement,
@@ -14,7 +13,7 @@ import { closeUpload, onDocumentKeydown } from './upload-form.js';
 // Отображение сообщения об ошибке при отправке или получении данных
 const onReceiveError = (errorText) => {
   dataErrorTitleElement.textContent = errorText;
-  bodyDOM.appendChild(dataErrorTemplateElement);
+  document.body.appendChild(dataErrorTemplateElement);
   setTimeout(() => {
     dataErrorTemplateElement.remove();
   }, ERROR_SHOW_TIMEOUT);
@@ -22,14 +21,14 @@ const onReceiveError = (errorText) => {
 
 // Отображение формы успешной отправки данных
 const onSendSuccess = () => {
-  bodyDOM.classList.remove('modal-open');
+  document.body.classList.remove('modal-open');
   const onDataSuccessButtonKeyDown = (evt) => {
     if (evt.key === 'Escape') {
       closeDataSuccessForm(evt);
     }
   };
 
-  bodyDOM.appendChild(successTemplateElement);
+  document.body.appendChild(successTemplateElement);
   document.addEventListener('keydown', onDataSuccessButtonKeyDown);
 
   const onDataSuccessButtonClick = (evt) => {
@@ -50,14 +49,14 @@ const onSendSuccess = () => {
 
 // Отображение формы отправки данных с ошибкой
 const onSendError = () => {
-  bodyDOM.classList.remove('modal-open');
+  document.body.classList.remove('modal-open');
   const onDataErrorButtonKeyDown = (evt) => {
     if (evt.key === 'Escape') {
       closeDataErrorForm(evt);
     }
   };
 
-  bodyDOM.appendChild(errorTemplateElement);
+  document.body.appendChild(errorTemplateElement);
   document.removeEventListener('keydown', onDocumentKeydown);
   document.addEventListener('keydown', onDataErrorButtonKeyDown);
 

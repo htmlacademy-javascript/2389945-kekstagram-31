@@ -5,7 +5,6 @@ import {
 } from './config.js';
 
 import {
-  bodyElement,
   effectNoneElement,
   scaleBiggerElement,
   scaleControlElement,
@@ -95,7 +94,7 @@ const createUploadForm = () => {
     });
     uploadFormElement.addEventListener('submit', onUploadFormSubmit);
     uploadOverlayElement.classList.remove('hidden');
-    bodyElement.classList.add('modal-open');
+    document.body.classList.add('modal-open');
     document.addEventListener('keydown', onDocumentKeydown);
     uploadCancelElement.addEventListener('click', closeUpload);
     scaleSmallerElement.addEventListener('click', onScaleSmallerClick);
@@ -158,7 +157,7 @@ const createUploadForm = () => {
 // Закрытие формы загрузки и редактирования фото
 function closeUpload() {
   uploadOverlayElement.classList.add('hidden');
-  bodyElement.classList.remove('modal-open');
+  document.body.classList.remove('modal-open');
   uploadInputElement.value = null;
   uploadHashtagsElement.value = null;
   uploadDescriptionElement.value = null;

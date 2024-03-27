@@ -2,7 +2,6 @@ import { SHOWN_COMMENTS_COUNT } from './config.js';
 import { isEnterKey, isEscapeKey } from './utils.js';
 
 import {
-  bodyElement,
   pictureElement,
   pictureCancelElement,
   pictureCaptionElement,
@@ -76,11 +75,9 @@ const openPicture = (pictureId) => {
   pictureCaptionElement.textContent = newPicture.description;
   pictureLikesCountElement.textContent = newPicture.likes;
   pictureTotalCommentsCountElement.textContent = getCurrentTotalComments();
-  bodyElement.classList.add('modal-open');
+  document.body.classList.add('modal-open');
   pictureElement.classList.remove('hidden');
-  pictureCommentsContainerElement
-    .querySelectorAll('.social__comment')
-    .forEach((comment) => comment.remove());
+  pictureCommentsContainerElement.replaceChildren();
   setCurrentOpenedComments(SHOWN_COMMENTS_COUNT);
   addComments(getCommentsFromCurrentPicture(), getCurrentOpenedComments());
   document.addEventListener('keydown', onDocumentKeydown);
@@ -94,7 +91,7 @@ const openPicture = (pictureId) => {
 
 // Закрытие формы полноразмерного просмотра фото
 function closePicture() {
-  bodyElement.classList.remove('modal-open');
+  document.body.classList.remove('modal-open');
   pictureElement.classList.add('hidden');
   document.removeEventListener('keydown', onDocumentKeydown);
   pictureCommentsLoaderElement.removeEventListener(
