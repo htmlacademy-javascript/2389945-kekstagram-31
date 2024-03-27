@@ -1,10 +1,6 @@
 export const PICTURES_RANDOM_COUNT = 10; // Количество случайных фотографий
 export const SHOWN_COMMENTS_COUNT = 5; // Количество комментариев отображаемых по умолчанию
 export const DESCRIPTION_LENGTH = 140; // Максимальная длина комментария
-//export const MIN_SCALE_VALUE = 25; // Минимальное значение масштаба (в процентах)
-//export const MAX_SCALE_VALUE = 100; // Минимальное значение масштаба (в процентах)
-//export const SCALE_STEP = 25; // Шаг масштабирования фото (в процентах)
-//export const DEFAULT_SCALE = '100%'; // Масштаб по-умолчанию
 export const ERROR_SHOW_TIMEOUT = 5000; //Таймаут показа сообщения об ошибке
 export const DEBOUNCE_TIMEOUT = 500; // Таймаут переключения фильтров
 export const DATA_URL = 'https://31.javascript.htmlacademy.pro/kekstagram'; // Адрес сервера
