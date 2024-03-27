@@ -76,7 +76,7 @@ const validatePattern = (array) =>
   array.every((item) => HashtagsValidateOptions.HASHTAG_PATTERN.test(item));
 
 // Отформатировать знвчение масштаба
-const formatScale = (value) => +value.replace('%', '');
+const formatScale = (value) => Number(value.replace('%', ''));
 
 // Получение расположения файла
 const getFilePath = (file) => {

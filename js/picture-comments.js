@@ -70,8 +70,8 @@ const onPictureCommentsLoader = () => {
 
 // Открытие формы полноразмерного просмотра фото
 const openPicture = (pictureId) => {
-  const newPicture = getPictureById(+pictureId);
-  setCurrentOpenedPicture(+pictureId);
+  const newPicture = getPictureById(Number(pictureId));
+  setCurrentOpenedPicture(Number(pictureId));
   pictureImgElement.src = newPicture.url;
   pictureCaptionElement.textContent = newPicture.description;
   pictureLikesCountElement.textContent = newPicture.likes;
