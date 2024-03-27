@@ -1,6 +1,5 @@
 import { DATA_URL, ERROR_SHOW_TIMEOUT, Method, Router } from './config.js';
 import {
-  bodyElement as bodyDOM,
   dataErrorTemplateElement,
   dataErrorTitleElement,
   successButtonElement,
@@ -14,7 +13,7 @@ import { closeUpload, onDocumentKeydown } from './upload-form.js';
 // Отображение сообщения об ошибке при отправке или получении данных
 const onReceiveError = (errorText) => {
   dataErrorTitleElement.textContent = errorText;
-  bodyDOM.appendChild(dataErrorTemplateElement);
+  document.body.appendChild(dataErrorTemplateElement);
   setTimeout(() => {
     dataErrorTemplateElement.remove();
   }, ERROR_SHOW_TIMEOUT);
@@ -22,24 +21,24 @@ const onReceiveError = (errorText) => {
 
 // Отображение формы успешной отправки данных
 const onSendSuccess = () => {
-  bodyDOM.classList.remove('modal-open');
+  document.body.classList.remove('modal-open');
   const onDataSuccessButtonKeyDown = (evt) => {
     if (evt.key === 'Escape') {
-      dataSuccessFormClose(evt);
+      closeDataSuccessForm(evt);
     }
   };
 
-  bodyDOM.appendChild(successTemplateElement);
+  document.body.appendChild(successTemplateElement);
   document.addEventListener('keydown', onDataSuccessButtonKeyDown);
 
   const onDataSuccessButtonClick = (evt) => {
     if (evt.target === successTemplateElement || evt.target === successButtonElement) {
-      dataSuccessFormClose(evt);
+      closeDataSuccessForm(evt);
       closeUpload();
     }
   };
 
-  function dataSuccessFormClose() {
+  function closeDataSuccessForm() {
     successTemplateElement.remove();
     document.removeEventListener('keydown', onDataSuccessButtonKeyDown);
     successTemplateElement.removeEventListener('click', onDataSuccessButtonClick);
@@ -50,24 +49,24 @@ const onSendSuccess = () => {
 
 // Отображение формы отправки данных с ошибкой
 const onSendError = () => {
-  bodyDOM.classList.remove('modal-open');
+  document.body.classList.remove('modal-open');
   const onDataErrorButtonKeyDown = (evt) => {
     if (evt.key === 'Escape') {
-      dataErrorFormClose(evt);
+      closeDataErrorForm(evt);
     }
   };
 
-  bodyDOM.appendChild(errorTemplateElement);
+  document.body.appendChild(errorTemplateElement);
   document.removeEventListener('keydown', onDocumentKeydown);
   document.addEventListener('keydown', onDataErrorButtonKeyDown);
 
   const onDataErrorButtonClick = (evt) => {
     if (evt.target === errorTemplateElement || evt.target === errorButtonElement) {
-      dataErrorFormClose(evt);
+      closeDataErrorForm(evt);
     }
   };
 
-  function dataErrorFormClose() {
+  function closeDataErrorForm() {
     errorTemplateElement.remove();
     document.removeEventListener('keydown', onDataErrorButtonKeyDown);
     document.addEventListener('keydown', onDocumentKeydown);

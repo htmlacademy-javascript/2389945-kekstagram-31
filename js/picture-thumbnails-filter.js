@@ -14,16 +14,15 @@ const getFilteredPictures = (evt) => {
     picturesContainerElement
       .querySelectorAll('.picture')
       .forEach((picture) => picture.parentNode.removeChild(picture));
-
     if (evt.target.id === Filter.DEFAULT) {
-      return pictureState.pictures.slice();
+      return pictureState.pictures;
     } else if (evt.target.id === Filter.RANDOM) {
       return getUniqueRandomArray(pictureState.pictures, PICTURES_RANDOM_COUNT);
     } else if (evt.target.id === Filter.DISCUSSED) {
       return pictureState.pictures.slice().sort(comparePicturesComments);
     }
   } else {
-    return pictureState.pictures.slice();
+    return pictureState.pictures;
   }
 };
 

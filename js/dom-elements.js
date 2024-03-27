@@ -3,11 +3,9 @@ export const picturesContainerElement = document.querySelector('.pictures');
 export const pictureTemplateElement =
   document.querySelector('#picture').content;
 export const documentFragment = document.createDocumentFragment();
-
-export const bodyElement = document.querySelector('body');
 export const pictureElement = document.querySelector('.big-picture');
 export const pictureFiltersContainerElement =
-  bodyElement.querySelector('.img-filters');
+  document.querySelector('.img-filters');
 export const pictureImgElement = pictureElement.querySelector('img');
 export const pictureCaptionElement =
   pictureElement.querySelector('.social__caption');

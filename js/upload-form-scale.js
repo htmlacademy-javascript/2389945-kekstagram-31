@@ -1,8 +1,5 @@
 import {
-  DEFAULT_SCALE,
-  MAX_SCALE_VALUE,
-  MIN_SCALE_VALUE,
-  SCALE_STEP,
+  ScaleOptions
 } from './config.js';
 import { scaleControlElement, uploadPreviewElement } from './dom-elements.js';
 import { formatScale } from './utils.js';
@@ -11,20 +8,20 @@ import { formatScale } from './utils.js';
 const scalePicture = (value) => {
   scaleControlElement.value = `${formatScale(scaleControlElement.value) + value}%`;
   uploadPreviewElement.querySelector('img').style.transform = `scale(${
-    formatScale(scaleControlElement.value) / formatScale(DEFAULT_SCALE)
+    formatScale(scaleControlElement.value) / formatScale(ScaleOptions.DEFAULT_SCALE_VALUE)
   })`;
 };
 
 // Обработка нажатия на кнопку уменьшения масштаба
 const onScaleSmallerClick = () =>
-  formatScale(scaleControlElement.value) > MIN_SCALE_VALUE
-    ? scalePicture(-SCALE_STEP)
+  formatScale(scaleControlElement.value) > ScaleOptions.MIN_SCALE_VALUE
+    ? scalePicture(-ScaleOptions.SCALE_STEP)
     : null;
 
 // Обработка нажатия на кнопку увеличения масштаба
 const onScaleBiggerClick = () =>
-  formatScale(scaleControlElement.value) < MAX_SCALE_VALUE
-    ? scalePicture(SCALE_STEP)
+  formatScale(scaleControlElement.value) < ScaleOptions.MAX_SCALE_VALUE
+    ? scalePicture(ScaleOptions.SCALE_STEP)
     : null;
 
 export { onScaleBiggerClick, onScaleSmallerClick, scalePicture };

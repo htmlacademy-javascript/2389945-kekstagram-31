@@ -1,4 +1,4 @@
-import { HASHTAG_PATTERN, FILE_TYPES } from './config.js';
+import { HashtagsValidateOptions, FILE_TYPES } from './config.js';
 import { getPictureById } from './picture-state.js';
 import { onReceiveError } from './server-data.js';
 
@@ -69,14 +69,14 @@ const isEnterKey = (evt) => evt.key === 'Enter';
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
 // Проверка массива на наличие дублей
-const arrayHasDuplicates = (array) => new Set(array).size !== array.length;
+const isDuplicates = (array) => new Set(array).size !== array.length;
 
 // Проверка строки на соответствие шаблону
 const validatePattern = (array) =>
-  array.every((item) => HASHTAG_PATTERN.test(item));
+  array.every((item) => HashtagsValidateOptions.HASHTAG_PATTERN.test(item));
 
 // Отформатировать знвчение масштаба
-const formatScale = (value) => +value.replace('%', '');
+const formatScale = (value) => Number(value.replace('%', ''));
 
 // Получение расположения файла
 const getFilePath = (file) => {
@@ -92,7 +92,7 @@ const getFilePath = (file) => {
 };
 
 export {
-  arrayHasDuplicates,
+  isDuplicates as arrayHasDuplicates,
   comparePicturesComments,
   createRandomIdFromRangeGenerator,
   debounce,

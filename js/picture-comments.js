@@ -2,7 +2,6 @@ import { SHOWN_COMMENTS_COUNT } from './config.js';
 import { isEnterKey, isEscapeKey } from './utils.js';
 
 import {
-  bodyElement,
   pictureElement,
   pictureCancelElement,
   pictureCaptionElement,
@@ -70,31 +69,35 @@ const onPictureCommentsLoader = () => {
 
 // Открытие формы полноразмерного просмотра фото
 const openPicture = (pictureId) => {
-  const newPicture = getPictureById(+pictureId);
-  setCurrentOpenedPicture(+pictureId);
+  const newPicture = getPictureById(Number(pictureId));
+  setCurrentOpenedPicture(Number(pictureId));
   pictureImgElement.src = newPicture.url;
   pictureCaptionElement.textContent = newPicture.description;
   pictureLikesCountElement.textContent = newPicture.likes;
   pictureTotalCommentsCountElement.textContent = getCurrentTotalComments();
-  bodyElement.classList.add('modal-open');
+  document.body.classList.add('modal-open');
   pictureElement.classList.remove('hidden');
-  while (pictureCommentsContainerElement.firstChild) {
-    pictureCommentsContainerElement.removeChild(pictureCommentsContainerElement.firstChild);
-  }
+  pictureCommentsContainerElement.replaceChildren();
   setCurrentOpenedComments(SHOWN_COMMENTS_COUNT);
   addComments(getCommentsFromCurrentPicture(), getCurrentOpenedComments());
   document.addEventListener('keydown', onDocumentKeydown);
-  pictureCommentsLoaderElement.addEventListener('click', onPictureCommentsLoader);
+  pictureCommentsLoaderElement.addEventListener(
+    'click',
+    onPictureCommentsLoader
+  );
   pictureCancelElement.addEventListener('click', closePicture);
   pictureCancelElement.addEventListener('keydown', onDocumentKeydown);
 };
 
 // Закрытие формы полноразмерного просмотра фото
 function closePicture() {
-  bodyElement.classList.remove('modal-open');
+  document.body.classList.remove('modal-open');
   pictureElement.classList.add('hidden');
   document.removeEventListener('keydown', onDocumentKeydown);
-  pictureCommentsLoaderElement.removeEventListener('click', onPictureCommentsLoader);
+  pictureCommentsLoaderElement.removeEventListener(
+    'click',
+    onPictureCommentsLoader
+  );
   pictureCancelElement.removeEventListener('click', closePicture);
   pictureCancelElement.removeEventListener('keydown', onDocumentKeydown);
   clearPictureState();
