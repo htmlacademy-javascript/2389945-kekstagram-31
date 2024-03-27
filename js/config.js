@@ -1,19 +1,29 @@
 export const PICTURES_RANDOM_COUNT = 10; // Количество случайных фотографий
 export const SHOWN_COMMENTS_COUNT = 5; // Количество комментариев отображаемых по умолчанию
-export const HASHTAG_PATTERN = /^#[a-zа-яё0-9]{1,19}$/i; // Шаблон для хэштега
 export const DESCRIPTION_LENGTH = 140; // Максимальная длина комментария
-export const MAX_HASHTAGS_COUNT = 5; // Максимальное количество хэштегов
-export const MIN_HASHTAG_LENGTH = 2; // Минимальная длина хэштега
-export const MAX_HASHTAG_LENGTH = 20; // Минимальная длина хэштега
-export const HASHTAGS_SPLITTER = ' '; // Разделитель хэштегов
-export const MIN_SCALE_VALUE = 25; // Минимальное значение масштаба (в процентах)
-export const MAX_SCALE_VALUE = 100; // Минимальное значение масштаба (в процентах)
-export const SCALE_STEP = 25; // Шаг масштабирования фото (в процентах)
-export const DEFAULT_SCALE = '100%'; // Масштаб по-умолчанию
+//export const MIN_SCALE_VALUE = 25; // Минимальное значение масштаба (в процентах)
+//export const MAX_SCALE_VALUE = 100; // Минимальное значение масштаба (в процентах)
+//export const SCALE_STEP = 25; // Шаг масштабирования фото (в процентах)
+//export const DEFAULT_SCALE = '100%'; // Масштаб по-умолчанию
 export const ERROR_SHOW_TIMEOUT = 5000; //Таймаут показа сообщения об ошибке
 export const DEBOUNCE_TIMEOUT = 500; // Таймаут переключения фильтров
 export const DATA_URL = 'https://31.javascript.htmlacademy.pro/kekstagram'; // Адрес сервера
 export const FILE_TYPES = ['jpg', 'jpeg', 'png']; // Допустимые типы загружаемых файлов
+
+// Настройки масштабирования
+export const ScaleOptions = {
+  DEFAULT_SCALE_VALUE: '100%',
+  MIN_SCALE_VALUE: 25,
+  MAX_SCALE_VALUE: 100,
+  SCALE_STEP: 25,
+};
+
+// Настройки валидации хэштегов
+export const HashtagsValidateOptions = {
+  MAX_HASHTAGS_COUNT: 5,
+  HASHTAGS_SPLITTER: ' ',
+  HASHTAG_PATTERN: /^#[a-zа-яё0-9]{1,19}$/i
+};
 
 // Адресация запроса
 export const Router = {

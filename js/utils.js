@@ -1,4 +1,4 @@
-import { HASHTAG_PATTERN, FILE_TYPES } from './config.js';
+import { HashtagsValidateOptions, FILE_TYPES } from './config.js';
 import { getPictureById } from './picture-state.js';
 import { onReceiveError } from './server-data.js';
 
@@ -73,7 +73,7 @@ const isDuplicates = (array) => new Set(array).size !== array.length;
 
 // Проверка строки на соответствие шаблону
 const validatePattern = (array) =>
-  array.every((item) => HASHTAG_PATTERN.test(item));
+  array.every((item) => HashtagsValidateOptions.HASHTAG_PATTERN.test(item));
 
 // Отформатировать знвчение масштаба
 const formatScale = (value) => +value.replace('%', '');
