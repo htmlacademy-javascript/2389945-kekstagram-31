@@ -35,7 +35,7 @@ import {
   onSendSuccess,
 } from './server-data.js';
 import {
-  arrayHasDuplicates,
+  isArrayDuplicates,
   isEscapeKey,
   validatePattern,
   getFilePath,
@@ -108,14 +108,14 @@ const createUploadForm = () => {
       .trim()
       .toLowerCase()
       .replace(/ +/g, ' ')
-      .split(HashtagsValidateOptions.HASHTAGS_SPLITTER);
+      .split(HashtagsValidateOptions.SPLITTER);
     if (value === '') {
       return null;
     } else if (!validatePattern(hashtags)) {
       return 'Введён невалидный хэштег';
-    } else if (arrayHasDuplicates(hashtags)) {
+    } else if (isArrayDuplicates(hashtags)) {
       return 'Хэштеги повторяются';
-    } else if (hashtags.length > HashtagsValidateOptions.MAX_HASHTAGS_COUNT) {
+    } else if (hashtags.length > HashtagsValidateOptions.MAX_COUNT) {
       return 'Превышено количество хэштегов';
     } else {
       return null;
@@ -161,7 +161,7 @@ function closeUpload() {
   uploadInputElement.value = null;
   uploadHashtagsElement.value = null;
   uploadDescriptionElement.value = null;
-  scaleControlElement.value = ScaleOptions.DEFAULT_SCALE_VALUE;
+  scaleControlElement.value = ScaleOptions.DEFAULT_VALUE;
   effectNoneElement.checked = true;
   scalePicture(null);
   document.removeEventListener('keydown', onDocumentKeydown);
