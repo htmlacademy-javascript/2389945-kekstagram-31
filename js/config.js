@@ -48,7 +48,7 @@ export const effectsConfig = {
       max: 0,
     },
     step: 0,
-    style: () => 'none',
+    getStyle: () => 'none',
   },
   chrome: {
     range: {
@@ -56,7 +56,7 @@ export const effectsConfig = {
       max: 1,
     },
     step: 0.1,
-    style: (value) => `grayscale(${value})`,
+    getStyle: (value) => `grayscale(${value})`,
   },
   sepia: {
     range: {
@@ -64,7 +64,7 @@ export const effectsConfig = {
       max: 1,
     },
     step: 0.1,
-    style: (value) => `sepia(${value})`,
+    getStyle: (value) => `sepia(${value})`,
   },
   marvin: {
     range: {
@@ -72,7 +72,7 @@ export const effectsConfig = {
       max: 100,
     },
     step: 1,
-    style: (value) => `invert(${value}%)`,
+    getStyle: (value) => `invert(${value}%)`,
   },
   phobos: {
     range: {
@@ -80,7 +80,7 @@ export const effectsConfig = {
       max: 3,
     },
     step: 0.1,
-    style: (value) => `blur(${value}px)`,
+    getStyle: (value) => `blur(${value}px)`,
   },
   heat: {
     range: {
@@ -88,6 +88,6 @@ export const effectsConfig = {
       max: 3,
     },
     step: 0.1,
-    style: (value) => `brightness(${value})`,
+    getStyle: (value) => `brightness(${value})`,
   },
 };

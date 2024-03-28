@@ -83,6 +83,8 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
+const onUploadCancelClick = () => closeUpload();
+
 // Обработка формы загрузки и редактирования фото
 const createUploadForm = () => {
   createSlider();
@@ -96,7 +98,7 @@ const createUploadForm = () => {
     uploadOverlayElement.classList.remove('hidden');
     document.body.classList.add('modal-open');
     document.addEventListener('keydown', onDocumentKeydown);
-    uploadCancelElement.addEventListener('click', closeUpload);
+    uploadCancelElement.addEventListener('click', onUploadCancelClick);
     scaleSmallerElement.addEventListener('click', onScaleSmallerClick);
     scaleBiggerElement.addEventListener('click', onScaleBiggerClick);
     uploadFormEffects();
@@ -165,7 +167,7 @@ function closeUpload() {
   effectNoneElement.checked = true;
   scalePicture(null);
   document.removeEventListener('keydown', onDocumentKeydown);
-  uploadCancelElement.removeEventListener('click', closeUpload);
+  uploadCancelElement.removeEventListener('click', onUploadCancelClick);
   scaleSmallerElement.removeEventListener('click', onScaleSmallerClick);
   scaleBiggerElement.removeEventListener('click', onScaleBiggerClick);
   uploadFormElement.removeEventListener('submit', onUploadFormSubmit);
