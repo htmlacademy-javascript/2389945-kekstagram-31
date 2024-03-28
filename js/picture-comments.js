@@ -56,7 +56,7 @@ const onDocumentKeydown = (evt) => {
 };
 
 // Действия при клике на кнопке "Загрузить еще"
-const onPictureCommentsLoader = () => {
+const onPictureCommentsLoaderClick = () => {
   if (
     getCurrentOpenedComments() <
     getCommentsFromCurrentPicture().length + SHOWN_COMMENTS_COUNT
@@ -66,6 +66,9 @@ const onPictureCommentsLoader = () => {
     pictureCommentsLoaderElement.classList.add('hidden');
   }
 };
+
+// Обработчик клика по элементу закрытия формы
+const onPictureCancelClick = () => closePicture();
 
 // Открытие формы полноразмерного просмотра фото
 const openPicture = (pictureId) => {
@@ -83,9 +86,9 @@ const openPicture = (pictureId) => {
   document.addEventListener('keydown', onDocumentKeydown);
   pictureCommentsLoaderElement.addEventListener(
     'click',
-    onPictureCommentsLoader
+    onPictureCommentsLoaderClick
   );
-  pictureCancelElement.addEventListener('click', closePicture);
+  pictureCancelElement.addEventListener('click', onPictureCancelClick);
   pictureCancelElement.addEventListener('keydown', onDocumentKeydown);
 };
 
@@ -96,9 +99,9 @@ function closePicture() {
   document.removeEventListener('keydown', onDocumentKeydown);
   pictureCommentsLoaderElement.removeEventListener(
     'click',
-    onPictureCommentsLoader
+    onPictureCommentsLoaderClick
   );
-  pictureCancelElement.removeEventListener('click', closePicture);
+  pictureCancelElement.removeEventListener('click', onPictureCancelClick);
   pictureCancelElement.removeEventListener('keydown', onDocumentKeydown);
   clearPictureState();
 }

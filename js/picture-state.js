@@ -28,7 +28,7 @@ const getCurrentOpenedComments = () => pictureState.currentOpenedComments;
 
 // Получить фото по id
 const getPictureById = function (id) {
-  return pictureState.pictures.find((el) => el.id === id);
+  return pictureState.pictures.find((picture) => picture.id === id);
 };
 
 // Получить массив комментариев текущего открытого фото

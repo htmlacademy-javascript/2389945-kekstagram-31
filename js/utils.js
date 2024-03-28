@@ -38,9 +38,9 @@ const createRandomIdFromRangeGenerator = (min, max) => {
 };
 
 // Получение случайного элемента массива
-const getRandomArrayElement = (array) => {
-  const uniqueElementId = createRandomIdFromRangeGenerator(0, array.length - 1);
-  return array[uniqueElementId()];
+const getRandomArrayElement = (elements) => {
+  const uniqueElementId = createRandomIdFromRangeGenerator(0, elements.length - 1);
+  return elements[uniqueElementId()];
 };
 
 // Получение случайного массива заданного размера
@@ -50,9 +50,9 @@ const getUniqueRandomArray = (sourceArray, resultArraySize) => {
     resultIndex.add(getRandomInteger(0, sourceArray.length - 1));
   }
 
-  const resultArray = [];
-  resultIndex.forEach((value) => resultArray.push(sourceArray[value]));
-  return resultArray;
+  const elements = [];
+  resultIndex.forEach((value) => elements.push(sourceArray[value]));
+  return elements;
 };
 
 // Сравнение количества комментариев у двух фотографий

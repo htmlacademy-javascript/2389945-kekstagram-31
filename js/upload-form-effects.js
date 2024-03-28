@@ -36,7 +36,7 @@ const getCurrentEffect = () =>
 // Обработка события изменения значения слайдера
 const onSliderChange = (currentEffect) => {
   sliderValueElement.value = sliderControlElement.noUiSlider.get();
-  const currentFilterValue = effectsConfig[currentEffect].style(
+  const currentFilterValue = effectsConfig[currentEffect].getStyle(
     sliderValueElement.value
   );
   uploadPreviewElement.querySelector('img').style.filter = currentFilterValue;
